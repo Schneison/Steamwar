@@ -11,7 +11,7 @@ namespace Steamwar.Sectors
     [Serializable]
     public class Sector : ScriptableObject
     {
-        public static readonly Vector2 DEFAULT_POSITION = new Vector2(5.43762F, 6.62512F);
+        public static readonly Vector2 DEFAULT_POSITION = new Vector2(0, 0);
 
         public string id;
         public string diplayName;

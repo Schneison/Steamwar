@@ -33,6 +33,34 @@ namespace Steamwar {
             this.listeners = listeners.ToArray();
         }
 
+        void UpdateCameraPosition(Camera camera, float xAxisValue, float yAxisValue)
+        {
+            SectorData sectorData = SessionManager.session.activeSector;
+            Sector sector = sectorData.sector;
+            Vector3 position = camera.transform.position + new Vector3(xAxisValue * 0.25F, yAxisValue * 0.25F, 0.0f);
+            Vector3 screenLeftBottom = camera.ViewportToWorldPoint(new Vector3(0.0F, 0.0F));
+            Vector3 screenRightTop = camera.ViewportToWorldPoint(new Vector3(1.0F, 1.0F));
+            Vector3 screenSize = screenRightTop - screenLeftBottom;
+            Vector4 bounds = sectorData.bounds;
+            if ((position.x + screenSize.x / 2) > (bounds.z))
+            {
+                position.x = (bounds.z) - screenSize.x / 2;
+            }
+            else if ((position.x - screenSize.x / 2) < (bounds.x))
+            {
+                position.x = bounds.x + screenSize.x / 2;
+            }
+            if ((position.y + screenSize.y / 2) > (bounds.w))
+            {
+                position.y = (bounds.w) - screenSize.y / 2;
+            }
+            else if ((position.y - screenSize.y / 2) < (bounds.y))
+            {
+                position.y = bounds.y + screenSize.y / 2;
+            }
+            camera.transform.position = position;
+        }
+
         void Update()
         {
             Vector2 mousePosition = Input.mousePosition;
@@ -50,31 +78,7 @@ namespace Steamwar {
             }
             if (camera != null && (xAxisValue != 0 || yAxisValue != 0 || scrollDelta != 0))
             {
-                SectorData sectorData = SessionManager.session.activeSector;
-                Sector sector = sectorData.sector;
-                Vector3 position = camera.transform.position + new Vector3(xAxisValue * 0.25F, yAxisValue * 0.25F, 0.0f);
-                Vector3 screenLeftBottom = camera.ViewportToWorldPoint(new Vector3(0.0F, 0.0F));
-                Vector3 screenRightTop = camera.ViewportToWorldPoint(new Vector3(1.0F, 1.0F));
-                Vector3 screenSize = screenRightTop - screenLeftBottom;
-                Vector4 bounds = sectorData.bounds;
-                if((position.x + screenSize.x / 2) > (bounds.z))
-                {
-                    position.x = (bounds.z) - screenSize.x / 2;
-                }
-                else if((position.x - screenSize.x / 2) < (bounds.x))
-                {
-                    position.x = bounds.x + screenSize.x / 2;
-                }
-                if ((position.y + screenSize.y / 2) > (bounds.w))
-                {
-                    position.y = (bounds.w) - screenSize.y / 2;
-                }
-                else if ((position.y - screenSize.y / 2) < (bounds.y))
-                {
-                    position.y = bounds.y + screenSize.y / 2;
-                }
-                camera.transform.position = position;
-
+                UpdateCameraPosition(camera, xAxisValue, yAxisValue);
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
