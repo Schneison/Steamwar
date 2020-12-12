@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 27e996f7516c7784bbe218be7c24e5c3, type: 3}
+  m_Name: Workshop
+  m_EditorClassIdentifier: 
+  id: workshop
+  displayName: Workshop
+  spriteBlue: {fileID: -5635123962534760068, guid: 967687b2f3332ea4b8dd89327e8af729,
+    type: 3}
+  spriteRed: {fileID: -206605710745942502, guid: 967687b2f3332ea4b8dd89327e8af729,
+    type: 3}
+  sprite: {fileID: 7114983493517918410, guid: 967687b2f3332ea4b8dd89327e8af729, type: 3}
