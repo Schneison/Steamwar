@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Steamwar.Utils;
 using Steamwar.Units;
 using Steamwar.Buildings;
+using Steamwar.Objects;
 
 namespace Steamwar.UI {
     public class ObjectCreator : MonoBehaviour
@@ -44,10 +45,14 @@ namespace Steamwar.UI {
         {
             this.type = type;
             int i = 0;
-            if (type == CreatorType.UNITS)
+            if (type == CreatorType.UNITS || type == CreatorType.BUILDINGS)
             {
-                foreach (UnitType unitType in ScriptableObjectUtility.GetAllInstances<UnitType>())
+                foreach (ObjectType objectType in SessionManager.registry.GetTypes(type == CreatorType.UNITS ? ObjectKind.UNIT : ObjectKind.BUILDING))
                 {
+                    if(objectType.name == "missing")
+                    {
+                        continue;
+                    }
                     Transform child = container.transform.Find("CreationButton(" + i + ")");
                     if (child == null)
                     {
@@ -55,22 +60,7 @@ namespace Steamwar.UI {
                     }
                     GameObject buttonObj = child.gameObject;
                     ObjectButton button = buttonObj.GetComponent<ObjectButton>();
-                    button.Type = unitType;
-                    buttonObj.SetActive(true);
-                    i++;
-                }
-            }else if(type == CreatorType.BUILDINGS)
-            {
-                foreach (BuildingType unitType in ScriptableObjectUtility.GetAllInstances<BuildingType>())
-                {
-                    Transform child = container.transform.Find("CreationButton(" + i + ")");
-                    if (child == null)
-                    {
-                        break;
-                    }
-                    GameObject buttonObj = child.gameObject;
-                    ObjectButton button = buttonObj.GetComponent<ObjectButton>();
-                    button.Type = unitType;
+                    button.Type = objectType;
                     buttonObj.SetActive(true);
                     i++;
                 }

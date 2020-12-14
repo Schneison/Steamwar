@@ -5,6 +5,7 @@ using Steamwar.Buildings;
 using Steamwar.Sectors;
 using Steamwar.Objects;
 using UnityEngine;
+using System.Collections;
 
 namespace Steamwar.Utils
 {
@@ -58,6 +59,33 @@ namespace Steamwar.Utils
             else if (typeType == typeof(UnitType))
             {
                 return units[typeId] as T;
+            }
+            return default;
+        }
+
+        public IEnumerable<ObjectType> GetTypes(ObjectKind kind)
+        {
+            if (kind == ObjectKind.BUILDING)
+            {
+                return buildings.Values;
+            }
+            else if (kind == ObjectKind.UNIT)
+            {
+                return units.Values;
+            }
+            return default;
+        }
+
+        public ICollection<T> GetTypes<T>()
+        {
+            Type typeType = typeof(T);
+            if (typeType == typeof(BuildingType))
+            {
+                return buildings.Values as ICollection<T>;
+            }
+            else if (typeType == typeof(UnitType))
+            {
+                return units.Values as ICollection<T>;
             }
             return default;
         }
