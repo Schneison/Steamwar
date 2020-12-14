@@ -12,11 +12,12 @@ namespace Steamwar.UI
         public CreatorType type;
         public GameObject activeBackground;
         public ObjectCreator objectCreator;
+        private RectTransform _creatorTransform;
         internal bool selected;
 
         void Start()
         {
-
+            _creatorTransform = objectCreator.GetComponent<RectTransform>();
         }
 
         void Update()
@@ -46,11 +47,11 @@ namespace Steamwar.UI
         public IEnumerator FadeIn()
         {
             objectCreator.gameObject.SetActive(true);
-            objectCreator.GetComponent<ObjectCreator>().SetType(type);
+            objectCreator.SetType(type);
             activeBackground.SetActive(true);
             Rect screenRect = new Rect(0f, 0f, Screen.width, Screen.height);
             Vector3[] objectCorners = new Vector3[4];
-            objectCreator.GetComponent<RectTransform>().GetWorldCorners(objectCorners);
+            _creatorTransform.GetWorldCorners(objectCorners);
             float delta = objectCorners[3].x - screenRect.xMax;
             float change = delta / 16.0F;
             Transform container = transform.parent.parent;
@@ -67,8 +68,7 @@ namespace Steamwar.UI
         public IEnumerator FadeOut()
         {
             Vector3[] objectCorners = new Vector3[4];
-            objectCreator.GetComponent<RectTransform>().GetWorldCorners(objectCorners);
-            objectCreator.GetComponent<ObjectCreator>().ClearType();
+            _creatorTransform.GetWorldCorners(objectCorners);
             float delta = objectCorners[3].x - objectCorners[0].x;
             float change = delta / 16.0F;
             Transform container = transform.parent.parent;
@@ -80,6 +80,7 @@ namespace Steamwar.UI
                 delta -= change;
                 yield return new WaitForSeconds(0.0625F);
             }
+            objectCreator.ClearType();
             activeBackground.SetActive(false);
             objectCreator.gameObject.SetActive(false);
         }
