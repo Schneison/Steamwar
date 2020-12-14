@@ -437,8 +437,8 @@ TextureImporter:
       name: forest_left_top_right
       rect:
         serializedVersion: 2
-        x: 20
-        y: 144
+        x: 19
+        y: 147
         width: 16
         height: 16
       alignment: 0
@@ -458,8 +458,8 @@ TextureImporter:
       name: forest_right_top
       rect:
         serializedVersion: 2
-        x: 1
-        y: 144
+        x: 3
+        y: 147
         width: 16
         height: 16
       alignment: 0
@@ -479,8 +479,8 @@ TextureImporter:
       name: forest_left_top
       rect:
         serializedVersion: 2
-        x: 39
-        y: 144
+        x: 35
+        y: 147
         width: 16
         height: 16
       alignment: 0
@@ -500,7 +500,7 @@ TextureImporter:
       name: forest_left_top_down
       rect:
         serializedVersion: 2
-        x: 39
+        x: 35
         y: 163
         width: 16
         height: 16
@@ -521,8 +521,8 @@ TextureImporter:
       name: forest_left_down
       rect:
         serializedVersion: 2
-        x: 39
-        y: 182
+        x: 35
+        y: 179
         width: 16
         height: 16
       alignment: 0
@@ -542,8 +542,8 @@ TextureImporter:
       name: forest_right_down
       rect:
         serializedVersion: 2
-        x: 1
-        y: 182
+        x: 3
+        y: 179
         width: 16
         height: 16
       alignment: 0
@@ -563,7 +563,7 @@ TextureImporter:
       name: forest_right_top_down
       rect:
         serializedVersion: 2
-        x: 1
+        x: 3
         y: 163
         width: 16
         height: 16
@@ -584,7 +584,7 @@ TextureImporter:
       name: forest
       rect:
         serializedVersion: 2
-        x: 20
+        x: 19
         y: 163
         width: 16
         height: 16
@@ -605,8 +605,8 @@ TextureImporter:
       name: forest_left_right_down
       rect:
         serializedVersion: 2
-        x: 20
-        y: 182
+        x: 19
+        y: 179
         width: 16
         height: 16
       alignment: 0
@@ -647,8 +647,8 @@ TextureImporter:
       name: cliff
       rect:
         serializedVersion: 2
-        x: 20
-        y: 87
+        x: 16
+        y: 96
         width: 16
         height: 16
       alignment: 0
@@ -668,8 +668,8 @@ TextureImporter:
       name: cliff_right_top
       rect:
         serializedVersion: 2
-        x: 1
-        y: 87
+        x: 0
+        y: 96
         width: 16
         height: 16
       alignment: 0
@@ -689,8 +689,8 @@ TextureImporter:
       name: cliff_right_top_down
       rect:
         serializedVersion: 2
-        x: 1
-        y: 106
+        x: 0
+        y: 112
         width: 16
         height: 16
       alignment: 0
@@ -714,8 +714,8 @@ TextureImporter:
       name: cliff_left_top_down
       rect:
         serializedVersion: 2
-        x: 39
-        y: 106
+        x: 32
+        y: 112
         width: 16
         height: 16
       alignment: 0
@@ -739,8 +739,8 @@ TextureImporter:
       name: cliff_left_top
       rect:
         serializedVersion: 2
-        x: 39
-        y: 87
+        x: 32
+        y: 96
         width: 16
         height: 16
       alignment: 0
@@ -823,8 +823,8 @@ TextureImporter:
       name: cliff_right_down
       rect:
         serializedVersion: 2
-        x: 1
-        y: 125
+        x: 0
+        y: 128
         width: 16
         height: 16
       alignment: 0
@@ -850,8 +850,8 @@ TextureImporter:
       name: cliff_left_down
       rect:
         serializedVersion: 2
-        x: 39
-        y: 125
+        x: 32
+        y: 128
         width: 16
         height: 16
       alignment: 0
@@ -877,8 +877,8 @@ TextureImporter:
       name: cliff_path
       rect:
         serializedVersion: 2
-        x: 20
-        y: 106
+        x: 16
+        y: 112
         width: 16
         height: 16
       alignment: 0
@@ -898,8 +898,8 @@ TextureImporter:
       name: cliff_left_right_down
       rect:
         serializedVersion: 2
-        x: 20
-        y: 125
+        x: 16
+        y: 128
         width: 16
         height: 16
       alignment: 0
