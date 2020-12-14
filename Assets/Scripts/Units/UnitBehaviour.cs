@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System;
 using Steamwar.Utils;
 using Steamwar.Objects;
+using Steamwar.Core;
+
 namespace Steamwar.Units {
 
     public class UnitBehaviour : ObjectBehaviour<UnitData, UnitType, UnitDataSerializable>
@@ -16,8 +18,9 @@ namespace Steamwar.Units {
         internal bool moves;
         internal Direction facingDirection;
 
-        public virtual void Start()
+        public override void Start()
         {
+            base.Start();
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
@@ -43,6 +46,11 @@ namespace Steamwar.Units {
             needInit = true;
         }
 
+        public override ObjectKind GetKind()
+        {
+            return ObjectKind.UNIT;
+        }
+
         /* Movment */
         public void Move(IEnumerable<PathNode> path)
         {
@@ -61,7 +69,7 @@ namespace Steamwar.Units {
             if(health <= 0)
             {
                 OnDeath(attackedUnit);
-                OnKill(attackedUnit);
+                attackedUnit.OnKill(this);
             }
         }
 
@@ -77,6 +85,10 @@ namespace Steamwar.Units {
 
         public void UpdateAnimation()
         {
+            if(animator == null)
+            {
+                return;
+            }
             animator.SetBool("moving", moves && (facingDirection == Direction.LEFT || facingDirection == Direction.RIGHT));
             animator.SetBool("moving_up", facingDirection == Direction.UP);
             animator.SetBool("moving_down", facingDirection == Direction.DOWN);
@@ -92,7 +104,6 @@ namespace Steamwar.Units {
         {
 
         }
-
     }
 
 }

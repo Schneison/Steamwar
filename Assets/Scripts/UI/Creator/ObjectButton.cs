@@ -2,15 +2,16 @@
 using UnityEngine.UI;
 using System.Collections;
 using Steamwar.Units;
+using Steamwar.Objects;
 
 namespace Steamwar.UI
 {
     public class ObjectButton : MonoBehaviour
     {
         public Image icon;
-        private UnitType type;
+        private ObjectType type;
 
-        public UnitType Type
+        public ObjectType Type
         {
             get
             {

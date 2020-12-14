@@ -98,6 +98,7 @@ namespace Steamwar
                 {
                     session = new Session();
                     Debug.Log("Failed to load game: " + e);
+                    //throw e;
                 }
                 finally
                 {

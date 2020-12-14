@@ -42,7 +42,11 @@ namespace Steamwar.Utils
 
         public T GetType<T>(string typeId) where T : class
         {
-            if(buildings.Count == 0)
+            if (typeId == null || typeId.Length == 0)
+            {
+                typeId = "missing";
+            }
+            if (buildings.Count == 0)
             {
                 LoadAssets();
             }

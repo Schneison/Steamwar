@@ -46,6 +46,7 @@ namespace Steamwar.UI
         public IEnumerator FadeIn()
         {
             objectCreator.gameObject.SetActive(true);
+            objectCreator.GetComponent<ObjectCreator>().SetType(type);
             activeBackground.SetActive(true);
             Rect screenRect = new Rect(0f, 0f, Screen.width, Screen.height);
             Vector3[] objectCorners = new Vector3[4];
@@ -67,6 +68,7 @@ namespace Steamwar.UI
         {
             Vector3[] objectCorners = new Vector3[4];
             objectCreator.GetComponent<RectTransform>().GetWorldCorners(objectCorners);
+            objectCreator.GetComponent<ObjectCreator>().ClearType();
             float delta = objectCorners[3].x - objectCorners[0].x;
             float change = delta / 16.0F;
             Transform container = transform.parent.parent;

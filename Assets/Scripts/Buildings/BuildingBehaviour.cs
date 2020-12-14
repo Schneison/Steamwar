@@ -8,8 +8,11 @@ using Steamwar.Objects;
 
 namespace Steamwar.Buildings
 {
-    public class Building : ObjectBehaviour<BuildingData,  BuildingType, BuildingDataSerializable>
+    public class Building : ObjectBehaviour<BuildingData, BuildingType, BuildingDataSerializable>
     {
-
+        public override ObjectKind GetKind()
+        {
+            return ObjectKind.BUILDING;
+        }
     }
 }
