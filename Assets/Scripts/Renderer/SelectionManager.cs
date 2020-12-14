@@ -46,6 +46,9 @@ namespace Steamwar.Renderer
             gradient.SetKeys(colorKey, alphaKey);
         }
 
+        /// <summary>
+        /// Draws debug info for the current path of the selected unit
+        /// </summary>
         private void OnDrawGizmos()
         {
             /*if(lastPath == null)
@@ -70,6 +73,11 @@ namespace Steamwar.Renderer
             }*/
         }
 
+
+        /// <summary>
+        /// Selects the given unit
+        /// </summary>
+        /// <param name="unit">Unit to be selected</param>
         public void Select(UnitBehaviour unit)
         {
             Deselect(false);
@@ -81,6 +89,11 @@ namespace Steamwar.Renderer
             unitInfo.Select(unit);
         }
 
+        /// <summary>
+        /// Deselects the currently selected unit and deletes the selection box object.
+        /// </summary>
+        /// <param name="move">If cuurently selected unit should move to currently selected path.</param>
+        /// <returns>True if a unit was deselected, false if no unit was selected before.</returns>
         public bool Deselect(bool move)
         {
             if(lastPath == null && selectedUnit == null)
@@ -111,6 +124,12 @@ namespace Steamwar.Renderer
             return true;
         }
 
+        /// <summary>
+        /// Updates the selection state of an unit.
+        /// 
+        /// Creates the move nodes for the unit.
+        /// </summary>
+        /// <param name="unit"></param>
         public void UpdateSelection(UnitBehaviour unit)
         {
             Vector2 mousePosition = Input.mousePosition;
@@ -124,7 +143,7 @@ namespace Steamwar.Renderer
                 Path path = finder.FindPath();
                 lastMouse = cellPosition;
                 lastPath = path;
-                
+                // TODO: Find a better way to handle the path nodes (Don't remove / reconstruct them every time) 
                 if (selectionBoxes != null)
                 {
                      foreach (Transform child in selectionBoxes.transform)
@@ -147,19 +166,10 @@ namespace Steamwar.Renderer
             }
         }
 
-        public bool CanMoveTo(Vector2 from , Vector2 to)
-        {
-            RaycastHit2D groundHit = Physics2D.Linecast(from, to, groundLayer);
-            if(groundHit.collider != null)
-            {
-                return false;
-            }
-            selectedCollider.enabled = false;
-            RaycastHit2D unitHit = Physics2D.Linecast(from, to, unitLayer);
-            selectedCollider.enabled = true;
-            return unitHit.collider == null;
-        }
-
+        /// <summary>
+        /// Called if the mouse button gets pressed down.
+        /// </summary>
+        /// <returns>True if no other handlers should be called after this one.</returns>
         public bool MouseDown()
         {
             Vector2 mousePosition = Input.mousePosition;
@@ -183,6 +193,10 @@ namespace Steamwar.Renderer
             return false;
         }
 
+        /// <summary>
+        /// Called if the mouse button gets released.
+        /// </summary>
+        /// <returns>True if no other handlers should be called after this one.</returns>
         public bool MouseUp()
         {
             Grid world = SessionManager.instance.world;
@@ -196,6 +210,12 @@ namespace Steamwar.Renderer
             return false;
         }
 
+        /// <summary>
+        /// Handles mouse moves. Checks for changes and updates the path nodes if the tile position of the mouse changed.
+        /// </summary>
+        /// <param name="mousePosition">Current position</param>
+        /// <param name="lastMouse">Last position</param>
+        /// <returns>True if no other handlers should be called after this one.</returns>
         public bool MouseMove(Vector2 mousePosition, Vector2 lastMouse)
         {
             if (selectedUnit != null && selectedUnit.selected && !selectedUnit.moves)
