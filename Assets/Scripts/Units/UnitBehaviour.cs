@@ -40,7 +40,7 @@ namespace Steamwar.Units {
             data = new UnitData
             {
                 type = type,
-                health = type.health,
+                health = type.Health,
                 faction = SessionManager.session.playerFaction
             };
             needInit = true;

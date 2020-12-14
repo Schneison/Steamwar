@@ -47,7 +47,7 @@ namespace Steamwar.Units
                 float sqrDistance = (((Vector2)transform.position) - point.position).sqrMagnitude;
                 while (sqrDistance > float.Epsilon && ((Vector2)transform.position) != point.position)
                 {
-                    transform.position = Vector2.MoveTowards(transform.position, point.position,  1F / unit.data.type.speed * Time.deltaTime);
+                    transform.position = Vector2.MoveTowards(transform.position, point.position,  1F / unit.data.type.Speed * Time.deltaTime);
                     sqrDistance = (((Vector2)transform.position) - point.position).sqrMagnitude;
                     yield return new WaitForEndOfFrame();
                 }

@@ -25,6 +25,10 @@ namespace Steamwar.Sectors
             GetHashCode();
         }
 
+        /// <summary>
+        /// Generates a potential position for a cloud to spawn.
+        /// </summary>
+        /// <returns> A potential position for a cloud</returns>
         public Vector2 RandomCloudPosition()
         {
             return new Vector2(bounds.x, bounds.y)
