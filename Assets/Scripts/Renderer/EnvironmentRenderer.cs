@@ -60,7 +60,8 @@ namespace Steamwar.Renderer
             if (rightSky.bounds.min.x > sector.bounds.max.x)
             {
                 rightSky.transform.position = new Vector2(lastSky.bounds.min.x - rightSky.bounds.size.x/2, rightSky.transform.position.y);
-                skies.Enqueue(lastSky = skies.Dequeue());
+                lastSky = skies.Dequeue();
+                skies.Enqueue(lastSky);
             }
             timer++;
         }

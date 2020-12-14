@@ -27,7 +27,10 @@ namespace Steamwar.Sectors
 
         public Vector2 RandomCloudPosition()
         {
-            return new Vector2(bounds.x, bounds.y) + Vector2.up * (UnityEngine.Random.value * sector.size.y);
+            return new Vector2(bounds.x, bounds.y)
+                + Vector2.up * (UnityEngine.Random.value * sector.size.y) // Random y offset
+                + Vector2.left * 8 // move the cloud out of the view
+                ;
         }
     }
 }
