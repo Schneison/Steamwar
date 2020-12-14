@@ -3,7 +3,6 @@ using UnityEditor;
 using Steamwar.Utils;
 using Steamwar.Resources;
 using Steamwar.Objects;
-using System;
 
 namespace Steamwar.Units {
 

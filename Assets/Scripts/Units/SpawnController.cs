@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System;
 using Steamwar.Renderer;
@@ -39,7 +40,8 @@ namespace Steamwar.Units
 
         public bool MouseDown()
         {
-            if (selectedUnit == null) {
+
+            if (selectedUnit == null || EventSystem.current.IsPointerOverGameObject()) {
                 return false;
             }
             Camera camera = SessionManager.instance.mainCamera;

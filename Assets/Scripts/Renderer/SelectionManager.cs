@@ -61,7 +61,7 @@ namespace Steamwar.Renderer
             }
             foreach (PathNode point  in lastPath.nodes)
             {
-                Gizmos.color = lastPath.Contains(point) ? lastPath.points[0] == point ? Color.yellow : lastPath.destination == point ? Color.magenta : Color.green :  gradient.Evaluate((float)point.priority / (float)(maxF));
+                Gizmos.color = lastPath.Contains(point) ? lastPath.nodes[0] == point ? Color.yellow : lastPath.destination == point ? Color.magenta : Color.green :  gradient.Evaluate((float)point.priority / (float)(maxF));
                 Gizmos.DrawCube(point.position, new Vector2(0.5F, 0.5F));
                 if (point.previous != null)
                 {
@@ -72,6 +72,7 @@ namespace Steamwar.Renderer
 
         public void Select(UnitBehaviour unit)
         {
+            Deselect(false);
             unitSlectionBox = Instantiate(unitSelectionPrefab, unit.gameObject.transform);
             unitSlectionBox.transform.position -= new Vector3(0.5F, 0.5F, 0);
             selectedUnit = unit;
@@ -173,7 +174,7 @@ namespace Steamwar.Renderer
             {
                 GameObject unitObj = hit.collider.gameObject;
                 UnitBehaviour unit = unitObj.GetComponent<UnitBehaviour>();
-                if(unit != null && unit.data.faction == SessionManager.session.playerFaction)
+                if(unit != null && unit.data.faction == SessionManager.session.playerFaction && unit != selectedUnit)
                 {
                     Select(unit);
                     return true;
