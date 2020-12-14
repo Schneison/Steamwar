@@ -12,9 +12,9 @@ namespace Steamwar.Units
     {
         public NodeType type;
         public PathNode previous;
-        public Vector2 position;
+        public readonly Vector2 position;
         public int index = -1;
-        public int hash;
+        public readonly int hash;
         public bool visited;
         public int distanceToDestination;//h
         public float distanceToOrigin;

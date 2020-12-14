@@ -24,8 +24,8 @@ namespace Steamwar.Units
         public readonly Vector2 origin;
         public readonly int maxDistance;
 
-        private Dictionary<int, PathNode> points = new Dictionary<int, PathNode>();
-        private PathNode[] options = new PathNode[4];
+        private readonly Dictionary<int, PathNode> points = new Dictionary<int, PathNode>();
+        private readonly PathNode[] options = new PathNode[4];
 
         public PathFinder(Vector2 destination, Vector2 origin, GameObject unit) : this(SessionManager.instance.world, SessionManager.instance.mainCamera, destination, origin, unit, 32)
         { }
@@ -64,7 +64,7 @@ namespace Steamwar.Units
             int count = 0;
             while (!heap.Empty())
             {
-                if (count > 200)
+                if (count > 300)
                 {
                     break;
                 }
@@ -85,7 +85,7 @@ namespace Steamwar.Units
                     option.distanceToOrigin = current.distanceToOrigin + 1;
                     option.malusFromDistance = current.malusFromDistance + (int) type;
                     int priority = option.malusFromDistance + option.distanceToDestination;
-                    if(option.distanceToOrigin > maxDistance || option.Assigned() && option.priority <= priority)
+                    if(type == NodeType.BLOCKED || option.distanceToOrigin > maxDistance || option.Assigned() && option.priority <= priority)
                     {
                         continue;
                     }
@@ -142,6 +142,7 @@ namespace Steamwar.Units
             TileBase tile = SessionManager.instance.ground.GetTile(world.WorldToCell(to));
 
             RaycastHit2D groundHit = Physics2D.Linecast(from, to, UnitController.instance.groundLayer);
+            RaycastHit2D hit = Physics2D.Linecast(to, from, UnitController.instance.groundLayer);
             if (groundHit.collider != null)
             {
                 return NodeType.BLOCKED;
