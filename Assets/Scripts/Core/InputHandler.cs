@@ -92,8 +92,14 @@ namespace Steamwar {
                     {
                         if(escMenu != null)
                         {
-                            escMenu.gameObject.SetActive(true);
-                            escMenu.enabled = true;
+                            if (escMenu.gameObject.activeSelf)
+                            {
+                                escMenu.gameObject.SetActive(false);
+                            }
+                            else
+                            {
+                                escMenu.gameObject.SetActive(true);
+                            }
                         }
                     }
                 }

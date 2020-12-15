@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27e996f7516c7784bbe218be7c24e5c3, type: 3}
-  m_Name: workshop
+  m_Name: house_small
   m_EditorClassIdentifier: 
-  id: workshop
-  displayName: Workshop
-  spriteBlue: {fileID: -5635123962534760068, guid: 967687b2f3332ea4b8dd89327e8af729,
+  id: house_small
+  displayName: Small House
+  spriteBlue: {fileID: -5146551468114596993, guid: 967687b2f3332ea4b8dd89327e8af729,
     type: 3}
-  spriteRed: {fileID: -206605710745942502, guid: 967687b2f3332ea4b8dd89327e8af729,
+  spriteRed: {fileID: -5222731076989381716, guid: 967687b2f3332ea4b8dd89327e8af729,
     type: 3}
-  sprite: {fileID: 7114983493517918410, guid: 967687b2f3332ea4b8dd89327e8af729, type: 3}
+  sprite: {fileID: 8008666036969442670, guid: 967687b2f3332ea4b8dd89327e8af729, type: 3}
+  health: 150

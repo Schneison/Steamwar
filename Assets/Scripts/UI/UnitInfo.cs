@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using Steamwar.Units;
 using Steamwar.Interaction;
+using Steamwar.Objects;
+using Steamwar.Buildings;
 
 namespace Steamwar.UI
 {
@@ -21,18 +23,29 @@ namespace Steamwar.UI
 
         public void OnSelection(SelectionData data, SelectionData oldData)
         {
-            UnitBehaviour unit = data.Unit;
+            ObjectBehaviour currentObj = data.Obj;
             gameObject.SetActive(true);
-            UnitData unitData = unit.data;
-            UnitType type = unitData.type;
+            ObjectData currentData = currentObj.Data;
+            ObjectType type = currentData.Type;
             unitName.text = type.displayName;
             unitIcon.sprite = type.spriteBlue;
 
-            healthText.text = "Helath: " + unitData.health;
-            movmentText.text = "Movment: " + unitData.health;
+            switch (currentObj.Kind)
+            {
+                case ObjectKind.BUILDING:
+                    BuildingData buildingData = currentData as BuildingData;
+                    healthText.text = "Helath: " + buildingData.health;
+                    movmentText.text = "";
+                    break;
+                case ObjectKind.UNIT:
+                    UnitData unitData = currentData as UnitData;
+                    healthText.text = "Helath: " + unitData.health;
+                    movmentText.text = "Movment: " + unitData.movment;
+                    break;
+            }
 
-            factionName.text = unitData.faction.name;
-            factionColor.color = ConvertIntToColor(unitData.faction.color);
+            factionName.text = currentData.faction.name;
+            factionColor.color = ConvertIntToColor(currentData.faction.color);
             this.selection = data;
         }
 

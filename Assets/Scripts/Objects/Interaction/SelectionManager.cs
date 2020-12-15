@@ -68,7 +68,7 @@ namespace Steamwar.Interaction
         /// <returns>True if a unit was deselected, false if no unit was selected before.</returns>
         public bool Deselect()
         {
-            if(selected.IsEmpty || !selected.Unit.Deselect())
+            if(selected.IsEmpty || !selected.Obj.Deselect())
             {
                 return false;
             }

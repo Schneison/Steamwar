@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEditor;
 using System.IO;
+using System.Reflection;
 
 namespace Steamwar.Utils
 {
@@ -18,10 +19,11 @@ namespace Steamwar.Utils
         {
             T asset = ScriptableObject.CreateInstance<T>();
 
+            
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             if (path == "")
             {
-                path = "Assets";
+                path = GetOpenFolder();
             }
             else if (Path.GetExtension(path) != "")
             {
@@ -36,6 +38,14 @@ namespace Steamwar.Utils
             AssetDatabase.Refresh();
             EditorUtility.FocusProjectWindow();
             Selection.activeObject = asset;
+        }
+
+        public static string GetOpenFolder()
+        {
+            Type projectWindowUtilType = typeof(ProjectWindowUtil);
+            MethodInfo getActiveFolderPath = projectWindowUtilType.GetMethod("GetActiveFolderPath", BindingFlags.Static | BindingFlags.NonPublic);
+            object obj = getActiveFolderPath.Invoke(null, new object[0]);
+            return obj.ToString();
         }
 
         public static T[] GetAllInstances<T>() where T : ScriptableObject

@@ -22,7 +22,7 @@ namespace Steamwar.Units {
             get {
                 if (speed == 0)
                 {
-                    Debug.Log($"Found 'speed' value of the  unit type with the name '{name}' with the value zero. This is bug, please report!");
+                    Debug.Log($"Found 'speed' value of the unit type with the name '{name}' with the value zero. This is bug, please report!");
                     speed = FALLBACK_SPEED;
                 }
                 return speed;
@@ -35,7 +35,7 @@ namespace Steamwar.Units {
             {
                 if (health == 0)
                 {
-                    Debug.Log($"Found 'health' value of the  unit type with the name '{name}' with the value zero. This is bug, please report!");
+                    Debug.Log($"Found 'health' value of the unit type with the name '{name}' with the value zero. This is bug, please report!");
                     health = FALLBACK_HEALTH;
                 }
                 return health;
