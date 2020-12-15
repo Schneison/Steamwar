@@ -5,8 +5,9 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 using Steamwar.Utils;
+using Steamwar.Units;
 
-namespace Steamwar.Units
+namespace Steamwar.Move
 {
     public class MovmentManager
     {
@@ -17,7 +18,7 @@ namespace Steamwar.Units
 
         public static void Move(UnitBehaviour unit, IEnumerable<PathNode> path)
         {
-            unit.moves = true;
+            unit.Moves = true;
             unit.StartCoroutine(MoveUnit(unit, path));
         }
 
@@ -52,7 +53,7 @@ namespace Steamwar.Units
                     yield return new WaitForEndOfFrame();
                 }
             }
-            unit.moves = false;
+            unit.Moves = false;
             unit.UpdateAnimation();
         }
 

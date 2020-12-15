@@ -50,11 +50,11 @@ namespace Steamwar
             SaveManager.Load(out session);
             //GUI: Create Faction
             string factionName = "Blue";// GUI
-            int color = 0xFFFFFF;// GUI
+            uint color = 0xFF212F3D;// GUI
             Faction faction = new Faction(factionName, color);
             session.playerFaction = faction;
             session.activeFaction = faction;
-            session.factions = new Faction[] { faction, new Faction("Team", 0x4D79FF) };
+            session.factions = new Faction[] { faction, new Faction("Team", 0xFFFF4D79) };
             session.roundFactionsSequence = session.factions;
             session.activeSector = ScriptableObjectUtility.GetAllInstances<Sector>()[0].ToData();
         }

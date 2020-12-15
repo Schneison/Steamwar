@@ -11,9 +11,9 @@ namespace Steamwar.Buildings
 {
     public class BuildingData : ObjectData<BuildingType, BuildingDataSerializable>
     {
-        public override ObjectKind GetKind()
+        public override ObjectKind Kind
         {
-            return ObjectKind.BUILDING;
+            get=>ObjectKind.BUILDING;
         }
 
         public virtual BuildingData Copy()

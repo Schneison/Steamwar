@@ -98,7 +98,7 @@ namespace Steamwar.Board
             }
             foreach (Transform buildingObj in buildingContainer)
             {
-                Building building = buildingObj.GetComponent<Building>();
+                BuildingBehaviour building = buildingObj.GetComponent<BuildingBehaviour>();
                 if (building != null)
                 {
                    buildings.Add(building.data.Copy());

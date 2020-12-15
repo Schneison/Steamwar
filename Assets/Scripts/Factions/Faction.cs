@@ -14,7 +14,7 @@ namespace Steamwar.Factions
     public class Faction
     {
         public string name;
-        public int color;
+        public uint color;
         public ResourceList resources;
         public int index;
         public int roundIndex;
@@ -24,11 +24,16 @@ namespace Steamwar.Factions
         /// </summary>
         /// <param name="name">Name of the faction that will be displayed in the game.</param>
         /// <param name="color">The color of this faction.</param>
-        public Faction(string name, int color)
+        public Faction(string name, uint color)
         {
             this.name = name;
             this.color = color;
             this.resources = new ResourceList();
+        }
+
+        public bool IsPlayer
+        {
+            get => index == SessionManager.session.playerFaction.index;
         }
     }
 }

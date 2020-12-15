@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 using Steamwar.Units;
+using Steamwar.Interaction;
 
 namespace Steamwar.UI
 {
-    public class UnitInfo : MonoBehaviour
+    public class UnitInfo : MonoBehaviour, ISelectionListener
     {
         //Unit
         public Text unitName;
@@ -17,43 +17,56 @@ namespace Steamwar.UI
         public Text factionName;
         public Image factionColor;
 
-        private UnitBehaviour unit;
+        private SelectionData? selection;
 
-        public void Select(UnitBehaviour unit)
+        public void OnSelection(SelectionData data, SelectionData oldData)
         {
+            UnitBehaviour unit = data.Unit;
             gameObject.SetActive(true);
-            UnitData data = unit.data;
-            UnitType type = data.type;
+            UnitData unitData = unit.data;
+            UnitType type = unitData.type;
             unitName.text = type.displayName;
             unitIcon.sprite = type.spriteBlue;
 
-            healthText.text = "Helath: " + data.health;
-            movmentText.text = "Movment: " + data.health;
+            healthText.text = "Helath: " + unitData.health;
+            movmentText.text = "Movment: " + unitData.health;
 
-            factionName.text = data.faction.name;
-            factionColor.color = ConvertAndroidColor(data.faction.color);
-            this.unit = unit;
+            factionName.text = unitData.faction.name;
+            factionColor.color = ConvertIntToColor(unitData.faction.color);
+            this.selection = data;
         }
 
-        public static Color32 ConvertAndroidColor(int aCol)
+        public static Color32 ConvertIntToColor(uint colorCode)
         {
             Color32 c = new Color32
             {
-                b = (byte)((aCol) & 0xFF),
-                g = (byte)((aCol >> 8) & 0xFF),
-                r = (byte)((aCol >> 16) & 0xFF),
-                a = (byte)((aCol >> 24) & 0xFF)
+                b = (byte)((colorCode) & 0xFF),
+                g = (byte)((colorCode >> 8) & 0xFF),
+                r = (byte)((colorCode >> 16) & 0xFF),
+                a = (byte)((colorCode >> 24) & 0xFF)
             };
             return c;
         }
 
-        public void Deselect(UnitBehaviour unit)
+        public void OnDeselection(SelectionData oldData)
         {
             if(gameObject != null)
             {
                 gameObject.SetActive(false);
             }
-            this.unit = null;
+            this.selection = null;
+        }
+
+        public bool OnInteraction(SelectionData data, InteractionContext context, out bool deselect)
+        {
+            deselect = false;
+            // No interaction needed
+            return false;
+        }
+
+        public void OnSelectionMouseMove(SelectionData data)
+        {
+            // No mouse move action needed
         }
     }
 }

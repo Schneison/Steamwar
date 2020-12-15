@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Steamwar.Interaction;
 
 namespace Steamwar.Renderer
 {

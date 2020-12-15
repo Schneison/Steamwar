@@ -22,15 +22,15 @@ namespace Steamwar {
 
         void Start()
         {
-            List<IMouseListener> listeners = new List<IMouseListener>
+            List<IMouseListener> mouseListeners = new List<IMouseListener>
             {
                 UnitController.instance.spawn
             };
             foreach (GameObject obj in listenersObjects)
             {
-                listeners.AddRange(obj.GetComponents<IMouseListener>());
+                mouseListeners.AddRange(obj.GetComponents<IMouseListener>());
             }
-            this.listeners = listeners.ToArray();
+            this.listeners = mouseListeners.ToArray();
         }
 
         void UpdateCameraPosition(Camera camera, float xAxisValue, float yAxisValue)
@@ -88,7 +88,7 @@ namespace Steamwar {
             {
                 if(SessionRenderer.instance.selection != null)
                 {
-                    if (!SessionRenderer.instance.selection.Deselect(false))
+                    if (!SessionRenderer.instance.selection.Deselect())
                     {
                         if(escMenu != null)
                         {

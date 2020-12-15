@@ -5,6 +5,7 @@ using System;
 using Steamwar.Utils;
 using Steamwar.Objects;
 using Steamwar.Core;
+using Steamwar.Move;
 
 namespace Steamwar.Units {
 
@@ -14,8 +15,6 @@ namespace Steamwar.Units {
         private SpriteRenderer spriteRenderer;
 
         internal bool needInit = false;
-        internal bool selected;
-        internal bool moves;
         internal Direction facingDirection;
 
         public override void Start()
@@ -24,6 +23,12 @@ namespace Steamwar.Units {
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
+
+        public override bool CanMove { get => IsMovable && !Moves; }
+
+        public override bool Moves { get; set; }
+
+        public override bool IsMovable { get => true; }
 
         public virtual void LateUpdate()
         {
@@ -46,9 +51,9 @@ namespace Steamwar.Units {
             needInit = true;
         }
 
-        public override ObjectKind GetKind()
+        public override ObjectKind Kind
         {
-            return ObjectKind.UNIT;
+            get=> ObjectKind.UNIT;
         }
 
         /* Movment */
@@ -89,7 +94,7 @@ namespace Steamwar.Units {
             {
                 return;
             }
-            animator.SetBool("moving", moves && (facingDirection == Direction.LEFT || facingDirection == Direction.RIGHT));
+            animator.SetBool("moving", Moves && (facingDirection == Direction.LEFT || facingDirection == Direction.RIGHT));
             animator.SetBool("moving_up", facingDirection == Direction.UP);
             animator.SetBool("moving_down", facingDirection == Direction.DOWN);
             spriteRenderer.flipX = facingDirection == Direction.RIGHT;

@@ -12,10 +12,12 @@ namespace Steamwar.Units
         public float health;
         public float movment;
 
-        public override ObjectKind GetKind()
-        {
-            return ObjectKind.UNIT;
-        }
+        /// <summary>
+        /// If the unit can be moved only based on its state independently from its faction.
+        /// </summary>
+        public bool CanMove { get => movment > 0; }
+
+        public override ObjectKind Kind { get => ObjectKind.UNIT; }
 
         public override void WriteData(UnitDataSerializable serializable)
         {

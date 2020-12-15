@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Steamwar.Buildings
 {
-    public class Workshop : Building
+    public class Workshop : BuildingBehaviour
     {
 
     }

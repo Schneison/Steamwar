@@ -11,18 +11,14 @@ using Steamwar.Utils;
 
 namespace Steamwar.Objects
 {
-    public abstract class ObjectData<T, S> where T : ObjectType where S : ObjectDataSerializable, new()
+    public abstract class ObjectData<T, S> : ObjectData where T : ObjectType where S : ObjectDataSerializable, new()
     {
-        private Vector3 position;
-        public Faction faction;
         public T type;
-        public int hash;
 
-        public Vector3 Position { get => position; set
-            {
-                position = value;
-                hash = GetHash(value);
-            }
+        public override ObjectType Type
+        {
+            get => type;
+            set => type = value as T;
         }
 
         public virtual void WriteData(S serializable)
@@ -46,10 +42,27 @@ namespace Steamwar.Objects
             faction = serializable.Faction;
         }
 
+    }
+
+    public abstract class ObjectData {
+        internal Vector3 position;
+        public Faction faction;
+        public int hash;
+
+        public Vector3 Position
+        {
+            get => position; 
+
+            set {
+                position = value;
+                hash = GetHash(value);
+            }
+        }
+
 
         public override bool Equals(object obj)
         {
-            return obj is ObjectData<T, S> data && position.Equals(data.position);
+            return obj is ObjectData data && position.Equals(data.position);
         }
 
         public override int GetHashCode()
@@ -57,7 +70,22 @@ namespace Steamwar.Objects
             return hash;
         }
 
-        public abstract ObjectKind GetKind();
+        /// <summary>
+        /// The object type of this object.
+        /// </summary>
+        public abstract ObjectType Type
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// The kind of the object this data represents.
+        /// </summary>
+        public abstract ObjectKind Kind
+        {
+            get;
+        }
 
         public static int GetHash(Vector2 position)
         {
