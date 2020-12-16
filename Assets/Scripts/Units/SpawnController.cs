@@ -24,7 +24,7 @@ namespace Steamwar.Units
                 typeof(UnitBehaviour),
                 typeof(Rigidbody2D)
             });
-            obj.transform.parent = UnitController.instance.transform;
+            obj.transform.parent = UnitController.Instance.transform;
             SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
             PolygonCollider2D collider = obj.GetComponent<PolygonCollider2D>();
             Rigidbody2D rigidbody = obj.GetComponent<Rigidbody2D>();
@@ -44,13 +44,13 @@ namespace Steamwar.Units
             if (selectedUnit == null || EventSystem.current.IsPointerOverGameObject()) {
                 return false;
             }
-            Camera camera = SessionManager.instance.mainCamera;
-            Grid world = SessionManager.instance.world;
+            Camera camera = SessionManager.Instance.mainCamera;
+            Grid world = SessionManager.Instance.world;
             Vector2 mousePosition = Input.mousePosition;
             Vector2 worldPos = camera.ScreenToWorldPoint(mousePosition);
             Vector3Int cellPos = world.WorldToCell(worldPos);
             Vector2 pos = (Vector2)world.CellToWorld(cellPos) + new Vector2(0.5F, 0.5F);
-            RaycastHit2D ray = Physics2D.BoxCast(pos, new Vector2(0.5F, 0.5F), 0.0F, Vector2.zero, SessionRenderer.instance.selection.groundLayer);
+            RaycastHit2D ray = Physics2D.BoxCast(pos, new Vector2(0.5F, 0.5F), 0.0F, Vector2.zero, SessionRenderer.Instance.selection.groundLayer);
             if(ray.collider != null)
             {
                 return false;

@@ -10,7 +10,7 @@ using System;
 
 namespace Steamwar
 {
-    public class SessionManager : MonoBehaviour
+    public class SessionManager : Singleton<SessionManager>
     {
         public Camera mainCamera;
         public Grid world;
@@ -21,20 +21,10 @@ namespace Steamwar
         internal SectorManager sectors;
   
         public static Session session;
-        public static SessionManager instance;
         public static Registry registry;
 
         void Awake()
         {
-            if (instance == null)
-            {
-                instance = this;
-            }
-            else if(instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
             registry = new Registry();
             rounds = GetComponent<RoundManager>();
             sectors = GetComponent<SectorManager>();

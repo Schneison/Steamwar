@@ -93,8 +93,8 @@ namespace Steamwar.Interaction
         public bool MouseDown()
         {
             Vector2 mousePosition = Input.mousePosition;
-            // Camera camera = SessionManager.instance.mainCamera;
-            // Grid world = SessionManager.instance.world;
+            // Camera camera = SessionManager.Instance.mainCamera;
+            // Grid world = SessionManager.Instance.world;
             // Vector2 worldPos = camera.ScreenToWorldPoint(mousePosition);
             // Vector3Int cellPosition = world.WorldToCell(worldPos);
             Ray ray = Camera.main.ScreenPointToRay(mousePosition);
@@ -119,8 +119,8 @@ namespace Steamwar.Interaction
         /// <returns>True if no other handlers should be called after this one.</returns>
         public bool MouseUp()
         {
-            Grid world = SessionManager.instance.world;
-            Camera camera = SessionManager.instance.mainCamera;
+            Grid world = SessionManager.Instance.world;
+            Camera camera = SessionManager.Instance.mainCamera;
             ObjectBehaviour currentObj = selected.Obj;
             if (currentObj != null &&
                 world.LocalToCell(currentObj.transform.position) != world.LocalToCell(camera.ScreenToWorldPoint(Input.mousePosition)))

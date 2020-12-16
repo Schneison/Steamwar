@@ -80,7 +80,7 @@ namespace Steamwar
                 game = new Session();
 
             }
-            SessionManager.instance.Setup(game);
+            SessionManager.Instance.Setup(game);
         }
 
         public static void Load(out Session session)
@@ -114,7 +114,7 @@ namespace Steamwar
                 session = new Session();
 
             }
-            SessionManager.instance.rounds.OnLoad(session);
+            SessionManager.Instance.rounds.OnLoad(session);
         }
 
         public static string[] GetSavePaths()

@@ -28,13 +28,13 @@ namespace Steamwar.UI.Menus
             SaveManager.Load(games[selectedGame].path);
             if(SceneManager.GetActiveScene().buildIndex == 0)
             {
-                MainMenu.instance.mainButtons.gameObject.SetActive(true);
-                MainMenu.instance.loadMenu.gameObject.SetActive(false);
+                MainMenu.Instance.mainButtons.gameObject.SetActive(true);
+                MainMenu.Instance.loadMenu.gameObject.SetActive(false);
             }
             else if(SceneManager.GetActiveScene().buildIndex == 1)
             {
-                EscMenu.instance.mainButtons.gameObject.SetActive(true);
-                EscMenu.instance.loadMenu.gameObject.SetActive(false);
+                EscMenu.Instance.mainButtons.gameObject.SetActive(true);
+                EscMenu.Instance.loadMenu.gameObject.SetActive(false);
             }
         }
 

@@ -1,34 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Steamwar.Objects;
+using Steamwar.Utils;
 
 namespace Steamwar.Core
 {
-    public class PropManager : MonoBehaviour
+    public class PropManager : Singleton<PropManager>
     {
         public Stack<ObjectBehaviour> props = new Stack<ObjectBehaviour>();
         private bool _initialized = false;
-        public static PropManager instance;
-
-        public void Awake()
-        {
-            if (instance == null)
-            {
-                instance = this;
-            }
-            else if (instance != this)
-            {
-                DestroyImmediate(gameObject);
-                return;
-            }
-            DontDestroyOnLoad(gameObject);
-        }
 
         public static void CheckForProp(ObjectBehaviour behaviour)
         {
-            if(!instance._initialized)
+            if(!Instance._initialized)
             {
-                instance?.props?.Push(behaviour);
+                Instance?.props?.Push(behaviour);
             }
         }
 

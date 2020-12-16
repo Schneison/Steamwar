@@ -16,8 +16,8 @@ namespace Steamwar.UI.Menus
         public void Save()
         {
             SaveManager.Save(input.text);
-            EscMenu.instance.mainButtons.gameObject.SetActive(true);
-            EscMenu.instance.saveMenu.gameObject.SetActive(false);
+            EscMenu.Instance.mainButtons.gameObject.SetActive(true);
+            EscMenu.Instance.saveMenu.gameObject.SetActive(false);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Steamwar.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,27 +8,14 @@ using UnityEngine;
 
 namespace Steamwar.Buildings
 {
-    public class BuildingManager : MonoBehaviour
+    public class BuildingManager : Singleton<BuildingManager>
     {
-        public static BuildingManager instance;
-
-        public void Awake()
-        {
-            if(instance == null)
-            {
-                instance = this;
-            }
-            else if(instance != this)
-            {
-                Destroy(this);
-            }
-        }
 
         public static void CreateBuildingFromData(BuildingData data)
         {
             GameObject obj = new GameObject(data.type.id, new Type[] {typeof(SpriteRenderer), typeof(Rigidbody2D)});
             obj.transform.position = data.Position;
-            obj.transform.parent = instance.transform;
+            obj.transform.parent = Instance.transform;
             Rigidbody2D rigidbody = obj.GetComponent<Rigidbody2D>();
             rigidbody.bodyType = RigidbodyType2D.Kinematic;
             SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();

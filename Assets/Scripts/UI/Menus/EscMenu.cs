@@ -7,28 +7,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Steamwar.Sectors;
+using Steamwar.Utils;
 
 namespace Steamwar.UI.Menus
 {
-    public class EscMenu : MonoBehaviour
+    public class EscMenu : Singleton<EscMenu>
     {
-        public static EscMenu instance;
         public GameObject mainButtons;
         public SaveMenu saveMenu;
         public LoadMenu loadMenu;
         public Button loadButton;
-
-        public void Awake()
-        {
-            if(instance == null)
-            {
-                instance = this;
-            }else if(instance != this)
-            {
-                Destroy(this);
-                return;
-            }
-        }
 
         public void Start()
         {
@@ -54,7 +42,7 @@ namespace Steamwar.UI.Menus
                     loadMenu.gameObject.SetActive(true);
                     break;
                 case ButtonType.RESTART:
-                    SessionManager.instance.sectors.Restart();
+                    SessionManager.Instance.sectors.Restart();
                     break;
                 case ButtonType.EXIT_MAIN:
                     SceneManager.LoadScene(0);

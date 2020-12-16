@@ -28,9 +28,9 @@ namespace Steamwar.UI.Menus
 
         public void StartSector()
         {
-            SessionManager.instance.sectors.StartSector(sectors[selectedSector]);
-            MainMenu.instance.mainButtons.gameObject.SetActive(true);
-            MainMenu.instance.sectorMenu.gameObject.SetActive(false);
+            SessionManager.Instance.sectors.StartSector(sectors[selectedSector]);
+            MainMenu.Instance.mainButtons.gameObject.SetActive(true);
+            MainMenu.Instance.sectorMenu.gameObject.SetActive(false);
         }
 
         public void Next()

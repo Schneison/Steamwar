@@ -112,8 +112,8 @@ namespace Steamwar.Move
         {
             ObjectBehaviour currentObj = data.Obj;
             Vector2 mousePosition = Input.mousePosition;
-            Camera camera = SessionManager.instance.mainCamera;
-            Grid world = SessionManager.instance.world;
+            Camera camera = SessionManager.Instance.mainCamera;
+            Grid world = SessionManager.Instance.world;
             Vector2 worldPos = camera.ScreenToWorldPoint(mousePosition);
             Vector3Int cellPosition = world.WorldToCell(worldPos);
             if (lastMouseCell == null || !lastMouseCell.Equals(cellPosition))

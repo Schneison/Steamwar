@@ -100,7 +100,7 @@ namespace Steamwar.UI {
         public void OnButtonSelection(ObjectButton button)
         {
             selectedButton = button;
-            UnitController.instance.spawn.selectedUnit = button.Type as UnitType;
+            UnitController.Instance.spawn.selectedUnit = button.Type as UnitType;
         }
 
     }

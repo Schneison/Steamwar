@@ -27,7 +27,7 @@ namespace Steamwar.Units
         private readonly Dictionary<int, PathNode> points = new Dictionary<int, PathNode>();
         private readonly PathNode[] options = new PathNode[4];
 
-        public PathFinder(Vector2 destination, Vector2 origin, GameObject unit) : this(SessionManager.instance.world, SessionManager.instance.mainCamera, destination, origin, unit, 32)
+        public PathFinder(Vector2 destination, Vector2 origin, GameObject unit) : this(SessionManager.Instance.world, SessionManager.Instance.mainCamera, destination, origin, unit, 32)
         { }
 
         public PathFinder(Grid world, Camera camera, Vector2 destination, Vector2 origin, GameObject unit, int maxDistance)
@@ -139,16 +139,16 @@ namespace Steamwar.Units
 
         public NodeType GetType(Vector2 from, Vector2 to)
         {
-            TileBase tile = SessionManager.instance.ground.GetTile(world.WorldToCell(to));
+            TileBase tile = SessionManager.Instance.ground.GetTile(world.WorldToCell(to));
 
-            RaycastHit2D groundHit = Physics2D.Linecast(from, to, UnitController.instance.groundLayer);
-            RaycastHit2D hit = Physics2D.Linecast(to, from, UnitController.instance.groundLayer);
+            RaycastHit2D groundHit = Physics2D.Linecast(from, to, UnitController.Instance.groundLayer);
+            RaycastHit2D hit = Physics2D.Linecast(to, from, UnitController.Instance.groundLayer);
             if (groundHit.collider != null)
             {
                 return NodeType.BLOCKED;
             }
             collider.enabled = false;
-            RaycastHit2D unitHit = Physics2D.Linecast(from, to, UnitController.instance.unitLayer);
+            RaycastHit2D unitHit = Physics2D.Linecast(from, to, UnitController.Instance.unitLayer);
             collider.enabled = true;
             return unitHit.collider == null ? NodeType.WALKABLE : NodeType.BLOCKED;
         }

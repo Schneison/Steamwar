@@ -6,10 +6,11 @@ using Steamwar.Units;
 using Steamwar.UI.Menus;
 using Steamwar.Sectors;
 using Steamwar.Renderer;
+using Steamwar.Utils;
 
 namespace Steamwar {
 
-    public class InputHandler : MonoBehaviour
+    public class InputHandler : Singleton<InputHandler>
     {
         public GameObject[] listenersObjects;
         public IMouseListener[] listeners;
@@ -24,7 +25,7 @@ namespace Steamwar {
         {
             List<IMouseListener> mouseListeners = new List<IMouseListener>
             {
-                UnitController.instance.spawn
+                UnitController.Instance.spawn
             };
             foreach (GameObject obj in listenersObjects)
             {
@@ -64,7 +65,7 @@ namespace Steamwar {
         void Update()
         {
             Vector2 mousePosition = Input.mousePosition;
-            Camera camera = SessionManager.instance.mainCamera;
+            Camera camera = SessionManager.Instance.mainCamera;
             float xAxisValue = Input.GetAxis("Horizontal");
             float yAxisValue = Input.GetAxis("Vertical");
             float scrollDelta= Input.GetAxis("Mouse ScrollWheel");
@@ -86,9 +87,9 @@ namespace Steamwar {
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if(SessionRenderer.instance.selection != null)
+                if(SessionRenderer.Instance.selection != null)
                 {
-                    if (!SessionRenderer.instance.selection.Deselect())
+                    if (!SessionRenderer.Instance.selection.Deselect())
                     {
                         if(escMenu != null)
                         {
