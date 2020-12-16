@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: a62f2c4005827c943be2ae739353c96e, type: 3}
   m_Name: tank_large
   m_EditorClassIdentifier: 
@@ -20,16 +19,10 @@ MonoBehaviour:
   spriteRed: {fileID: 3621750310021062352, guid: f1804e0f4a006b6408f4dbd0d4e32ccb,
     type: 3}
   sprite: {fileID: 0}
-  id: tank_large
-  spriteBlue: {fileID: -6523033603963679561, guid: f1804e0f4a006b6408f4dbd0d4e32ccb,
-    type: 3}
-  spriteRed: {fileID: 3621750310021062352, guid: f1804e0f4a006b6408f4dbd0d4e32ccb,
-    type: 3}
   animation: {fileID: 9100000, guid: bad92ab3c72c2694a83a0448cce4cb22, type: 2}
-  display_name: 
   cost:
     moneyAmount: 0
   damage: 6
-  health: 35
+  health: 6
   speed: 0.5
   movment: 3
