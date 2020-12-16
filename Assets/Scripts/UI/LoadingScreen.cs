@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Steamwar.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,8 @@ using UnityEngine.UI;
 
 namespace Steamwar.UI
 {
-    public class LoadingScreen : MonoBehaviour
+    public class LoadingScreen : Singleton<LoadingScreen>
     {
-        public static LoadingScreen instance;
         private const float MIN_TIME_TO_SHOW = 1f;
         private AsyncOperation currentLoadingOperation;
         private bool isLoading;
@@ -32,16 +32,6 @@ namespace Steamwar.UI
 
         private void Awake()
         {
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-                return;
-            }
             Configure();
             Hide();
         }

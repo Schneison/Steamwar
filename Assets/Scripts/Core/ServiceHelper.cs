@@ -16,7 +16,7 @@ namespace Steamwar
 
         public static bool Available(this IService service)
         {
-            return Available(service, GameManager.instance.state);
+            return Available(service, GameManager.Instance.state);
         }
     }
 }

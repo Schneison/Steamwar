@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Singleton
   layers:
   - Default
   - TransparentFX
@@ -61,6 +62,9 @@ TagManager:
     locked: 0
   - name: Units
     uniqueID: 3956561593
+    locked: 0
+  - name: Unit UI
+    uniqueID: 2033684533
     locked: 0
   - name: Clouds
     uniqueID: 2700745953
