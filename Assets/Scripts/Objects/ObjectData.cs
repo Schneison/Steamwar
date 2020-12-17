@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Steamwar.Factions;
 using Steamwar.Utils;
@@ -56,6 +50,18 @@ namespace Steamwar.Objects
             set {
                 position = value;
                 hash = GetHash(value);
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S3237:\"value\" parameters should be used", Justification = "<Pending>")]
+        public virtual int Health
+        {
+            get {
+                return -1;
+            }
+
+            set {
+                // Placholder for depending types like unit or building
             }
         }
 

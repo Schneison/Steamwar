@@ -19,4 +19,4 @@ MonoBehaviour:
   spriteRed: {fileID: -206605710745942502, guid: 967687b2f3332ea4b8dd89327e8af729,
     type: 3}
   sprite: {fileID: 7114983493517918410, guid: 967687b2f3332ea4b8dd89327e8af729, type: 3}
-  health: 300
+  health: 10
