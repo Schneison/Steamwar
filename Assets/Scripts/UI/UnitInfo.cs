@@ -34,12 +34,12 @@ namespace Steamwar.UI
             {
                 case ObjectKind.BUILDING:
                     BuildingData buildingData = currentData as BuildingData;
-                    healthText.text = "Helath: " + buildingData.health;
+                    healthText.text = "Helath: " + buildingData.Health;
                     movmentText.text = "";
                     break;
                 case ObjectKind.UNIT:
                     UnitData unitData = currentData as UnitData;
-                    healthText.text = "Helath: " + unitData.health;
+                    healthText.text = "Helath: " + unitData.Health;
                     movmentText.text = "Movment: " + unitData.movment;
                     break;
             }

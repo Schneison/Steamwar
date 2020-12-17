@@ -14,7 +14,7 @@ namespace Steamwar.Core
         {
             if(!Instance._initialized)
             {
-                Instance?.props?.Push(behaviour);
+                Instance.props?.Push(behaviour);
             }
         }
 

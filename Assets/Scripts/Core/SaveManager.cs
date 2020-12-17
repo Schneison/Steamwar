@@ -15,7 +15,7 @@ using Steamwar.Units;
 
 namespace Steamwar
 {
-    public class SaveManager
+    public static class SaveManager
     {
 
         public static readonly string SAVE_NAME = "default";

@@ -7,7 +7,7 @@ namespace Steamwar.Buildings
 {
     public class BuildingType : ObjectType
     {
-        public const uint FALLBACK_HEALTH = 250;
+        public const uint FALLBACK_HEALTH = 10;
 
         public float health;
 

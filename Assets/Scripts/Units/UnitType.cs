@@ -10,13 +10,14 @@ namespace Steamwar.Units {
     {
         public const uint FALLBACK_SPEED = 1;
         public const uint FALLBACK_HEALTH = 25;
+        public const uint FALLBACK_MOVMENT = 3;
 
         public RuntimeAnimatorController animation;
         public ResourceList cost;
-        public float damage;
-        public float health;
+        public uint damage;
+        public uint health;
         public float speed;
-        public int movment;
+        public uint movment;
 
         public float Speed {
             get {
@@ -29,7 +30,7 @@ namespace Steamwar.Units {
             }
         }
 
-        public float Health
+        public uint Health
         {
             get
             {
@@ -39,6 +40,19 @@ namespace Steamwar.Units {
                     health = FALLBACK_HEALTH;
                 }
                 return health;
+            }
+        }
+
+        public uint Movment
+        {
+            get
+            {
+                if (movment == 0)
+                {
+                    Debug.Log($"Found 'movment' value of the unit type with the name '{name}' with the value zero. This is bug, please report!");
+                    health = FALLBACK_MOVMENT;
+                }
+                return movment;
             }
         }
 

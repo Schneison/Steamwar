@@ -45,7 +45,7 @@ namespace Steamwar.Units {
             data = new UnitData
             {
                 type = type,
-                health = type.Health,
+                Health = type.Health,
                 faction = SessionManager.session.playerFaction
             };
             needInit = true;
@@ -80,7 +80,7 @@ namespace Steamwar.Units {
 
         public virtual float GetHealth()
         {
-            return data.health;
+            return data.Health;
         }
 
         public virtual float GetDamage(UnitBehaviour attackedUnit)

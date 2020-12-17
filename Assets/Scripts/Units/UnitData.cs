@@ -7,9 +7,8 @@ using Steamwar.Objects;
 
 namespace Steamwar.Units
 {
-    public class UnitData : ObjectData<UnitType, UnitDataSerializable>
+    public class UnitData : DestroyableObject<UnitType, UnitDataSerializable>
     {
-        public float health;
         public float movment;
 
         /// <summary>
@@ -22,14 +21,13 @@ namespace Steamwar.Units
         public override void WriteData(UnitDataSerializable serializable)
         {
             base.WriteData(serializable);
-            serializable.health = health;
             serializable.movment = movment;
         }
 
         public override void ReadData(UnitDataSerializable serializable)
         {
             base.ReadData(serializable);
-            health = serializable.health;
+            Health = serializable.health;
             movment = serializable.movment;
         }
 
@@ -42,9 +40,8 @@ namespace Steamwar.Units
     }
 
     [Serializable]
-    public class UnitDataSerializable : ObjectDataSerializable
+    public class UnitDataSerializable : DestroyableObjectSerializable
     {
-        public float health;
         public float movment;
     }
 }

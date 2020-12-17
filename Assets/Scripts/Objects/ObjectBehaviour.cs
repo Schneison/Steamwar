@@ -19,6 +19,7 @@ namespace Steamwar.Objects
 
         public virtual void Init(T type)
         {
+            
         }
 
         public void OnAfterDeserialize()
