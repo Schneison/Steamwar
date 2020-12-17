@@ -30,7 +30,7 @@ namespace Steamwar.Units {
             }
         }
 
-        public uint Health
+        public override uint Health
         {
             get
             {

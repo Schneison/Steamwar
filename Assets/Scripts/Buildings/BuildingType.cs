@@ -9,9 +9,9 @@ namespace Steamwar.Buildings
     {
         public const uint FALLBACK_HEALTH = 10;
 
-        public float health;
+        public uint health;
 
-        public float Health
+        public override uint Health
         {
             get
             {

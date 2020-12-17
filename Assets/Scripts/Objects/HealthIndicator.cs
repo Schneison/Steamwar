@@ -4,32 +4,50 @@ using System.Collections.Generic;
 
 namespace Steamwar.Objects
 {
-    [RequireComponent(typeof(Image), typeof(RectTransform))]
     public class HealthIndicator : MonoBehaviour
     {
+        public const uint MAX_BARS = 8;
+
         private ObjectBehaviour objBehaviour;
         public Color activeColor;
         public Color inactiveColor;
         public GameObject container;
-        private int maxHealth;
-        private int healt;
-        private List<Image> healthBars = new List<Image>();
+        public GameObject barPrefab;
+        private uint maxHealth;
+        private uint health;
+        private readonly List<Image> healthBars = new List<Image>();
+
         void Start()
         {
             objBehaviour = GetComponentInParent<ObjectBehaviour>();
-            objBehaviour.Data.Type
-            foreach(GameObject healBar in container.transform)
+            maxHealth = objBehaviour.Data.Type.Health;
+            health  = objBehaviour.Data.Health;
+            for(int i = 0;i <maxHealth;i++)
             {
-                healthBars.Add(healBar.GetComponent<Image>());
+                GameObject obj = Instantiate(barPrefab, container.transform);
+                obj.name = $"HealthBar_{i:D2}";
+                Image image = obj.GetComponent<Image>();
+                image.color = GetColor(i);
+                healthBars.Add(image);
             }
-            //image = GetComponent<Image>();
-            //rectTransform = GetComponent<RectTransform>();
         }
 
-        // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
+            if(objBehaviour.Data.Health != health)
+            {
+                health = objBehaviour.Data.Health;
+                for (int i = 0; i < maxHealth; i++)
+                {
+                    healthBars[i].color = GetColor(i);
 
+                }
+            }
+        }
+
+        public Color GetColor(int index)
+        {
+            return (index + 1) <= health ? activeColor : inactiveColor;
         }
     }
 }

@@ -54,10 +54,10 @@ namespace Steamwar.Objects
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S3237:\"value\" parameters should be used", Justification = "<Pending>")]
-        public virtual int Health
+        public virtual uint Health
         {
             get {
-                return -1;
+                return 0;
             }
 
             set {

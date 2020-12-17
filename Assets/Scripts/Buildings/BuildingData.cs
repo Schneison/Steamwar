@@ -9,7 +9,7 @@ using Steamwar.Objects;
 
 namespace Steamwar.Buildings
 {
-    public class BuildingData : DestroyableObject<BuildingType, BuildingDataSerializable>
+    public class BuildingData : DestroyableData<BuildingType, BuildingDataSerializable>
     {
 
         public override ObjectKind Kind
@@ -26,7 +26,7 @@ namespace Steamwar.Buildings
     }
 
     [Serializable]
-    public class BuildingDataSerializable : DestroyableObjectSerializable
+    public class BuildingDataSerializable : DestroyableDataSerializable
     {
 
     }

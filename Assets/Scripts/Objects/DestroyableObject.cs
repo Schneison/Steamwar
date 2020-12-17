@@ -1,36 +1,33 @@
-﻿
-using System;
+﻿using UnityEngine;
+using System.Collections;
+using UnityEditor;
 
-namespace Steamwar.Objects
-{
-    public abstract class DestroyableObject<T, S> : ObjectData<T, S> where T : ObjectType where S : DestroyableObjectSerializable, new()
+namespace Steamwar.Objects {
+
+    public abstract class DestroyableObject<D, T, S> : ObjectBehaviour<D, T, S> where D : DestroyableData<T, S>, new() where T : ObjectType where S : DestroyableDataSerializable, new()
     {
-        public override void WriteData(S serializable)
-        {
-            base.WriteData(serializable);
-            serializable.health = Health;
-        }
+        private HealthIndicator healthIndicator;
 
-        public override void ReadData(S serializable)
+        public override void Start()
         {
-            base.ReadData(serializable);
-            Health = serializable.health;
+            base.Start();
+            healthIndicator = GetComponentInChildren<HealthIndicator>(true);
         }
-
-        public bool IsAlive
+        public override void OnDeselection()
         {
-            get
+            if (healthIndicator != null)
             {
-                return Health <= 0;
+                healthIndicator.gameObject.SetActive(false);
             }
         }
 
-        public uint Health { get; set; }
-    }
+        public override void OnSelection()
+        {
+            if (healthIndicator != null)
+            {
+                healthIndicator.gameObject.SetActive(true);
+            }
+        }
 
-    [Serializable]
-    public class DestroyableObjectSerializable : ObjectDataSerializable
-    {
-        public uint health;
     }
 }

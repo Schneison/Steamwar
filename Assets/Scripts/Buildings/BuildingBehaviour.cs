@@ -8,7 +8,7 @@ using Steamwar.Objects;
 
 namespace Steamwar.Buildings
 {
-    public class BuildingBehaviour : ObjectBehaviour<BuildingData, BuildingType, BuildingDataSerializable>
+    public class BuildingBehaviour : DestroyableObject<BuildingData, BuildingType, BuildingDataSerializable>
     {
         public override ObjectKind Kind
         {

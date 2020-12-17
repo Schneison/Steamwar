@@ -86,8 +86,17 @@ namespace Steamwar.Objects
             {
                 return false;
             }
+            OnSelection();
             Selected = true;
             return true;
+        }
+
+        /// <summary>
+        /// Called at the moment the object gets selected
+        /// </summary>
+        public virtual void OnSelection()
+        {
+            // Empty by default
         }
 
         /// <summary>
@@ -110,6 +119,7 @@ namespace Steamwar.Objects
                 return false;
             }
             Selected = false;
+            OnDeselection();
             return true;
         }
 
@@ -120,6 +130,14 @@ namespace Steamwar.Objects
         protected virtual bool IsDeselectable()
         {
             return true;
+        }
+
+        /// <summary>
+        /// Called at the moment the object gets deselected
+        /// </summary>
+        public virtual void OnDeselection()
+        {
+            // Empty by default
         }
 
         /// <summary>

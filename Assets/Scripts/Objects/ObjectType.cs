@@ -10,5 +10,13 @@ namespace Steamwar.Objects
         public Sprite spriteBlue;
         public Sprite spriteRed;
         public Sprite sprite;
+
+        public virtual uint Health
+        {
+            get
+            {
+                return 0;
+            }
+        }
     }
 }

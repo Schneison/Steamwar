@@ -9,7 +9,7 @@ using Steamwar.Move;
 
 namespace Steamwar.Units {
 
-    public class UnitBehaviour : ObjectBehaviour<UnitData, UnitType, UnitDataSerializable>
+    public class UnitBehaviour : DestroyableObject<UnitData, UnitType, UnitDataSerializable>
     {
         private Animator animator;
         private SpriteRenderer spriteRenderer;

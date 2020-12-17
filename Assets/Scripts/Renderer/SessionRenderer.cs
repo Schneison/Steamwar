@@ -9,9 +9,9 @@ namespace Steamwar.Renderer
     {
         internal SelectionManager selection;
 
-        void Update()
+        void Start()
         {
-
+            selection = GetComponent<SelectionManager>();
         }
     }
 }

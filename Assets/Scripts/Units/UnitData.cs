@@ -7,7 +7,7 @@ using Steamwar.Objects;
 
 namespace Steamwar.Units
 {
-    public class UnitData : DestroyableObject<UnitType, UnitDataSerializable>
+    public class UnitData : DestroyableData<UnitType, UnitDataSerializable>
     {
         public float movment;
 
@@ -40,7 +40,7 @@ namespace Steamwar.Units
     }
 
     [Serializable]
-    public class UnitDataSerializable : DestroyableObjectSerializable
+    public class UnitDataSerializable : DestroyableDataSerializable
     {
         public float movment;
     }
