@@ -89,7 +89,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c8cafde1a8d734684574a0f32c8b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeColor: {r: 0.67058825, g: 0.2627451, b: 0.2627451, a: 1}
+  colors:
+  - {r: 0.1254902, g: 0.2, b: 0.30980393, a: 1}
+  - {r: 0.5, g: 0.125, b: 0.125, a: 1}
+  - {r: 0.745283, g: 0.67619795, b: 0.3058473, a: 1}
+  - {r: 0.2494215, g: 0.5566038, b: 0.3758714, a: 1}
+  - {r: 0.38479167, g: 0.13572444, b: 0.4716981, a: 1}
   inactiveColor: {r: 0.1254902, g: 0.2, b: 0.30980393, a: 1}
   container: {fileID: 3756253182425002585}
   barPrefab: {fileID: 2829970479152893606, guid: ae39bbb121fde89408b38c0319694e8a,

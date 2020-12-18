@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using Steamwar.Units;
-using Steamwar.UI;
 using Steamwar.Objects;
 
 namespace Steamwar.Interaction

@@ -40,7 +40,7 @@ namespace Steamwar.Units {
             }
         }
 
-        public override void Init(UnitType type)
+        protected override void Construction(UnitType type)
         {
             data = new UnitData
             {

@@ -8,11 +8,11 @@ namespace Steamwar.Objects {
     {
         private HealthIndicator healthIndicator;
 
-        public override void Start()
+        public virtual void Awake()
         {
-            base.Start();
             healthIndicator = GetComponentInChildren<HealthIndicator>(true);
         }
+
         public override void OnDeselection()
         {
             if (healthIndicator != null)

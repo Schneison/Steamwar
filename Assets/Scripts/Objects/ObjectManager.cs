@@ -6,7 +6,9 @@ namespace Steamwar.Objects
 {
     public class ObjectManager : Singleton<ObjectManager>
     {
-
+        [Header("Layers")]
+        public LayerMask unitLayer;
+        public LayerMask groundLayer;
         public void Awake()
         {
 

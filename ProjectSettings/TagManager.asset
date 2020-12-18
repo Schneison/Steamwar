@@ -51,14 +51,14 @@ TagManager:
   - name: Ground
     uniqueID: 2949155231
     locked: 0
-  - name: Objects
-    uniqueID: 2990694565
-    locked: 0
   - name: Field
     uniqueID: 147245231
     locked: 0
   - name: Selection
     uniqueID: 3070213473
+    locked: 0
+  - name: Objects
+    uniqueID: 2990694565
     locked: 0
   - name: Units
     uniqueID: 3956561593

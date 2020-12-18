@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Steamwar.Interaction;
 using Steamwar.Utils;
 

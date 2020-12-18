@@ -7,6 +7,7 @@ using Steamwar.UI.Menus;
 using Steamwar.Sectors;
 using Steamwar.Renderer;
 using Steamwar.Utils;
+using Steamwar.Objects;
 
 namespace Steamwar {
 
@@ -25,7 +26,7 @@ namespace Steamwar {
         {
             List<IMouseListener> mouseListeners = new List<IMouseListener>
             {
-                UnitController.Instance.spawn
+                ConstructionManager.Instance
             };
             foreach (GameObject obj in listenersObjects)
             {

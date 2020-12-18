@@ -28,19 +28,11 @@ namespace Steamwar.Board
             ApplyObjects(objects.units);
         }
 
-        private static void ApplyObjects<D>(List<D> objects) where D : new()
+        private static void ApplyObjects<D>(List<D> objects) where D : ObjectData, new()
         {
             foreach(D obj in objects)
             {
-                if(obj is BuildingData)
-                {
-                    BuildingData data = obj as BuildingData;
-                    BuildingManager.CreateBuildingFromData(data);
-                }else if( obj is UnitData)
-                {
-                    UnitData data = obj as UnitData;
-                    UnitManager.CreateUnitFromData(data);
-                }
+                ConstructionManager.CreateObjectFromData(obj);
             }
         }
 

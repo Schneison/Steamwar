@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Steamwar.Utils;
 using Steamwar.Units;
+using Steamwar.Objects;
 
 namespace Steamwar.Units
 {
@@ -141,14 +142,14 @@ namespace Steamwar.Units
         {
             TileBase tile = SessionManager.Instance.ground.GetTile(world.WorldToCell(to));
 
-            RaycastHit2D groundHit = Physics2D.Linecast(from, to, UnitController.Instance.groundLayer);
-            RaycastHit2D hit = Physics2D.Linecast(to, from, UnitController.Instance.groundLayer);
+            RaycastHit2D groundHit = Physics2D.Linecast(from, to, ObjectManager.Instance.groundLayer);
+            RaycastHit2D hit = Physics2D.Linecast(to, from, ObjectManager.Instance.groundLayer);
             if (groundHit.collider != null)
             {
                 return NodeType.BLOCKED;
             }
             collider.enabled = false;
-            RaycastHit2D unitHit = Physics2D.Linecast(from, to, UnitController.Instance.unitLayer);
+            RaycastHit2D unitHit = Physics2D.Linecast(from, to, ObjectManager.Instance.unitLayer);
             collider.enabled = true;
             return unitHit.collider == null ? NodeType.WALKABLE : NodeType.BLOCKED;
         }

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
+using System.Timers;
 
 namespace Steamwar.Objects
 {
@@ -9,11 +11,11 @@ namespace Steamwar.Objects
         public const uint MAX_BARS = 8;
 
         private ObjectBehaviour objBehaviour;
-        public Color activeColor;
-        public Color inactiveColor;
+        public Color[] colors;
         public GameObject container;
         public GameObject barPrefab;
         private uint maxHealth;
+        private uint barCount;
         private uint health;
         private readonly List<Image> healthBars = new List<Image>();
 
@@ -21,8 +23,9 @@ namespace Steamwar.Objects
         {
             objBehaviour = GetComponentInParent<ObjectBehaviour>();
             maxHealth = objBehaviour.Data.Type.Health;
+            barCount = Math.Min(MAX_BARS, maxHealth);
             health  = objBehaviour.Data.Health;
-            for(int i = 0;i <maxHealth;i++)
+            for(uint i = 0;i < barCount; i++)
             {
                 GameObject obj = Instantiate(barPrefab, container.transform);
                 obj.name = $"HealthBar_{i:D2}";
@@ -37,17 +40,30 @@ namespace Steamwar.Objects
             if(objBehaviour.Data.Health != health)
             {
                 health = objBehaviour.Data.Health;
-                for (int i = 0; i < maxHealth; i++)
+                for (uint i = 0; i < barCount; i++)
                 {
-                    healthBars[i].color = GetColor(i);
-
+                    healthBars[(int)i].color = GetColor(i);
                 }
             }
         }
 
-        public Color GetColor(int index)
+
+
+        public Color GetColor(uint index)
         {
-            return (index + 1) <= health ? activeColor : inactiveColor;
+            if (barCount == MAX_BARS)
+            {
+                uint lastLevelIndex = health % MAX_BARS;
+                uint level = (health - lastLevelIndex) / MAX_BARS + 1;
+                //Is index on this level ?
+                if (lastLevelIndex > (index))
+                {
+                    return colors[level];
+                }
+                return colors[level - 1];
+
+            }
+            return (index + 1) <= health ? colors[1] : colors[0];
         }
     }
 }

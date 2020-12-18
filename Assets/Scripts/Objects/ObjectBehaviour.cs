@@ -17,9 +17,11 @@ namespace Steamwar.Objects
             PropManager.CheckForProp(this);
         }
 
-        public virtual void Init(T type)
+        protected abstract void Construction(T type);
+
+        public override void OnConstruction(ObjectType type)
         {
-            
+            Construction(type as T);
         }
 
         public void OnAfterDeserialize()
@@ -37,6 +39,7 @@ namespace Steamwar.Objects
             }
         }
 
+
         public override void OnPropInit()
         {
             if (data == null)
@@ -52,6 +55,8 @@ namespace Steamwar.Objects
 
     public abstract class ObjectBehaviour : MonoBehaviour
     {
+        public abstract void OnConstruction(ObjectType type);
+
         /// <summary>
         /// If the object is currently selected by the player.
         /// </summary>
@@ -162,5 +167,10 @@ namespace Steamwar.Objects
         /// Gets called after all game systems were initialized so the object can safely create its data and do other actions that are based on these systems.
         /// </summary>
         public abstract void OnPropInit();
+
+        public virtual void OnPrefabInit()
+        {
+
+        }
     }
 }
