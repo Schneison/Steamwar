@@ -10,7 +10,7 @@ namespace Steamwar.Objects
         public Sprite spriteBlue;
         public Sprite spriteRed;
         public Sprite sprite;
-
+        public GameObject elementPrefab;
         public virtual uint Health
         {
             get

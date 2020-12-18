@@ -74,6 +74,12 @@ namespace Steamwar.Objects
             if(obj != null)
             {
                 obj.OnPrefabInit();
+                if (type.elementPrefab != null)
+                {
+                    GameObject element = Instantiate(type.elementPrefab);
+                    element.name = "Element";
+                    element.transform.parent = obj.transform;
+                }
             }
             return objInstance;
         }
@@ -81,6 +87,8 @@ namespace Steamwar.Objects
         public static GameObject CreateUnitFromType(UnitType type)
         {
             GameObject obj = CreateBaseObject(type);
+            SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+            renderer.sprite = type.spriteBlue;
             obj.AddComponent<Animator>().runtimeAnimatorController= type.animation;
             return obj;
         }
