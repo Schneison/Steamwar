@@ -8,6 +8,7 @@ public class TileType : Tile
 {
     public string id;
     public string displayName;
+    public bool chessable;
 
     [MenuItem("Create/Tile")]
     static void CreateType()

@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: dc460216726d7c04c830533f8917f2f4, type: 3}
   m_Name: cliff_path
   m_EditorClassIdentifier: 
@@ -38,3 +37,4 @@ MonoBehaviour:
   m_ColliderType: 0
   id: cliff_path
   displayName: Cliff Path
+  chessable: 1
