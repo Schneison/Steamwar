@@ -50,11 +50,18 @@ namespace Steamwar.Objects
             {
                 data.ReadData(dataSerializable);
             }
+            ObjectElement element = GetComponent<ObjectElement>();
+            if(element == null)
+            {
+                ConstructionManager.AddElement(this, data.Type);
+            }
         }
     }
 
     public abstract class ObjectBehaviour : MonoBehaviour
     {
+        public GameObject rendererChild;
+
         public abstract void OnConstruction(ObjectType type);
 
         /// <summary>

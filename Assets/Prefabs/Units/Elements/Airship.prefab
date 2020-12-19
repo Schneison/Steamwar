@@ -43,9 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6206b4ee624af04eba20366650ab950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 0.025
+  scale: 0.02
   timeScale: 0.05
   time: 0
   origin: {x: 0, y: 0, z: 0}
   shadowOrigin: {x: 0, y: 0, z: 0}
-  shadow: {fileID: 0}

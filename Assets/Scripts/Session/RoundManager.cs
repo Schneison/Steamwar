@@ -51,7 +51,7 @@ namespace Steamwar
         {
             if(Enum.IsDefined(typeof(RoundState), (int)SessionManager.session.roundState + 1))
             {
-                SessionManager.session.roundState = SessionManager.session.roundState + 1;
+                SessionManager.session.roundState += 1;
             }
             else
             {

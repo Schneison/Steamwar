@@ -8,6 +8,9 @@ using Steamwar.Units;
 
 namespace Steamwar.Objects
 {
+     /// <summary>
+     /// Helper class to create objects.
+     /// </summary>
     public class ConstructionManager : Singleton<ConstructionManager>, IMouseListener
     {
         [Header("Prefabs")]
@@ -74,22 +77,27 @@ namespace Steamwar.Objects
             if(obj != null)
             {
                 obj.OnPrefabInit();
-                if (type.elementPrefab != null)
-                {
-                    GameObject element = Instantiate(type.elementPrefab);
-                    element.name = "Element";
-                    element.transform.parent = obj.transform;
-                }
+                AddElement(obj, type);
             }
             return objInstance;
+        }
+
+        public static void AddElement(MonoBehaviour obj, ObjectType type)
+        {
+            if (type.elementPrefab != null)
+            {
+                GameObject element = Instantiate(type.elementPrefab);
+                element.name = "Element";
+                element.transform.parent = obj.transform;
+            }
         }
 
         public static GameObject CreateUnitFromType(UnitType type)
         {
             GameObject obj = CreateBaseObject(type);
-            SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+            SpriteRenderer renderer = obj.GetComponentInChildren<SpriteRenderer>();
             renderer.sprite = type.spriteBlue;
-            obj.AddComponent<Animator>().runtimeAnimatorController= type.animation;
+            renderer.gameObject.AddComponent<Animator>().runtimeAnimatorController= type.animation;
             return obj;
         }
 

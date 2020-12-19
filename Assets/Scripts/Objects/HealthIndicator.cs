@@ -8,7 +8,7 @@ namespace Steamwar.Objects
 {
     public class HealthIndicator : MonoBehaviour
     {
-        public const uint MAX_BARS = 8;
+        public const uint MAX_BARS = 7;
 
         private ObjectBehaviour objBehaviour;
         public Color[] colors;
