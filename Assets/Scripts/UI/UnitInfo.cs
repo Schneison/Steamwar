@@ -21,6 +21,11 @@ namespace Steamwar.UI
 
         private SelectionData? selection;
 
+        public bool IsActive()
+        {
+            return true;
+        }
+
         public void OnSelection(SelectionData data, SelectionData oldData)
         {
             ObjectBehaviour currentObj = data.Obj;
@@ -77,7 +82,7 @@ namespace Steamwar.UI
             return false;
         }
 
-        public void OnSelectionMouseMove(SelectionData data)
+        public void OnSelectionMouseMove(SelectionData data, Vector3Int cellPosition)
         {
             // No mouse move action needed
         }

@@ -1,4 +1,4 @@
-﻿
+﻿using UnityEngine;
 
 namespace Steamwar.Interaction
 {
@@ -9,6 +9,14 @@ namespace Steamwar.Interaction
     /// </summary>
     public interface ISelectionListener
     {
+
+
+        /// <summary>
+        /// If this listener is currently active and recives events.
+        /// </summary>
+        /// <returns>True if the listener is currently active.</returns>
+        bool IsActive();
+
         /// <summary>
         /// Called if an object gets selected
         /// </summary>
@@ -37,6 +45,6 @@ namespace Steamwar.Interaction
         /// Called if an object is selected and the mouse moves.
         /// </summary>
         /// <param name="data"></param>
-        void OnSelectionMouseMove(SelectionData data);
+        void OnSelectionMouseMove(SelectionData data, Vector3Int cellPosition);
     }
 }

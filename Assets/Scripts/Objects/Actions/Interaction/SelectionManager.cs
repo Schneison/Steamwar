@@ -19,6 +19,7 @@ namespace Steamwar.Interaction
         internal Collider2D selectedCollider;
         public SelectionData selected = SelectionData.EMPTY;
 
+        internal Vector3Int? lastMouseCell = null;
 
         void Start()
         {
@@ -48,7 +49,7 @@ namespace Steamwar.Interaction
             selectedCollider = obj.GetComponent<Collider2D>();
             foreach (ISelectionListener listener in listeners)
             {
-                if (listener != null)
+                if (listener != null && listener.IsActive())
                 {
                     listener.OnSelection(selected, oldSelected);
                 }
@@ -69,7 +70,7 @@ namespace Steamwar.Interaction
 
             foreach (ISelectionListener listener in listeners)
             {
-                if (listener != null)
+                if (listener != null && listener.IsActive())
                 {
                     listener.OnDeselection(selected);
                 }
@@ -77,6 +78,7 @@ namespace Steamwar.Interaction
             selected = SelectionData.EMPTY;
             Destroy(unitSlectionBox);
             selectedCollider = null;
+            lastMouseCell = null;
             return true;
         }
 
@@ -116,13 +118,18 @@ namespace Steamwar.Interaction
             Grid world = SessionManager.Instance.world;
             Camera camera = SessionManager.Instance.mainCamera;
             ObjectBehaviour currentObj = selected.Obj;
-            if (currentObj != null &&
-                world.LocalToCell(currentObj.transform.position) != world.LocalToCell(camera.ScreenToWorldPoint(Input.mousePosition)))
+            if(currentObj == null)
+            {
+                return false;
+            }
+            Vector3Int mousePos = world.LocalToCell(camera.ScreenToWorldPoint(Input.mousePosition));
+            Vector3Int unitPos = world.LocalToCell(currentObj.transform.position);
+            if (unitPos != mousePos)
             {
                 bool deselect = false;
                 foreach (ISelectionListener listener in listeners)
                 {
-                    if (listener != null && listener.OnInteraction(selected, InteractionContext.EMPTY, out deselect))
+                    if (listener != null && listener.IsActive() && listener.OnInteraction(selected, InteractionContext.EMPTY, out deselect))
                     {
                         break;
                     }
@@ -143,13 +150,16 @@ namespace Steamwar.Interaction
         /// <returns>True if no other handlers should be called after this one.</returns>
         public bool MouseMove(Vector2 mousePosition, Vector2 lastMouse)
         {
-            if (!selected.IsEmpty && selected.Obj.Selected && selected.Obj.CanMove)
+            Camera camera = SessionManager.Instance.mainCamera;
+            Grid world = SessionManager.Instance.world;
+            Vector3Int cellPosition = world.WorldToCell(camera.ScreenToWorldPoint(mousePosition));
+            if ((lastMouseCell == null || !lastMouseCell.Equals(cellPosition)) && !selected.IsEmpty && selected.Obj.Selected)
             {
                 foreach (ISelectionListener listener in listeners)
                 {
-                    if (listener != null)
+                    if (listener != null && listener.IsActive())
                     {
-                        listener.OnSelectionMouseMove(selected);
+                        listener.OnSelectionMouseMove(selected, cellPosition);
                     }
                 }
             }

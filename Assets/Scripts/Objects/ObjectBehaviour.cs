@@ -1,4 +1,5 @@
 ﻿using Steamwar.Core;
+using System;
 using UnityEngine;
 
 namespace Steamwar.Objects
@@ -179,5 +180,7 @@ namespace Steamwar.Objects
         {
 
         }
+
+        public abstract bool HasAction(ObjectBehaviour obj, ActionType type);
     }
 }

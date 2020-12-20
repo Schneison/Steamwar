@@ -20,8 +20,8 @@ namespace Steamwar.Units {
         public override void Start()
         {
             base.Start();
-            animator = GetComponent<Animator>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            animator = GetComponentInChildren<Animator>();
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
         public override bool CanMove { get => IsMovable && !Moves; }
@@ -108,6 +108,11 @@ namespace Steamwar.Units {
         public virtual void OnKill(UnitBehaviour killedUnit)
         {
 
+        }
+
+        public override bool HasAction(ObjectBehaviour obj, ActionType type)
+        {
+            return true;
         }
     }
 

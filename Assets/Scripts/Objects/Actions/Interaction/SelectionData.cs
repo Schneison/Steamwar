@@ -1,6 +1,8 @@
 ﻿using Steamwar.Buildings;
 using Steamwar.Objects;
 using Steamwar.Units;
+using System;
+using UnityEngine;
 
 namespace Steamwar.Interaction
 {
@@ -11,15 +13,30 @@ namespace Steamwar.Interaction
     {
         public static readonly SelectionData EMPTY = new SelectionData(null);
         private readonly ObjectBehaviour obj;
+        private Vector3Int? _cellPos;
+
 
         public SelectionData(ObjectBehaviour obj)
         {
             this.obj = obj;
+            this._cellPos = null;
         }
 
         public bool IsEmpty
         {
             get => Obj == null;
+        }
+
+        public Vector3Int CellPos
+        {
+            get
+            {
+                if (_cellPos == null)
+                {
+                    _cellPos = SessionManager.Instance.world.WorldToCell(obj.transform.position);
+                }
+                return _cellPos ?? Vector3Int.zero;
+            }
         }
 
 

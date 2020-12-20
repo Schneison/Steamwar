@@ -15,7 +15,6 @@ namespace Steamwar.Move
         public GameObject selectionPrefab;
 
         internal Path lastPath = null;
-        internal Vector3Int? lastMouseCell = null;
 
         private GameObject selectionBoxes;
         private Collider2D selectedCollider;
@@ -72,6 +71,11 @@ namespace Steamwar.Move
             }*/
         }
 
+        public bool IsActive()
+        {
+            return ActionManager.IsActive(ActionType.MOVE);
+        }
+
         public void OnDeselection(SelectionData oldData)
         {
             ClearData();
@@ -87,7 +91,6 @@ namespace Steamwar.Move
                     Destroy(child.gameObject);
                 }
             }
-            lastMouseCell = null;
         }
 
         public bool OnInteraction(SelectionData data, InteractionContext context, out bool deselect)
@@ -108,19 +111,14 @@ namespace Steamwar.Move
         /// Creates the move nodes for the unit.
         /// </summary>
         /// <param name="data"></param>
-        public void OnSelectionMouseMove(SelectionData data)
+        public void OnSelectionMouseMove(SelectionData data, Vector3Int cellPosition)
         {
             ObjectBehaviour currentObj = data.Obj;
-            Vector2 mousePosition = Input.mousePosition;
-            Camera camera = SessionManager.Instance.mainCamera;
             Grid world = SessionManager.Instance.world;
-            Vector2 worldPos = camera.ScreenToWorldPoint(mousePosition);
-            Vector3Int cellPosition = world.WorldToCell(worldPos);
-            if (lastMouseCell == null || !lastMouseCell.Equals(cellPosition))
+            if (data.Obj.CanMove)
             {
                 PathFinder finder = new PathFinder(world.CellToWorld(cellPosition) + new Vector3(0.5F, 0.5F), new Vector2(currentObj.transform.position.x, currentObj.transform.position.y), currentObj.gameObject);
                 Path path = finder.FindPath();
-                lastMouseCell = cellPosition;
                 lastPath = path;
                 // TODO: Find a better way to handle the path nodes (Don't remove / reconstruct them every time) 
                 if (selectionBoxes != null)
