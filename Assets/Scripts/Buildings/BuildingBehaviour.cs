@@ -45,9 +45,9 @@ namespace Steamwar.Buildings
             needInit = true;
         }
 
-        public override bool HasAction(ObjectBehaviour obj, ActionType type)
+        public override ActionType GetAction()
         {
-            return type == ActionType.DESTROY || type == ActionType.SKIP || type == ActionType.REPAIR;
+            return ActionType.Destroy | ActionType.Skip | ActionType.Repair;
         }
     }
 }

@@ -110,9 +110,14 @@ namespace Steamwar.Units {
 
         }
 
-        public override bool HasAction(ObjectBehaviour obj, ActionType type)
+        public override ActionType GetAction()
         {
-            return true;
+            return ActionType.All;
+        }
+
+        public override ActionType GetDefaultType()
+        {
+            return ActionType.Move;
         }
     }
 

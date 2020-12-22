@@ -8,6 +8,7 @@ using Steamwar.Sectors;
 using Steamwar.Renderer;
 using Steamwar.Utils;
 using Steamwar.Objects;
+using Steamwar.Core;
 
 namespace Steamwar {
 
@@ -82,11 +83,8 @@ namespace Steamwar {
             {
                 UpdateCameraPosition(camera, xAxisValue, yAxisValue);
             }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-
-            }
-            if (Input.GetKeyDown(KeyCode.Escape))
+            KeyListeners.KeyUpdate();
+            /*if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if(SessionRenderer.Instance.selection != null)
                 {
@@ -105,7 +103,7 @@ namespace Steamwar {
                         }
                     }
                 }
-            }
+            }*/
             if (Input.GetMouseButtonDown(0))
             {
                 buttonDown[0] = true;

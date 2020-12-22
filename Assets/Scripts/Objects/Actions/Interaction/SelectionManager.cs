@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Steamwar.Objects;
+using Steamwar.Utils;
 
 namespace Steamwar.Interaction
 {
-    public class SelectionManager : MonoBehaviour, IMouseListener
+    public class SelectionManager : Singleton<SelectionManager>, IMouseListener
     {
         public GameObject[] listenersObjects;
-        public ISelectionListener[] listeners;
+        public SelectionContainer listeners;
 
         public GameObject selectionPrefab;
         public GameObject unitSelectionPrefab;
 
-        public LayerMask unitLayer;
-        public LayerMask groundLayer;
         private GameObject unitSlectionBox;
 
         internal Collider2D selectedCollider;
@@ -28,7 +27,12 @@ namespace Steamwar.Interaction
             {
                 selectionListeners.AddRange(obj.GetComponents<ISelectionListener>());
             }
-            this.listeners = selectionListeners.ToArray();
+            this.listeners = new SelectionContainer(selectionListeners, ()=>selected);
+        }
+
+        public static void OnUpdate(ActionType activeType)
+        {
+            Instance.listeners.OnActionUpdate(activeType);
         }
 
         /// <summary>
@@ -44,15 +48,14 @@ namespace Steamwar.Interaction
                 return;
             }
             selected = new SelectionData(obj);
+            //Change type to the default type of the object
+            ActionManager.ActivateType(obj.GetDefaultType());
             unitSlectionBox = Instantiate(unitSelectionPrefab, obj.gameObject.transform);
             unitSlectionBox.transform.position -= new Vector3(0.5F, 0.5F, 0);
             selectedCollider = obj.GetComponent<Collider2D>();
             foreach (ISelectionListener listener in listeners)
             {
-                if (listener != null && listener.IsActive())
-                {
-                    listener.OnSelection(selected, oldSelected);
-                }
+                listener.OnSelection(selected, oldSelected);
             }
         }
 
@@ -70,10 +73,7 @@ namespace Steamwar.Interaction
 
             foreach (ISelectionListener listener in listeners)
             {
-                if (listener != null && listener.IsActive())
-                {
-                    listener.OnDeselection(selected);
-                }
+                listener.OnDeselection(selected);
             }
             selected = SelectionData.EMPTY;
             Destroy(unitSlectionBox);
@@ -95,7 +95,7 @@ namespace Steamwar.Interaction
             // Vector3Int cellPosition = world.WorldToCell(worldPos);
             Ray ray = Camera.main.ScreenPointToRay(mousePosition);
 
-            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity, unitLayer);
+            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity, ObjectManager.Instance.unitLayer);
             if(hit.collider != null)
             {
                 GameObject unitObj = hit.collider.gameObject;
@@ -129,7 +129,7 @@ namespace Steamwar.Interaction
                 bool deselect = false;
                 foreach (ISelectionListener listener in listeners)
                 {
-                    if (listener != null && listener.IsActive() && listener.OnInteraction(selected, InteractionContext.EMPTY, out deselect))
+                    if (listener.OnInteraction(selected, InteractionContext.EMPTY, out deselect))
                     {
                         break;
                     }
@@ -157,10 +157,7 @@ namespace Steamwar.Interaction
             {
                 foreach (ISelectionListener listener in listeners)
                 {
-                    if (listener != null && listener.IsActive())
-                    {
-                        listener.OnSelectionMouseMove(selected, cellPosition);
-                    }
+                    listener.OnSelectionMouseMove(selected, cellPosition);
                 }
             }
             return false;

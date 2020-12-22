@@ -7,7 +7,7 @@ using Steamwar.Buildings;
 
 namespace Steamwar.UI
 {
-    public class UnitInfo : MonoBehaviour, ISelectionListener
+    public class ObjectInspector : MonoBehaviour, ISelectionListener
     {
         //Unit
         public Text unitName;
@@ -18,12 +18,27 @@ namespace Steamwar.UI
         //Faction
         public Text factionName;
         public Image factionColor;
+        //Actions
+        public HorizontalLayoutGroup actionContainer;
 
         private SelectionData? selection;
+        private ActionButton[] buttons;
 
-        public bool IsActive()
+        public ActionButton[] ActionButtons
         {
-            return true;
+            get
+            {
+                if(buttons == null)
+                {
+                    buttons = actionContainer.GetComponentsInChildren<ActionButton>();
+                }
+                return buttons;
+            }
+        }
+
+        public ActionType GetActionType()
+        {
+            return ActionType.None;
         }
 
         public void OnSelection(SelectionData data, SelectionData oldData)
@@ -47,6 +62,17 @@ namespace Steamwar.UI
                     healthText.text = "Helath: " + unitData.Health;
                     movmentText.text = "Movment: " + unitData.movment;
                     break;
+            }
+
+            foreach(ActionButton button in ActionButtons)
+            {
+                if(currentObj.HasAction(button.type)) {
+                    button.Activate();
+                }
+                else
+                {
+                    button.Deactivate();
+                }
             }
 
             factionName.text = currentData.faction.name;

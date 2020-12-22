@@ -8,6 +8,31 @@ namespace Steamwar.Utils
 {
     public static class ExtensionMethods
     {
+        public static TValue GetOrDefault<TKey,TValue>(this IDictionary<TKey, TValue> source, TKey key, Func<TValue> defaultValue)
+        {
+            return source.TryGetValue(key, out TValue value) ? value : defaultValue();
+        }
+
+        public static TValue AddIfAbsent<TKey, TValue>(this IDictionary<TKey, TValue> source, TKey key, Func<TValue> defaultValue)
+        {
+            if (!source.TryGetValue(key, out TValue value))
+            {
+                value = defaultValue();
+                source.Add(key, value);
+            }
+            return value;
+        }
+
+        public static HashSet<V> AddIfAbsent<TKey, V>(this IDictionary<TKey, HashSet<V>> source, TKey key)
+        {
+            return source.AddIfAbsent(key, ()=>new HashSet<V>());
+        }
+
+        public static List<V> AddIfAbsent<TKey, V>(this IDictionary<TKey, List<V>> source, TKey key)
+        {
+            return source.AddIfAbsent(key, () => new List<V>());
+        }
+
         public static T[][] ToJaggedArray<T>(this T[,] twoDimensionalArray)
         {
             int rowsFirstIndex = twoDimensionalArray.GetLowerBound(0);

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Steamwar.Objects;
+using UnityEngine;
 
 namespace Steamwar.Interaction
 {
@@ -10,12 +11,11 @@ namespace Steamwar.Interaction
     public interface ISelectionListener
     {
 
-
         /// <summary>
-        /// If this listener is currently active and recives events.
+        /// The action type that is needed to activate this listener.
         /// </summary>
-        /// <returns>True if the listener is currently active.</returns>
-        bool IsActive();
+        /// <returns>None, if needs no action type an sinlge type otherwise.</returns>
+        ActionType GetActionType();
 
         /// <summary>
         /// Called if an object gets selected

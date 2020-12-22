@@ -84,6 +84,11 @@ namespace Steamwar.Objects
         public virtual bool Moves { get => false; set{}
         }
 
+        public bool HasAction(ActionType type)
+        {
+            return (GetAction() & type) == type;
+        }
+
         /// <summary>
         /// If the object has the ability to move.
         /// </summary>
@@ -181,6 +186,19 @@ namespace Steamwar.Objects
 
         }
 
-        public abstract bool HasAction(ObjectBehaviour obj, ActionType type);
+        /// <summary>
+        /// All types that this object can handle.
+        /// </summary>
+        /// <returns>A multi flag type</returns>
+        public abstract ActionType GetAction();
+
+        /// <summary>
+        /// The type that is selected if the player selects the unit.
+        /// </summary>
+        /// <returns>A single action type.</returns>
+        public virtual ActionType GetDefaultType()
+        {
+            return ActionType.None;
+        }
     }
 }

@@ -71,9 +71,9 @@ namespace Steamwar.Move
             }*/
         }
 
-        public bool IsActive()
+        public ActionType GetActionType()
         {
-            return ActionManager.IsActive(ActionType.MOVE);
+            return ActionType.Move;
         }
 
         public void OnDeselection(SelectionData oldData)

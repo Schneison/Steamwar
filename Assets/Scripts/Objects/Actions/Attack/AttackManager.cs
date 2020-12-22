@@ -35,9 +35,9 @@ namespace Assets.Attack
         private GameObject currentCross;
         private SpriteRenderer lineRenderer;
 
-        public bool IsActive()
+        public ActionType GetActionType()
         {
-            return ActionManager.IsActive(ActionType.ATTACK);
+            return ActionType.Atttack;
         }
 
         public void OnDeselection(SelectionData oldData)

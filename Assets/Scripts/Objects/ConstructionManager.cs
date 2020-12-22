@@ -5,6 +5,7 @@ using Steamwar.Renderer;
 using Steamwar.Buildings;
 using Steamwar.Utils;
 using Steamwar.Units;
+using Steamwar.Interaction;
 
 namespace Steamwar.Objects
 {
@@ -119,7 +120,7 @@ namespace Steamwar.Objects
             Vector2 worldPos = camera.ScreenToWorldPoint(mousePosition);
             Vector3Int cellPos = world.WorldToCell(worldPos);
             Vector2 pos = (Vector2)world.CellToWorld(cellPos) + new Vector2(0.5F, 0.5F);
-            RaycastHit2D ray = Physics2D.BoxCast(pos, new Vector2(0.5F, 0.5F), 0.0F, Vector2.zero, SessionRenderer.Instance.selection.groundLayer);
+            RaycastHit2D ray = Physics2D.BoxCast(pos, new Vector2(0.5F, 0.5F), 0.0F, Vector2.zero, ObjectManager.Instance.groundLayer);
             if(ray.collider != null)
             {
                 return false;
