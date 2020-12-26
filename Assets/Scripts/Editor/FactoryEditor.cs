@@ -1,16 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEditor;
-
-using Steamwar.Utils;
+using UnityEngine;
 
 namespace Steamwar.InternalEditor
 {
-
-    /// <summary>
-    /// This class contain custom drawer for ReadOnly attribute.
-    /// </summary>
-    [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
-    public class ReadOnlyDrawer : PropertyDrawer
+    /*[CustomPropertyDrawer(typeof(FactoryConfig))]   
+    public class FactoryEditor : PropertyDrawer
     {
         /// <summary>
         /// Unity method for drawing GUI in Editor
@@ -29,5 +28,5 @@ namespace Steamwar.InternalEditor
             // Setting old GUI enabled value
             GUI.enabled = previousGUIState;
         }
-    }
+    }*/
 }

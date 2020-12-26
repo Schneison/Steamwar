@@ -2,6 +2,7 @@
 using Steamwar.Objects;
 using Steamwar.Units;
 using System;
+using System.ComponentModel;
 using UnityEngine;
 
 namespace Steamwar.Interaction
@@ -11,6 +12,11 @@ namespace Steamwar.Interaction
     /// </summary>
     public struct SelectionData
     {
+        /// <summary>
+        /// Default instance.
+        /// <para/>
+        /// This should be used if no object is currently selected.
+        /// </summary>
         public static readonly SelectionData EMPTY = new SelectionData(null);
         private readonly ObjectBehaviour obj;
         private Vector3Int? _cellPos;
@@ -22,11 +28,17 @@ namespace Steamwar.Interaction
             this._cellPos = null;
         }
 
+        /// <summary>
+        /// True if this data contains no object and so no object is selected.
+        /// </summary>
         public bool IsEmpty
         {
             get => Obj == null;
         }
 
+        /// <summary>
+        /// The cell position of the selected object.
+        /// </summary>
         public Vector3Int CellPos
         {
             get
@@ -73,8 +85,17 @@ namespace Steamwar.Interaction
             get => !IsEmpty && Obj.Data.faction.IsPlayer;
         }
 
+        /// <summary>
+        /// The current object.
+        /// </summary>
         public ObjectBehaviour Obj => obj;
 
+
+        /// <summary>
+        /// Datermines if the given object is the same object as the selected object.
+        /// </summary>
+        /// <param name="other">An other object that should be compared to the selected object.</param>
+        /// <returns>True if they are the same</returns>
         public bool IsSameObject(ObjectBehaviour other)
         {
             return other == Obj;

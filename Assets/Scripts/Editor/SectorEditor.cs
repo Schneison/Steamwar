@@ -18,7 +18,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Steamwar.Editor
+namespace Steamwar.InternalEditor
 {
     public class SectorEditor : EditorWindow
     {

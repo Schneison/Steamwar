@@ -50,10 +50,11 @@ namespace Steamwar.Objects
             return Instance.DeselectTypeInternal();
         }
 
-        public static void ActivateType(ActionType type)
+        public static bool ActivateType(ActionType type)
         {
             Instance.activeType = type;
             SelectionManager.Instance.listeners.OnActionUpdate(type);
+            return true;
         }
     }
 }

@@ -18,9 +18,14 @@ namespace Steamwar.Objects {
         }
     }
 
+    /// <summary>
+    /// Logoc class for all behaviour. Handles the logic for a specific object type.
+    /// </summary>
     public abstract class ObjectElement : MonoBehaviour
     {
-
+        /// <summary>
+        /// Object that this element belongs to
+        /// </summary>
         public abstract ObjectBehaviour Behaviour
         {
             get;
