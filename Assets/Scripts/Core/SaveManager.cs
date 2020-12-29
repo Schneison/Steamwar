@@ -12,6 +12,9 @@ using Unity.Collections;
 using Steamwar.Objects;
 using Steamwar.Buildings;
 using Steamwar.Units;
+using Steamwar.Factions;
+using Steamwar.Sectors;
+using Steamwar.Utils;
 
 namespace Steamwar
 {
@@ -24,7 +27,7 @@ namespace Steamwar
 
         public static void Save(string fileName)
         {
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            /*BinaryFormatter binaryFormatter = new BinaryFormatter();
             FileStream saveGame = File.Create(Application.persistentDataPath + "/saves/" + fileName + FILE_EXTENSION);
             binaryFormatter.Serialize(saveGame, SessionManager.session.CreateData());
             saveGame.Close();
@@ -33,26 +36,26 @@ namespace Steamwar
             writter.Write(JsonUtility.ToJson(SessionManager.session.CreateData()));
             writter.Close();
             jsonGame.Close();
-            PlayerPrefs.SetString("lastSave", fileName);
+            PlayerPrefs.SetString("lastSave", fileName);*/
         }
 
         public static void Save(Session game)
         {
             //string jsonGame = JsonUtility.ToJson(game);
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            /*BinaryFormatter binaryFormatter = new BinaryFormatter();
             if (!Directory.Exists(Application.persistentDataPath + "/saves/" + SAVE_NAME))
             {
                 Directory.CreateDirectory(Application.persistentDataPath + "/saves/" + SAVE_NAME);
             }
             FileStream saveGame = File.Create(Application.persistentDataPath + "/saves/" + SAVE_NAME + "/" + LEVEL_FILE);
             binaryFormatter.Serialize(saveGame, game.CreateData());
-            saveGame.Close();
+            saveGame.Close();*/
         }
 
         public static void Load(string path)
         {
             Session game;
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            /*BinaryFormatter binaryFormatter = new BinaryFormatter();
             if (File.Exists(path))
             {
                 FileStream saveGame = null;
@@ -76,16 +79,16 @@ namespace Steamwar
             }
 
             else
-            {
+            {*/
                 game = new Session();
 
-            }
+            //}
             SessionManager.Instance.Setup(game);
         }
 
         public static void Load(out Session session)
         {
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            /*BinaryFormatter binaryFormatter = new BinaryFormatter();
             if(File.Exists(Application.persistentDataPath + "/saves/" + SAVE_NAME + "/" + LEVEL_FILE))
             {
                 FileStream saveGame = null;
@@ -110,10 +113,19 @@ namespace Steamwar
             }
 
             else
-            {
+            {*/
                 session = new Session();
 
-            }
+            //}
+            //GUI: Create Faction
+            string factionName = "Blue";// GUI
+            uint color = 0xFF212F3D;// GUI
+            Faction faction = new Faction(factionName, color);
+            session.playerIndex = faction.index;
+            session.activeFaction = faction;
+            session.factions = new Faction[] { faction, new Faction("Team RED", 0xFF6A0A22) };
+            session.roundFactionsSequence = session.factions;
+            session.activeSector = ScriptableObjectUtility.GetAllInstances<Sector>()[0].ToData();
             SessionManager.Instance.rounds.OnLoad(session);
         }
 

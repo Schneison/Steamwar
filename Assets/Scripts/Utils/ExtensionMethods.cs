@@ -33,6 +33,20 @@ namespace Steamwar.Utils
             return source.AddIfAbsent(key, () => new List<V>());
         }
 
+        public static bool AddToSub<TKey, TValue>(this IDictionary<TKey, HashSet<TValue>> source, TKey key, TValue value)
+        {
+            return source.AddIfAbsent(key).Add(value);
+        }
+
+        public static bool RemoveFromSub<TKey, TValue>(this IDictionary<TKey, HashSet<TValue>> source, TKey key, TValue value)
+        {
+            if (!source.TryGetValue(key, out HashSet <TValue> subSet))
+            {
+                return true;
+            }
+            return subSet.Remove(value);
+        }
+
         public static T[][] ToJaggedArray<T>(this T[,] twoDimensionalArray)
         {
             int rowsFirstIndex = twoDimensionalArray.GetLowerBound(0);

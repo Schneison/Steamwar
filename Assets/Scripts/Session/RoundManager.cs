@@ -22,7 +22,7 @@ namespace Steamwar
 
         public void OnLoad(Session game)
         {
-            if (game.activeFaction == game.playerFaction)
+            if (game.activeFaction == game.PlayerFaction)
             {
                 roundMessage.gameObject.SetActive(true);
                 StartCoroutine(FadeText());
@@ -75,7 +75,7 @@ namespace Steamwar
                     if (newIndex < session.roundFactionsSequence.Length)
                     {
                         Faction newFaction = session.roundFactionsSequence[newIndex];
-                        if(newFaction == session.playerFaction)
+                        if(newFaction == session.PlayerFaction)
                         {
                             roundMessage.gameObject.SetActive(true);
                             StartCoroutine(FadeText());

@@ -23,6 +23,7 @@ namespace Steamwar.Objects
         public override void OnConstruction(ObjectType type)
         {
             Construction(type as T);
+            ObjectCache.Add(gameObject);
         }
 
         public void OnAfterDeserialize()
@@ -199,6 +200,11 @@ namespace Steamwar.Objects
         public virtual ActionType GetDefaultType()
         {
             return ActionType.None;
+        }
+
+        public virtual void OnDisable()
+        {
+            ObjectCache.Remove(gameObject);
         }
     }
 }

@@ -15,7 +15,6 @@ namespace Steamwar.Factions
     {
         public string name;
         public uint color;
-        public ResourceList resources;
         public int index;
         public int roundIndex;
 
@@ -28,12 +27,11 @@ namespace Steamwar.Factions
         {
             this.name = name;
             this.color = color;
-            this.resources = new ResourceList();
         }
 
         public bool IsPlayer
         {
-            get => index == SessionManager.session.playerFaction.index;
+            get => index == SessionManager.session.playerIndex;
         }
     }
 }

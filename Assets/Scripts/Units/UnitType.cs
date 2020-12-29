@@ -14,9 +14,14 @@ namespace Steamwar.Units {
 
         public RuntimeAnimatorController animation;
         public ResourceList cost;
+        [Header("Unit Parameters")]
+        [Range(0, 20)]
         public uint damage;
+        [Range(0, 60)]
         public uint health;
+        [Range(0, 1)]
         public float speed;
+        [Range(0, 20)]
         public uint movment;
 
         public float Speed {

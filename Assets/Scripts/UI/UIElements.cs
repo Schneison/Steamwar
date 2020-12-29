@@ -18,6 +18,7 @@ namespace Steamwar.UI
         public GameObject roundCounter;
         public GameObject roundButton;
         public GameObject resourcePanel;
+        public ResourcePanel moneyContainer;
         public Text centerMessage;
     }
 }

@@ -17,3 +17,8 @@ MonoBehaviour:
   spriteBlue: {fileID: 0}
   spriteRed: {fileID: 0}
   sprite: {fileID: 0}
+  elementPrefab: {fileID: 0}
+  health: 0
+  hasStorage: 0
+  storageCapacity:
+    moneyAmount: 0

@@ -46,7 +46,7 @@ namespace Steamwar.Units {
             {
                 type = type,
                 Health = type.Health,
-                faction = SessionManager.session.playerFaction
+                faction = SessionManager.session.PlayerFaction
             };
             needInit = true;
         }

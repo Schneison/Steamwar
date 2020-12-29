@@ -40,7 +40,7 @@ namespace Steamwar.Buildings
             {
                 type = type,
                 Health = type.Health,
-                faction = SessionManager.session.playerFaction
+                faction = SessionManager.session.PlayerFaction
             };
             needInit = true;
         }
