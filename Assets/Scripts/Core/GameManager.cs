@@ -8,7 +8,7 @@ namespace Steamwar
 {
     public class GameManager : Singleton<GameManager>
     {
-        internal GameState state;
+        internal static GameState state;
 
         public void StartLoading(int sceneIndex)
         {
@@ -28,22 +28,32 @@ namespace Steamwar
 
         public static bool Menu()
         {
-            return Instance.state == GameState.MAIN_MENU;
+            return state == GameState.MAIN_MENU;
         }
 
         public static bool Loading()
         {
-            return Instance.state == GameState.LOADING;
+            return state == GameState.LOADING;
         }
 
         public static bool Playing()
         {
-            return Instance.state == GameState.SESSION;
+            return state == GameState.SESSION;
+        }
+
+        public static bool ShuttDown()
+        {
+            return state == GameState.SHUTTTING_DOWN;
+        }
+
+        public void ShuttingDown()
+        {
+            state = GameState.SHUTTTING_DOWN;
         }
     }
 
     public enum GameState
     {
-        PERSISTENT, MAIN_MENU, LOADING, SESSION
+        PERSISTENT, MAIN_MENU, LOADING, SESSION, SHUTTTING_DOWN
     }
 }

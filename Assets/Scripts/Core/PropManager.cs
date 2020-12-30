@@ -20,15 +20,17 @@ namespace Steamwar.Core
 
         void Update()
         {
-            while (props.Count > 0)
-            {
-                var prop = props.Pop();
-                prop.OnPropInit();
+            if(SessionManager.session != null) {
+                while (props.Count > 0)
+                {
+                    var prop = props.Pop();
+                    prop.OnPropInit();
 
-            }
-            if (!_initialized)
-            {
-                _initialized = true;
+                }
+                if (!_initialized)
+                {
+                    _initialized = true;
+                }
             }
         }
     }

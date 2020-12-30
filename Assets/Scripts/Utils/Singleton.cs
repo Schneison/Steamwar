@@ -60,12 +60,20 @@ namespace Steamwar.Utils {
 
         private void OnApplicationQuit()
         {
+            if (!GameManager.ShuttDown())
+            {
+                GameManager.Instance.ShuttingDown();
+            }
             _shuttingDown = true;
         }
 
 
         private void OnDestroy()
         {
+            if (!GameManager.ShuttDown())
+            {
+                GameManager.Instance.ShuttingDown();
+            }
             _shuttingDown = true;
         }
     }

@@ -34,7 +34,7 @@ namespace Steamwar.Units {
         {
             if(needInit)
             {
-                spriteRenderer.sprite = data.type.spriteBlue;
+                spriteRenderer.sprite = Type.spriteBlue;
                 
                 needInit = false;
             }
@@ -42,9 +42,9 @@ namespace Steamwar.Units {
 
         protected override void Construction(UnitType type)
         {
-            data = new UnitData
+            _data = new UnitData
             {
-                type = type,
+                Type = type,
                 Health = type.Health,
                 faction = SessionManager.session.PlayerFaction
             };
@@ -80,12 +80,12 @@ namespace Steamwar.Units {
 
         public virtual float GetHealth()
         {
-            return data.Health;
+            return Data.Health;
         }
 
         public virtual float GetDamage(UnitBehaviour attackedUnit)
         {
-            return data.type.damage;
+            return Type.damage;
         }
 
         public void UpdateAnimation()

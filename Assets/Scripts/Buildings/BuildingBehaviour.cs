@@ -28,7 +28,7 @@ namespace Steamwar.Buildings
         {
             if (needInit)
             {
-                spriteRenderer.sprite = data.type.spriteBlue;
+                spriteRenderer.sprite = Type.spriteBlue;
 
                 needInit = false;
             }
@@ -36,9 +36,9 @@ namespace Steamwar.Buildings
 
         protected override void Construction(BuildingType type)
         {
-            data = new BuildingData
+            _data = new BuildingData
             {
-                type = type,
+                Type = type,
                 Health = type.Health,
                 faction = SessionManager.session.PlayerFaction
             };

@@ -6,12 +6,16 @@ namespace Steamwar.Objects
 {
     public abstract class ObjectBehaviour<D, T, S> : ObjectBehaviour, ISerializationCallbackReceiver where D : ObjectData<T, S>, new() where T : ObjectType where S : ObjectDataSerializable, new()
     {
-        public D data;
         public S dataSerializable;
 
-        public override ObjectData Data
+        public new D Data
         {
-            get => data;
+            get => _data as D;
+        }
+
+        public T Type
+        {
+            get => Data?.Type;
         }
 
         public virtual void Start() {
@@ -28,41 +32,43 @@ namespace Steamwar.Objects
 
         public void OnAfterDeserialize()
         {
-            if(data != null) {
-                dataSerializable = data.WriteData();
+            if(Data != null) {
+                dataSerializable = Data.WriteData();
             }
         }
 
         public void OnBeforeSerialize()
         {
-            if (data != null)
+            if (Data != null)
             {
-                data.ReadData(dataSerializable);
+                Data.ReadData(dataSerializable);
             }
         }
 
 
         public override void OnPropInit()
         {
-            if (data == null)
+            if (_data == null)
             {
-                data = new D();
+                _data = new D();
             }
-            if (data != null)
+            if (Data != null)
             {
-                data.ReadData(dataSerializable);
+                Data.ReadData(dataSerializable);
             }
             ObjectElement element = GetComponent<ObjectElement>();
             if(element == null)
             {
-                ConstructionManager.AddElement(this, data.Type);
+                ConstructionManager.AddElement(this, Data.Type);
             }
+            ObjectCache.Add(gameObject);
         }
     }
 
     public abstract class ObjectBehaviour : MonoBehaviour
     {
         public GameObject rendererChild;
+        protected ObjectData _data;
 
         public abstract void OnConstruction(ObjectType type);
 
@@ -162,9 +168,9 @@ namespace Steamwar.Objects
         /// <summary>
         /// The data of this object. Will be converted to ObjectDataSerializable to save it to the disc.
         /// </summary>
-        public abstract ObjectData Data
+        public ObjectData Data
         {
-            get;
+            get => _data;
         }
 
         /// <summary>

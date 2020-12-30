@@ -1,10 +1,12 @@
-﻿using Steamwar.Utils;
+﻿using Steamwar.Core;
+using Steamwar.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 namespace Steamwar.Objects
 {
@@ -13,10 +15,6 @@ namespace Steamwar.Objects
     /// </summary>
     public static class ObjectCache
     {
-        public delegate void ObjectAdded(ObjectBehaviour obj);
-
-        public delegate void ObjectRemoved(ObjectBehaviour obj);
-
         /// <summary>
         /// All objects on the board by there kind
         /// </summary>
@@ -34,31 +32,11 @@ namespace Steamwar.Objects
         /// </summary>
         //public static IDictionary<string, ObjectBehaviour> objectByName = new Dictionary<string, ObjectBehaviour>();
 
-        public static IDictionary<ObjectTag, HashSet<int>> objerctByTag = new Dictionary<ObjectTag, HashSet<int>>();
-
-        private static event ObjectAdded OnCreation;
-
-        private static event ObjectRemoved OnDeletion;
-
-        public static void Listen(ObjectAdded callback)
-        {
-            OnCreation += callback;
-        }
-
-        public static void Unlisten(ObjectAdded callback)
-        {
-            OnCreation -= callback;
-        }
-
-        public static void Listen(ObjectRemoved callback)
-        {
-            OnDeletion += callback;
-        }
-
-        public static void Unlisten(ObjectRemoved callback)
-        {
-            OnDeletion -= callback;
-        }
+        public static IDictionary<ObjectTag, HashSet<int>> objectsByTag = new Dictionary<ObjectTag, HashSet<int>>();
+        /// <summary>
+        /// All objects on the boartd by there faction index.
+        /// </summary>
+        public static IDictionary<int, HashSet<int>> objectsByFaction = new Dictionary<int, HashSet<int>>();
 
         public static void Add(GameObject gameObject)
         {
@@ -71,6 +49,11 @@ namespace Steamwar.Objects
 
         public static void Add(ObjectBehaviour obj)
         {
+            if (GameManager.ShuttDown())
+            {
+                return;
+            }
+            EventManager.Instance.objectConstrcuted.Invoke(obj);
             int id = obj.GetInstanceID();
             ObjectData data = obj.Data;
             objectsByKind.AddToSub(obj.Kind, id);
@@ -78,8 +61,9 @@ namespace Steamwar.Objects
             {
                 return;
             }
-            ObjectType type = obj.Data.Type;
+            ObjectType type = data.Type;
             objectByType.AddToSub(type, id);
+            objectsByFaction.AddToSub(obj.Data.faction.index, id);
             ObjectTag tag = type.Tag;
             if (tag == ObjectTag.None)
             {
@@ -90,7 +74,7 @@ namespace Steamwar.Objects
             {
                 if((tag & objTag) == objTag)
                 {
-                    objerctByTag.AddToSub(objTag, id);
+                    objectsByTag.AddToSub(objTag, id);
                 }
             }
         }
@@ -106,6 +90,11 @@ namespace Steamwar.Objects
 
         public static void Remove(ObjectBehaviour obj)
         {
+            if (GameManager.ShuttDown())
+            {
+                return;
+            }
+            EventManager.Instance.objectDeconstrcuted.Invoke(obj);
             int id = obj.GetInstanceID();
             ObjectData data = obj.Data;
             objectsByKind.RemoveFromSub(obj.Kind, id);
@@ -115,6 +104,7 @@ namespace Steamwar.Objects
             }
             ObjectType type = obj.Data.Type;
             objectByType.RemoveFromSub(type, id);
+            objectsByFaction.RemoveFromSub(obj.Data.faction.index, id);
             objectById.Remove(id);
             ObjectTag tag = type.Tag;
             if (tag == ObjectTag.None)
@@ -125,10 +115,79 @@ namespace Steamwar.Objects
             {
                 if ((tag & objTag) == objTag)
                 {
-                    objerctByTag.RemoveFromSub(objTag, id);
+                    objectsByTag.RemoveFromSub(objTag, id);
                 }
             }
         }
 
+        public static IEnumerable<ObjectBehaviour> GetObjects(ObjectTag tag)
+        {
+            return from id in objectsByTag[tag]
+                   select GetObject(id);
+        }
+
+        public static ObjectBehaviour GetObject(int index)
+        {
+            return objectById[index];
+        }
+
+        public static IEnumerable<ObjectBehaviour> GetObjectsFromFaction(int faction)
+        {
+            return from id in objectsByFaction.AddIfAbsent(faction)
+                   select GetObject(id);
+        }
+
+        public static IEnumerable<(int, IEnumerable<ObjectBehaviour>)> GetObjectsByFactions()
+        {
+            return from pair in objectsByFaction
+                   select (pair.Key, (from id in pair.Value select GetObject(id)));
+        }
+
+    }
+
+    public struct CacheListener
+    {
+
+    }
+
+    public struct CacheKey
+    {
+        private readonly ObjectTag tag;
+        private readonly int index;
+
+        public CacheKey(ObjectTag tag) : this()
+        {
+            this.tag = tag;
+            this.index = -1;
+        }
+
+        public CacheKey(int index) : this()
+        {
+            this.tag = ObjectTag.None;
+            this.index = index;
+        }
+
+        public bool IsTag
+        {
+            get
+            {
+                return tag != ObjectTag.None;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is CacheKey key &&
+                   tag == key.tag &&
+                   index == key.index;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashCode = -1422057162;
+            hashCode = hashCode * -1521134295 + tag.GetHashCode();
+            hashCode = hashCode * -1521134295 + index.GetHashCode();
+            return hashCode;
+        }
     }
 }

@@ -13,6 +13,8 @@ namespace Steamwar.Factions
     [Serializable]
     public class Faction
     {
+        public static readonly Faction None = new Faction(-1, "missing", 0xFF251905);
+        
         public string name;
         public uint color;
         public int index;
@@ -29,9 +31,26 @@ namespace Steamwar.Factions
             this.color = color;
         }
 
+        private Faction(int index, string name, uint color)
+        {
+            this.index = index;
+            this.name = name;
+            this.color = color;
+        }
+
+        public bool Exists
+        {
+            get => index >= 0;
+        }
+
         public bool IsPlayer
         {
-            get => index == SessionManager.session.playerIndex;
+            get => FactionManager.IsPlayerFaction(index);
+        }
+
+        public FactionData Data
+        {
+            get => FactionManager.GetData(index);
         }
     }
 }

@@ -85,7 +85,7 @@ namespace Steamwar.Board
                 UnitBehaviour unit = unitObj.GetComponent<UnitBehaviour>();
                 if (unit != null)
                 {
-                    units.Add(unit.data.Copy());
+                    units.Add(unit.Data.Copy());
                 }
             }
             foreach (Transform buildingObj in buildingContainer)
@@ -93,7 +93,7 @@ namespace Steamwar.Board
                 BuildingBehaviour building = buildingObj.GetComponent<BuildingBehaviour>();
                 if (building != null)
                 {
-                   buildings.Add(building.data.Copy());
+                   buildings.Add(building.Data.Copy());
                 }
             }
             BoardStorage tileStorage = new BoardStorage(MAX_SIZE, 8);

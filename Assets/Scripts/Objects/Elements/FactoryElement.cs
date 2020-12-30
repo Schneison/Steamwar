@@ -9,41 +9,6 @@ using System.Threading.Tasks;
 
 namespace Steamwar.Objects
 {
-    public class Product
-    {
-
-    }
-
-    public enum EffektType
-    {
-        UNIT,
-    }
-
-    [Serializable]
-    public class EffektConfig {
-
-        [Serializable]
-        public class Object : EffektConfig
-        {
-            public ObjectType type;
-        }
-
-        [Serializable]
-        public class Repair : EffektConfig
-        {
-            public int amount;
-        }
-
-    }
-
-    [Serializable]
-    public class FactoryConfig
-    {
-        public int progressTime;
-        [Header("Effect")]
-        public EffektType effectType;
-        public EffektConfig effectConfig;
-    }
 
     public class FactoryElement<O> : ObjectElement<O> where O : ObjectBehaviour
     {
@@ -56,6 +21,20 @@ namespace Steamwar.Objects
         /// 
         /// </summary>
         public int progressMax = -1;
+
+        /// <summary>
+        /// The config of this factory.
+        /// </summary>
+        public FactoryConfig config;
+
+        /// <summary>
+        /// The config for the currently qued product
+        /// </summary>
+        public ProductConfig product;
+        /// <summary>
+        /// The data for the currently qued product
+        /// </summary>
+        public ProductContext context;
 
         public virtual int ProgressMax
         {
@@ -75,7 +54,7 @@ namespace Steamwar.Objects
         /// <returns>0 if the object produces nothing.</returns>
         public virtual int CalculateProgressrMax()
         {
-            return 0;
+            return product?.progressTime ?? 0;
         }
 
         /// <summary>
@@ -84,7 +63,7 @@ namespace Steamwar.Objects
         /// <returns>True if the object can make progress</returns>
         public virtual bool CanProgress()
         {
-            return false;
+            return product?.objectConfig?.CanProgress(Behaviour, context) ?? false;
         }
 
         /// <summary>
@@ -93,7 +72,7 @@ namespace Steamwar.Objects
         /// <returns>True if the object can start the production</returns>
         public virtual bool CanStartProduction()
         {
-            return false;
+            return product?.objectConfig?.CanStartProduction(Behaviour, context) ?? false;
         }
 
         /// <summary>
@@ -101,7 +80,7 @@ namespace Steamwar.Objects
         /// </summary>
         public virtual void OnProduce()
         {
-
+            product?.objectConfig?.OnProduce(Behaviour, context);
         }
 
         public void FixedUpdate()

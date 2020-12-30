@@ -1,4 +1,5 @@
-﻿using Steamwar.Utils;
+﻿using Steamwar.Objects;
+using Steamwar.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

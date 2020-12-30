@@ -73,7 +73,7 @@ namespace Steamwar.Interaction
         /// </summary>
         public bool AllowedToMove
         {
-            get => HasPlayerFaction && Unit != null && Unit.data.CanMove;
+            get => HasPlayerFaction && Unit != null && Unit.Data.CanMove;
         }
 
 

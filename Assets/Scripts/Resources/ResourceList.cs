@@ -10,7 +10,31 @@ namespace Steamwar.Resources
     [Serializable]
     public class ResourceList
     {
-        [Range(-1, 8192)]
-        public int moneyAmount = -1;
+        [Range(0, 8192)]
+        public int moneyAmount = 0;
+
+        public ResourceList()
+        {
+            this.moneyAmount = 0;
+        }
+
+        public ResourceList(int moneyAmount)
+        {
+            this.moneyAmount = moneyAmount;
+        }
+
+        public int this[Resource type]
+        {
+            get
+            {
+                return moneyAmount;
+            }
+        }
+
+        public static ResourceList operator +(ResourceList a) => a;
+
+        public static ResourceList operator +(ResourceList a, ResourceList b) => new ResourceList(a.moneyAmount + b.moneyAmount);
+
+        public static ResourceList operator -(ResourceList a, ResourceList b) => new ResourceList(a.moneyAmount - b.moneyAmount);
     }
 }

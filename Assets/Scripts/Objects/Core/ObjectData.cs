@@ -7,18 +7,17 @@ namespace Steamwar.Objects
 {
     public abstract class ObjectData<T, S> : ObjectData where T : ObjectType where S : ObjectDataSerializable, new()
     {
-        public T type;
 
-        public override ObjectType Type
+        public new T Type
         {
-            get => type;
-            set => type = value as T;
+            get => _type as T;
+            set => _type = value;
         }
 
         public virtual void WriteData(S serializable)
         {
             serializable.position = new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y));
-            serializable.type = type.id;
+            serializable.type = Type.id;
             serializable.Faction = faction;
         }
 
@@ -32,7 +31,7 @@ namespace Steamwar.Objects
         public virtual void ReadData(S serializable)
         {
             Position = new Vector3(serializable.position.x, serializable.position.y, 0);
-            type = SessionManager.registry.GetType<T>(serializable.type);
+            _type = SessionManager.registry.GetType<T>(serializable.type);
             faction = serializable.Faction;
         }
 
@@ -42,6 +41,7 @@ namespace Steamwar.Objects
         internal Vector3 position;
         public Faction faction;
         public int hash;
+        protected ObjectType _type;
 
         public Vector3 Position
         {
@@ -79,10 +79,10 @@ namespace Steamwar.Objects
         /// <summary>
         /// The object type of this object.
         /// </summary>
-        public abstract ObjectType Type
+        public ObjectType Type
         {
-            get;
-            set;
+            get => _type;
+            set => _type = value;
         }
 
         /// <summary>

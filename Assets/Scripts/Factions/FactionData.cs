@@ -9,17 +9,39 @@ using UnityEngine;
 namespace Steamwar.Factions
 {
     [Serializable]
-    public struct FactionData
+    public class FactionData
     {
+        public static readonly FactionData None = new FactionData(-1);
+
         public readonly int factionIndex;
-        public ResourceList resources;
-        public FactionPrediction prediction;
+        private ResourceList resources;
+        private FactionPrediction prediction;
 
         public FactionData(int factionIndex)
         {
             this.factionIndex = factionIndex;
             this.resources = new ResourceList();
             this.prediction = CreatePrediction();
+        }
+
+        public bool IsPlayer
+        {
+            get => FactionManager.IsPlayerFaction(factionIndex);
+        }
+
+        public bool Exists
+        {
+            get => factionIndex >= 0;
+        }
+        public FactionPrediction Prediction
+        {
+            get => prediction;
+            set => prediction = value;
+        }
+        public ResourceList Resources 
+        { 
+            get => resources; 
+            set => resources = value; 
         }
 
         public void Update()
@@ -29,7 +51,7 @@ namespace Steamwar.Factions
 
         public static FactionPrediction CreatePrediction()
         {
-            return new FactionPrediction();
+            return FactionPrediction.Empty();
         }
 
         public void UpdatePrediction()
