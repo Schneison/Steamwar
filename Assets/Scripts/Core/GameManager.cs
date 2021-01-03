@@ -8,11 +8,11 @@ namespace Steamwar
 {
     public class GameManager : Singleton<GameManager>
     {
-        internal static GameState state;
+        internal static LifcycleState state;
 
         public void StartLoading(int sceneIndex)
         {
-            state = GameState.LOADING;
+            state = LifcycleState.LOADING;
             LoadingScreen.Instance.Show(SceneManager.LoadSceneAsync(sceneIndex));
         }
 
@@ -28,32 +28,37 @@ namespace Steamwar
 
         public static bool Menu()
         {
-            return state == GameState.MAIN_MENU;
+            return state == LifcycleState.MAIN_MENU;
         }
 
         public static bool Loading()
         {
-            return state == GameState.LOADING;
+            return state == LifcycleState.LOADING;
         }
 
         public static bool Playing()
         {
-            return state == GameState.SESSION;
+            return state == LifcycleState.SESSION;
         }
 
         public static bool ShuttDown()
         {
-            return state == GameState.SHUTTTING_DOWN;
+            return state == LifcycleState.SHUTTTING_DOWN;
         }
 
         public void ShuttingDown()
         {
-            state = GameState.SHUTTTING_DOWN;
+            state = LifcycleState.SHUTTTING_DOWN;
         }
     }
 
-    public enum GameState
+    public enum LifcycleState
     {
-        PERSISTENT, MAIN_MENU, LOADING, SESSION, SHUTTTING_DOWN
+        NONE,
+        PERSISTENT, 
+        MAIN_MENU, 
+        LOADING, 
+        SESSION,
+        SHUTTTING_DOWN
     }
 }

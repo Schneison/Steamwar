@@ -69,6 +69,7 @@ namespace Steamwar.Objects
         [Serializable]
         public class Object : EffektConfig
         {
+            public ResourceProps resources;
             public ObjectType type;
         }
 
@@ -97,13 +98,21 @@ namespace Steamwar.Objects
             }
 
             public override bool CanStartProduction(ObjectBehaviour obj, ProductContext context)
-            {
-                Faction faction = FactionManager.GetFaction(obj);
-                int amount = faction.Data.Resources[type];
-                int maxAmount = faction.Data.Prediction.capacity[type];
+            { 
+                FactionData data = FactionManager.GetData(obj);
+                int amount = data.Exists() ? data.Resources[type] : 0;
+                int maxAmount = data.Exists() ? data.Resources.Capacity[type] : 0;
                 return amount < maxAmount;
             }
 
+            public override void OnProduce(ObjectBehaviour obj, ProductContext context)
+            {
+                FactionData data = obj.Data.faction.Data;
+                if(data.Exists())
+                {
+                    data.Resources[type] += amount;
+                }
+            }
         }
 
     }
@@ -171,6 +180,12 @@ namespace Steamwar.Objects
     {
         public string productName;
         public Vector3Int cellPos;
+
+        public ProductContext(string productName, Vector3Int cellPos)
+        {
+            this.productName = productName;
+            this.cellPos = cellPos;
+        }
     }
 
 
@@ -193,7 +208,12 @@ namespace Steamwar.Objects
         /// </summary>
         public string automaticName;
 
-        public ProductConfig GetConfig(string name)
+        public ProductConfig GetAutomaticProduct()
+        {
+            return GetProduct(automaticName);
+        }
+
+        public ProductConfig GetProduct(string name)
         {
             return products
                 .Where((product)=>product.name == name)

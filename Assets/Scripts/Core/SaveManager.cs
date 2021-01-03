@@ -126,7 +126,6 @@ namespace Steamwar
             session.factions = new Faction[] { faction, new Faction("Team RED", 0xFF6A0A22) };
             session.roundFactionsSequence = session.factions;
             session.activeSector = ScriptableObjectUtility.GetAllInstances<Sector>()[0].ToData();
-            session.factionDatas = new FactionData[] { new FactionData(0), new FactionData(1) };
             SessionManager.Instance.rounds.OnLoad(session);
         }
 

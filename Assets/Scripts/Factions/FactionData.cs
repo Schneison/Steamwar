@@ -1,4 +1,6 @@
-﻿using Steamwar.Resources;
+﻿using Steamwar.Core;
+using Steamwar.Resources;
+using Steamwar.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +11,20 @@ using UnityEngine;
 namespace Steamwar.Factions
 {
     [Serializable]
-    public class FactionData
+    [RequireComponent(typeof(ResourceContainer))]
+    public class FactionData : SteamBehaviour
     {
-        public static readonly FactionData None = new FactionData(-1);
-
         public readonly int factionIndex;
-        private ResourceList resources;
-        private FactionPrediction prediction;
+        private ResourceContainer _resources;
 
         public FactionData(int factionIndex)
         {
             this.factionIndex = factionIndex;
-            this.resources = new ResourceList();
-            this.prediction = CreatePrediction();
+        }
+
+        protected override void OnInit()
+        {
+            _resources = GetComponent<ResourceContainer>();
         }
 
         public bool IsPlayer
@@ -29,34 +32,10 @@ namespace Steamwar.Factions
             get => FactionManager.IsPlayerFaction(factionIndex);
         }
 
-        public bool Exists
-        {
-            get => factionIndex >= 0;
-        }
-        public FactionPrediction Prediction
-        {
-            get => prediction;
-            set => prediction = value;
-        }
-        public ResourceList Resources 
+        public ResourceContainer Resources 
         { 
-            get => resources; 
-            set => resources = value; 
+            get => _resources;
         }
 
-        public void Update()
-        {
-            UpdatePrediction();
-        }
-
-        public static FactionPrediction CreatePrediction()
-        {
-            return FactionPrediction.Empty();
-        }
-
-        public void UpdatePrediction()
-        {
-
-        }
     }
 }

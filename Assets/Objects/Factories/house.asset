@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: house
   m_EditorClassIdentifier: 
   products:
-  - progressTime: 0
+  - progressTime: 100
+    name: tax
     effectType: 3
     objectConfig:
+      resources:
+        moneyAmount: 0
       type: {fileID: 0}
     repairConfig:
       amount: 0
     resourceConfig:
-      type: {fileID: 0}
-      amount: 0
+      type: {fileID: 11400000, guid: 99b57d3a0058f7d4787c2e3f62708e65, type: 2}
+      amount: 10
+  automatic: 1
+  automaticName: tax

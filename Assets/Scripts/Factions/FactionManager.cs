@@ -9,12 +9,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 namespace Steamwar.Factions
 {
     public class FactionManager : Singleton<FactionManager>
     {
+
+        public delegate void DataAction(FactionData data);
+
+        public FactionData factionPrefab;
+        public FactionData[] datas;
+
+        protected override void OnSpawn()
+        {
+            List<FactionData> factionData = new List<FactionData>();
+            foreach(Faction faction in SessionManager.session.factions)
+            {
+                FactionData dataObj = Instantiate(factionPrefab, transform);
+                dataObj.name = $"Faction({faction.index}={faction.name})";
+                factionData.Add(dataObj);
+                EventManager.Instance.objectConstrcuted.AddListener(dataObj.Resources.OnObjectConstructed);
+                EventManager.Instance.objectDeconstructed.AddListener(dataObj.Resources.OnObjectDeconstructed);
+            }
+            datas = factionData.ToArray();
+        }
 
         public static Faction GetFaction(int index)
         {
@@ -30,6 +50,15 @@ namespace Steamwar.Factions
             get => SessionManager.session.factions;
         }
 
+        public static FactionData GetData(ObjectBehaviour obj)
+        {
+            Faction faction = GetFaction(obj);
+            if(faction == Faction.None)
+            {
+                return null;
+            }
+            return GetData(faction.index);
+        }
 
         public static FactionData GetData(Faction faction)
         {
@@ -38,21 +67,21 @@ namespace Steamwar.Factions
 
         public static FactionData GetData(int index)
         {
-            if (index >= SessionManager.session.factions.Length || index < 0)
+            if (index >= Instance.datas.Length || index < 0)
             {
-                return FactionData.None;
+                return null;
             }
-            return SessionManager.session.factionDatas[index];
+            return Instance.datas[index];
         }
 
-        public static bool UpdatePrediction(int faction, PredictionHandler handler)
+        public static bool UpdateData(int faction, DataAction handler)
         {
             FactionData data = GetData(faction);
-            if (!data.Exists)
+            if (!data.Exists())
             {
                 return false;
             }
-            data.Prediction = handler(data.Prediction);
+            handler(data);
             return true;
         }
 
@@ -70,61 +99,6 @@ namespace Steamwar.Factions
         public static bool IsPlayerFaction(int index)
         {
             return SessionManager.session.playerIndex == index;
-        }
-
-        /// <summary>
-        /// Called if an storage object gets added to the board.
-        /// </summary>
-        public void OnStorageAdded(ObjectBehaviour obj)
-        {
-            obj.ActOnBuilding(
-                (data, type, building) => type.Tag.HasFlag(ObjectTag.Storage),
-                (data, type, building) =>
-                {
-                    ResourceList capacity = type.storageCapacity;
-                    UpdatePrediction(data.faction.index, (prediction) => prediction.WithCapacity(prediction.capacity + capacity));
-                    EventManager.Instance.resourceUpdate.Invoke(data.faction.Data);
-                });
-        }
-
-        /// <summary>
-        /// Called if an storage object gets removed from the board.
-        /// </summary>
-        public void OnStorageRemoved(ObjectBehaviour obj)
-        {
-            obj.ActOnBuilding(
-                (data, type, building) => type.Tag.HasFlag(ObjectTag.Storage),
-                (data, type, building) =>
-            {
-                ResourceList capacity = type.storageCapacity;
-                UpdatePrediction(data.faction.index, (prediction) => prediction.WithCapacity(prediction.capacity - capacity));
-                EventManager.Instance.resourceUpdate.Invoke(data.faction.Data);
-            });
-        }
-
-        /// <summary>
-        /// Called after the board was created an every object constructed. 
-        /// </summary>
-        public void OnBoardCreated()
-        {
-            IDictionary<int, FactionPrediction> predictions = new Dictionary<int, FactionPrediction>();
-            foreach(Faction faction in Factions)
-            {
-                predictions.Add(faction.index, FactionPrediction.Empty());
-            }
-            foreach(ObjectBehaviour obj in ObjectCache.GetObjects(ObjectTag.Storage))
-            {
-                obj.ActOnBuilding((data, type, building) =>
-                {
-                    FactionPrediction prediction = predictions[data.faction.index];
-                    ResourceList capacity = type.storageCapacity;
-                    predictions[data.faction.index] = prediction.WithCapacity(prediction.capacity + capacity);
-                });
-            }
-            foreach (Faction faction in Factions)
-            {
-                UpdatePrediction(faction.index, (old)=>predictions[faction.index]);
-            }
         }
     }
 }

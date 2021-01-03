@@ -13,14 +13,14 @@ namespace Steamwar.UI
         public Text currentAmount;
         public Text maxAmount;
 
-        public void UpdateText(FactionData data)
+        public void UpdateText(ResourceContainer container)
         {
-            if (!data.IsPlayer)
+            if (!container.IsPlayer)
             {
                 return;
             }
-            int amount = data.Resources.moneyAmount;
-            int capacity = data.Prediction.capacity.moneyAmount;
+            int amount = container[resource];
+            int capacity = container.Capacity[resource];
             int digets = Math.Max(3, (int)Math.Floor(Math.Log10(capacity) + 1));
             currentAmount.text = amount.ToString(digets == 3 ? "000" : "0000");
             maxAmount.text = capacity.ToString(digets == 3 ? "000" : "0000");

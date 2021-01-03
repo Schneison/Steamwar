@@ -27,7 +27,7 @@ namespace Steamwar.Objects
         public override void OnConstruction(ObjectType type)
         {
             Construction(type as T);
-            ObjectCache.Add(gameObject);
+            Board.Add(gameObject);
         }
 
         public void OnAfterDeserialize()
@@ -61,7 +61,7 @@ namespace Steamwar.Objects
             {
                 ConstructionManager.AddElement(this, Data.Type);
             }
-            ObjectCache.Add(gameObject);
+            Board.Add(gameObject);
         }
     }
 
@@ -210,7 +210,7 @@ namespace Steamwar.Objects
 
         public virtual void OnDisable()
         {
-            ObjectCache.Remove(gameObject);
+            Board.Remove(gameObject);
         }
     }
 }

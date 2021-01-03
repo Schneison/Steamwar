@@ -2,7 +2,7 @@
 
 
 namespace Steamwar.Utils {
-    public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+    public class Singleton<T> : SteamBehaviour where T : MonoBehaviour
     {
 
         private static readonly object _lock = new object();

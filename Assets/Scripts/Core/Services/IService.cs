@@ -8,9 +8,5 @@ namespace Steamwar
 {
     public interface IService
     {
-        /// <returns>The state in that this service is available.</returns>
-        GameState GetState();
-
-        bool Available();
     }
 }

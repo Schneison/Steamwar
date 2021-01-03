@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Steamwar.Factions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,12 @@ namespace Steamwar.Utils
 {
     public static class ExtensionMethods
     {
+
+        public static bool Exists(this FactionData data)
+        {
+            return data != null;
+        }
+
         public static TValue GetOrDefault<TKey,TValue>(this IDictionary<TKey, TValue> source, TKey key, Func<TValue> defaultValue)
         {
             return source.TryGetValue(key, out TValue value) ? value : defaultValue();

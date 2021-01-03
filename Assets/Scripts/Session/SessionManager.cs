@@ -10,8 +10,11 @@ using System;
 
 namespace Steamwar
 {
+
     public class SessionManager : Singleton<SessionManager>
     {
+        public static ServiceContainer<Registry> registryService = new ServiceContainer<Registry>(()=>new Registry(), (state) => state == LifcycleState.SESSION);
+
         public Camera mainCamera;
         public Grid world;
         public Tilemap ground;
@@ -23,7 +26,7 @@ namespace Steamwar
         public static Session session;
         public static Registry registry;
 
-        void Awake()
+        protected override void OnInit()
         {
             registry = new Registry();
             rounds = GetComponent<RoundManager>();

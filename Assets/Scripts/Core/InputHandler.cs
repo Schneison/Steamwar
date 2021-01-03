@@ -23,7 +23,7 @@ namespace Steamwar {
 
         private bool[] buttonDown = new bool[] { false, false, false};
 
-        void Start()
+        protected override void OnInit()
         {
             List<IMouseListener> mouseListeners = new List<IMouseListener>
             {

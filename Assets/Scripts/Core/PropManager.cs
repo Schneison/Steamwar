@@ -8,11 +8,11 @@ namespace Steamwar.Core
     public class PropManager : Singleton<PropManager>
     {
         public Stack<ObjectBehaviour> props = new Stack<ObjectBehaviour>();
-        private bool _initialized = false;
+        private bool _init = false;
 
         public static void CheckForProp(ObjectBehaviour behaviour)
         {
-            if(!Instance._initialized)
+            if(!Instance._init)
             {
                 Instance.props?.Push(behaviour);
             }
@@ -27,9 +27,9 @@ namespace Steamwar.Core
                     prop.OnPropInit();
 
                 }
-                if (!_initialized)
+                if (!_init)
                 {
-                    _initialized = true;
+                    _init = true;
                 }
             }
         }

@@ -20,7 +20,7 @@ namespace Steamwar.Interaction
 
         internal Vector3Int? lastMouseCell = null;
 
-        void Start()
+        protected override void OnInit()
         {
             List<ISelectionListener> selectionListeners = new List<ISelectionListener>();
             foreach (GameObject obj in listenersObjects)

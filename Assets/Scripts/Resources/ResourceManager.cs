@@ -9,11 +9,6 @@ namespace Steamwar.Resources
 
         public delegate void ResourceUpdateEvent(int factionId, Resource resource, int amount, int maxAmount);
 
-        void Start()
-        {
-           
-        }
-
 
         void Update()
         {

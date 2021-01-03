@@ -13,7 +13,6 @@ namespace Steamwar
     public class Session
     {
         public Faction[] factions;
-        public FactionData[] factionDatas;
         public int playerIndex;
         /* Sector */
         public SectorData activeSector;
@@ -42,7 +41,6 @@ namespace Steamwar
             return new SessionData()
             {
                 factions = factions,
-                factionDatas = factionDatas,
                 playerFaction = PlayerFaction.index,
 
                 sectorData = activeSector,

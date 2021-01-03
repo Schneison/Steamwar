@@ -98,6 +98,16 @@ namespace Steamwar.Objects
             Vector2Int pos2 = (position - new Vector2(0.5F, 0.5F)).Floor();
             return pos2.y & short.MaxValue | (pos2.x & short.MaxValue) << 16 | (pos2.x < 0 ? int.MinValue : 0);
         }
+
+        public bool HasFaction(Faction faction)
+        {
+            return HasFaction(faction.index);
+        }
+
+        public bool HasFaction(int index)
+        {
+            return faction.index == index;
+        }
     }
 
 }

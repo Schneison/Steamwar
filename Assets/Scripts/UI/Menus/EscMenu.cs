@@ -18,7 +18,7 @@ namespace Steamwar.UI.Menus
         public LoadMenu loadMenu;
         public Button loadButton;
 
-        public void Start()
+        protected override void OnInit()
         {
             if(SaveGame.GetGames().Length == 0)
             {

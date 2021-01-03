@@ -20,7 +20,7 @@ MonoBehaviour:
     type: 3}
   sprite: {fileID: 7114983493517918410, guid: 967687b2f3332ea4b8dd89327e8af729, type: 3}
   elementPrefab: {fileID: 0}
-  _tag: -1
+  _tag: 1
   health: 30
   hasStorage: 1
   storageCapacity:

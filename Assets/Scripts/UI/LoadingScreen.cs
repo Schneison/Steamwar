@@ -30,11 +30,12 @@ namespace Steamwar.UI
         private Animator animator;
         private bool didTriggerFadeOutAnimation;
 
-        private void Awake()
+        protected override void OnInit()
         {
             Configure();
             Hide();
         }
+
 
         private void Configure()
         {

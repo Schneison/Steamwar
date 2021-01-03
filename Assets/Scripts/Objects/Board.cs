@@ -13,7 +13,7 @@ namespace Steamwar.Objects
     /// <summary>
     /// Keeps track of every object that is currently on the board.
     /// </summary>
-    public static class ObjectCache
+    public static class Board
     {
         /// <summary>
         /// All objects on the board by there kind
@@ -94,7 +94,7 @@ namespace Steamwar.Objects
             {
                 return;
             }
-            EventManager.Instance.objectDeconstrcuted.Invoke(obj);
+            EventManager.Instance.objectDeconstructed.Invoke(obj);
             int id = obj.GetInstanceID();
             ObjectData data = obj.Data;
             objectsByKind.RemoveFromSub(obj.Kind, id);
@@ -143,51 +143,5 @@ namespace Steamwar.Objects
                    select (pair.Key, (from id in pair.Value select GetObject(id)));
         }
 
-    }
-
-    public struct CacheListener
-    {
-
-    }
-
-    public struct CacheKey
-    {
-        private readonly ObjectTag tag;
-        private readonly int index;
-
-        public CacheKey(ObjectTag tag) : this()
-        {
-            this.tag = tag;
-            this.index = -1;
-        }
-
-        public CacheKey(int index) : this()
-        {
-            this.tag = ObjectTag.None;
-            this.index = index;
-        }
-
-        public bool IsTag
-        {
-            get
-            {
-                return tag != ObjectTag.None;
-            }
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is CacheKey key &&
-                   tag == key.tag &&
-                   index == key.index;
-        }
-
-        public override int GetHashCode()
-        {
-            int hashCode = -1422057162;
-            hashCode = hashCode * -1521134295 + tag.GetHashCode();
-            hashCode = hashCode * -1521134295 + index.GetHashCode();
-            return hashCode;
-        }
     }
 }

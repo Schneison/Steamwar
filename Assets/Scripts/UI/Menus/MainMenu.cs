@@ -14,7 +14,7 @@ namespace Steamwar.UI.Menus
         public Button loadButton;
         public SectorMenu sectorMenu;
 
-        public void Start()
+        protected override void OnInit()
         {
             if (SaveGame.GetGames().Length == 0)
             {

@@ -13,7 +13,6 @@ namespace Steamwar.Units {
         public const uint FALLBACK_MOVMENT = 3;
 
         public RuntimeAnimatorController animation;
-        public ResourceList cost;
         [Header("Unit Parameters")]
         [Range(0, 20)]
         public uint damage;

@@ -6,14 +6,20 @@ using Steamwar.Sectors;
 using Steamwar.Objects;
 using UnityEngine;
 using System.Collections;
+using Steamwar.Resources;
 
 namespace Steamwar.Utils
 {
-    public class Registry
+    public class Registry : IService
     {
         private readonly Dictionary<string, BuildingType> buildings = new Dictionary<string, BuildingType>();
         private readonly Dictionary<string, UnitType> units = new Dictionary<string, UnitType>();
         private readonly Dictionary<string, Sector> sectors = new Dictionary<string, Sector>();
+        private readonly Dictionary<string, Resource> resources = new Dictionary<string, Resource>();
+
+        public LifcycleState AvailableState => LifcycleState.SESSION;
+
+        public ServiceState State { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public Registry()
         {
@@ -33,6 +39,10 @@ namespace Steamwar.Utils
             foreach (Sector type in ScriptableObjectUtility.GetAllInstances<Sector>())
             {
                 sectors[type.id] = type;
+            }
+            foreach (Resource type in ScriptableObjectUtility.GetAllInstances<Resource>())
+            {
+                resources[type.id] = type;
             }
         }
 
@@ -90,6 +100,11 @@ namespace Steamwar.Utils
             return default;
         }
 
+        public IEnumerable<Resource> GetResources()
+        {
+            return resources.Values;
+        }
+
         public UnitType GetUnit(string name)
         {
             return units[name];
@@ -98,6 +113,11 @@ namespace Steamwar.Utils
         public Sector GetSector(string name)
         {
             return sectors[name];
+        }
+
+        public Resource GetResource(string name)
+        {
+            return resources[name];
         }
     }
 }

@@ -6880,7 +6880,7 @@ PrefabInstance:
     - target: {fileID: 8990082240775771849, guid: 672976dd0852ae149a3145e080e2746e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8990082240775771849, guid: 672976dd0852ae149a3145e080e2746e,
         type: 3}
@@ -7210,6 +7210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a13b916f41ceb04eaabee6ac258e10c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  factionPrefab: {fileID: 4712465650058774105, guid: 8273c5fb99d9d6543b14d50f69e6d8eb,
+    type: 3}
+  datas: []
 --- !u!1 &762809047
 GameObject:
   m_ObjectHideFlags: 0
@@ -8321,7 +8324,7 @@ RectTransform:
   - {fileID: 1804434216}
   - {fileID: 1198511742}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -13767,52 +13770,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardCreation:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 757655397}
-        m_TargetAssemblyTypeName: Steamwar.Factions.FactionManager, Assembly-CSharp
-        m_MethodName: OnBoardCreated
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   objectConstrcuted:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 757655397}
-        m_TargetAssemblyTypeName: Steamwar.Factions.FactionManager, Assembly-CSharp
-        m_MethodName: OnStorageAdded
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  objectDeconstrcuted:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 757655397}
-        m_TargetAssemblyTypeName: Steamwar.Factions.FactionManager, Assembly-CSharp
-        m_MethodName: OnStorageRemoved
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  predictionUpdate:
+      m_Calls: []
+  objectDeconstructed:
     m_PersistentCalls:
       m_Calls: []
+  factionUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  capacityUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 53321722}
+        m_TargetAssemblyTypeName: Steamwar.UI.ResourcePanel, Assembly-CSharp
+        m_MethodName: UpdateText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   resourceUpdate:
     m_PersistentCalls:
       m_Calls:

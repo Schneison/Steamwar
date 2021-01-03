@@ -9,10 +9,6 @@ namespace Steamwar.Objects
         [Header("Layers")]
         public LayerMask unitLayer;
         public LayerMask groundLayer;
-        public void Awake()
-        {
-
-        }
 
         // Update is called once per frame
         void Update()

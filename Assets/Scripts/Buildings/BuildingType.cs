@@ -15,12 +15,11 @@ namespace Steamwar.Buildings
         public uint health;
 
         [Separator("Segments")]
-        [Header("Storage")]
         public bool hasStorage;
 
         //[HideInInspector]
         [ConditionalField(nameof(hasStorage))]
-        public ResourceList storageCapacity;
+        public ResourceProps storageCapacity;
 
         public override uint Health
         {

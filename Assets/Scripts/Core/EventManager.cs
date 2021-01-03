@@ -1,5 +1,6 @@
 ﻿using Steamwar.Factions;
 using Steamwar.Objects;
+using Steamwar.Resources;
 using Steamwar.Utils;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,16 @@ namespace Steamwar.Core
 {
     public class EventManager : Singleton<EventManager>
     {
+        // IBoardListener
         public UnityEvent boardCreation;
+        // IBoardListener
         public ObjectEvent objectConstrcuted;
-        public ObjectEvent objectDeconstrcuted;
-        public FactionEvent predictionUpdate;
-        public FactionEvent resourceUpdate;
+        // IBoardListener
+        public ObjectEvent objectDeconstructed;
+        // IFractionListener
+        public FactionEvent factionUpdate;
+        public ResourceEvent capacityUpdate;
+        public ResourceEvent resourceUpdate;
     }
 
     [Serializable]
@@ -26,6 +32,12 @@ namespace Steamwar.Core
 
     [Serializable]
     public class FactionEvent : UnityEvent<FactionData>
+    {
+
+    }
+
+    [Serializable]
+    public class ResourceEvent : UnityEvent<ResourceContainer>
     {
 
     }

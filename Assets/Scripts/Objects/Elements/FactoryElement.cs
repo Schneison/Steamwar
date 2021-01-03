@@ -28,9 +28,10 @@ namespace Steamwar.Objects
         public FactoryConfig config;
 
         /// <summary>
-        /// The config for the currently qued product
+        /// The config for the currently queued product
         /// </summary>
-        public ProductConfig product;
+        [SerializeField]
+        private ProductConfig _product;
         /// <summary>
         /// The data for the currently qued product
         /// </summary>
@@ -48,13 +49,34 @@ namespace Steamwar.Objects
             }
         }
 
+        public ProductConfig Product {
+            get
+            {
+                if((_product == null || _product.name.Length == 0) && (config != null && config.automatic))
+                {
+                    _product = config.GetAutomaticProduct();
+                    context = new ProductContext(config.automaticName, Vector3Int.up);
+                }
+                return _product;
+            }
+            set
+            {
+                _product = value;
+            }
+        }
+
+        public void SetProduct(ProductConfig product)
+        {
+
+        }
+
         /// <summary>
         /// Can be used to calculate a max progress that the object should exceed to produce an effect.
         /// </summary>
         /// <returns>0 if the object produces nothing.</returns>
         public virtual int CalculateProgressrMax()
         {
-            return product?.progressTime ?? 0;
+            return Product?.progressTime ?? 0;
         }
 
         /// <summary>
@@ -63,7 +85,7 @@ namespace Steamwar.Objects
         /// <returns>True if the object can make progress</returns>
         public virtual bool CanProgress()
         {
-            return product?.objectConfig?.CanProgress(Behaviour, context) ?? false;
+            return Product?.Config?.CanProgress(Behaviour, context) ?? false;
         }
 
         /// <summary>
@@ -72,7 +94,7 @@ namespace Steamwar.Objects
         /// <returns>True if the object can start the production</returns>
         public virtual bool CanStartProduction()
         {
-            return product?.objectConfig?.CanStartProduction(Behaviour, context) ?? false;
+            return Product?.Config?.CanStartProduction(Behaviour, context) ?? false;
         }
 
         /// <summary>
@@ -80,12 +102,12 @@ namespace Steamwar.Objects
         /// </summary>
         public virtual void OnProduce()
         {
-            product?.objectConfig?.OnProduce(Behaviour, context);
+            Product?.Config?.OnProduce(Behaviour, context);
         }
 
         public void FixedUpdate()
         {
-            if (ProgressMax > 0)
+            if (Product != null && ProgressMax > 0)
             {
                 if (
                     progress == 0 && !CanStartProduction() ||
