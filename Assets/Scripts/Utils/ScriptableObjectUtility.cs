@@ -17,9 +17,6 @@ namespace Steamwar.Utils
         /// </summary>
         public static void CreateAsset<T>() where T : ScriptableObject
         {
-            T asset = ScriptableObject.CreateInstance<T>();
-
-            
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             if (path == "")
             {
@@ -30,14 +27,24 @@ namespace Steamwar.Utils
                 path = path.Replace(Path.GetFileName(AssetDatabase.GetAssetPath(Selection.activeObject)), "");
             }
 
-            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/New " + typeof(T).ToString() + ".asset");
+            CreateAsset<T>(path + "/New " + typeof(T).ToString() + ".asset", (action)=>{ });
+        }
+
+        public static void CreateAsset<T>(string path, Action<T> action, bool updateAssets = true) where T : ScriptableObject
+        {
+            T asset = ScriptableObject.CreateInstance<T>();
+            action(asset);
+            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path);
 
             AssetDatabase.CreateAsset(asset, assetPathAndName);
 
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-            EditorUtility.FocusProjectWindow();
-            Selection.activeObject = asset;
+            if (updateAssets)
+            {
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+                EditorUtility.FocusProjectWindow();
+                Selection.activeObject = asset;
+            }
         }
 
         public static string GetOpenFolder()

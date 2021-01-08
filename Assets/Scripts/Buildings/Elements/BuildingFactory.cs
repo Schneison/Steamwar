@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Steamwar.Buildings
 {
-    public class BuildingFactory : FactoryElement<BuildingBehaviour>
+    public class BuildingFactory : FactoryElement<BuildingContainer>
     {
     }
 }

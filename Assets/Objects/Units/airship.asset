@@ -19,11 +19,13 @@ MonoBehaviour:
   spriteRed: {fileID: -7734894807949795715, guid: 82ffb675ba9cc7b41b18b08214e8ed78,
     type: 3}
   sprite: {fileID: -7734894807949795715, guid: 82ffb675ba9cc7b41b18b08214e8ed78, type: 3}
+  baseSprites:
+  - {fileID: -7734894807949795715, guid: 82ffb675ba9cc7b41b18b08214e8ed78, type: 3}
+  coloredSprites: []
   elementPrefab: {fileID: 5026028412070512748, guid: d73b349780750134a812c8b8b3c37747,
     type: 3}
+  _tag: 0
   animation: {fileID: 9100000, guid: c6858e44b64917c469f2a71d187ab6e1, type: 2}
-  cost:
-    moneyAmount: 0
   damage: 2
   health: 6
   speed: 0.35

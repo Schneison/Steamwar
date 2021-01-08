@@ -19,6 +19,10 @@ MonoBehaviour:
   spriteRed: {fileID: -3739738397781451314, guid: 967687b2f3332ea4b8dd89327e8af729,
     type: 3}
   sprite: {fileID: 7114983493517918410, guid: 967687b2f3332ea4b8dd89327e8af729, type: 3}
+  baseSprites:
+  - {fileID: -1902499784304978931, guid: 911d4e31f0fd2c5499ce0b439ccb8bbf, type: 3}
+  coloredSprites:
+  - {fileID: -2103510987136548113, guid: 911d4e31f0fd2c5499ce0b439ccb8bbf, type: 3}
   elementPrefab: {fileID: 0}
   _tag: 1
   health: 30

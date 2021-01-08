@@ -22,7 +22,7 @@ namespace Steamwar.Objects
         /// <summary>
         /// All objects on the board by there own unique id
         /// </summary>
-        public static IDictionary<int, ObjectBehaviour> objectById = new Dictionary<int, ObjectBehaviour>();
+        public static IDictionary<int, ObjectContainer> objectById = new Dictionary<int, ObjectContainer>();
         /// <summary>
         /// All objects on the board by there type
         /// </summary>
@@ -40,14 +40,14 @@ namespace Steamwar.Objects
 
         public static void Add(GameObject gameObject)
         {
-            ObjectBehaviour obj = gameObject.GetComponent<ObjectBehaviour>();
+            ObjectContainer obj = gameObject.GetComponent<ObjectContainer>();
             if(obj != null)
             {
                 Add(obj);
             }
         }
 
-        public static void Add(ObjectBehaviour obj)
+        public static void Add(ObjectContainer obj)
         {
             if (GameManager.ShuttDown())
             {
@@ -81,14 +81,14 @@ namespace Steamwar.Objects
 
         public static void Remove(GameObject gameObject)
         {
-            ObjectBehaviour obj = gameObject.GetComponent<ObjectBehaviour>();
+            ObjectContainer obj = gameObject.GetComponent<ObjectContainer>();
             if (obj != null)
             {
                 Remove(obj);
             }
         }
 
-        public static void Remove(ObjectBehaviour obj)
+        public static void Remove(ObjectContainer obj)
         {
             if (GameManager.ShuttDown())
             {
@@ -120,24 +120,24 @@ namespace Steamwar.Objects
             }
         }
 
-        public static IEnumerable<ObjectBehaviour> GetObjects(ObjectTag tag)
+        public static IEnumerable<ObjectContainer> GetObjects(ObjectTag tag)
         {
             return from id in objectsByTag[tag]
                    select GetObject(id);
         }
 
-        public static ObjectBehaviour GetObject(int index)
+        public static ObjectContainer GetObject(int index)
         {
             return objectById[index];
         }
 
-        public static IEnumerable<ObjectBehaviour> GetObjectsFromFaction(int faction)
+        public static IEnumerable<ObjectContainer> GetObjectsFromFaction(int faction)
         {
             return from id in objectsByFaction.AddIfAbsent(faction)
                    select GetObject(id);
         }
 
-        public static IEnumerable<(int, IEnumerable<ObjectBehaviour>)> GetObjectsByFactions()
+        public static IEnumerable<(int, IEnumerable<ObjectContainer>)> GetObjectsByFactions()
         {
             return from pair in objectsByFaction
                    select (pair.Key, (from id in pair.Value select GetObject(id)));

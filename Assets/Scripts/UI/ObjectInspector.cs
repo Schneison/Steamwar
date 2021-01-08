@@ -43,7 +43,7 @@ namespace Steamwar.UI
 
         public void OnSelection(SelectionData data, SelectionData oldData)
         {
-            ObjectBehaviour currentObj = data.Obj;
+            ObjectContainer currentObj = data.Obj;
             gameObject.SetActive(true);
             ObjectData currentData = currentObj.Data;
             ObjectType type = currentData.Type;
@@ -76,7 +76,7 @@ namespace Steamwar.UI
             }
 
             factionName.text = currentData.faction.name;
-            factionColor.color = ConvertIntToColor(currentData.faction.color);
+            factionColor.color = currentData.faction.color;
             this.selection = data;
         }
 

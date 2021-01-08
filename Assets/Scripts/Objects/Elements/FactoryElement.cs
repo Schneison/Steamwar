@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Steamwar.Objects
 {
 
-    public class FactoryElement<O> : ObjectElement<O> where O : ObjectBehaviour
+    public class FactoryElement<O> : ObjectElement<O> where O : ObjectContainer
     {
 
         /// <summary>

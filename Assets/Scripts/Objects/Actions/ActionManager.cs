@@ -24,7 +24,7 @@ namespace Steamwar.Objects
     {
         private ActionType activeType = ActionType.Move;
 
-        public static bool HasAction(ObjectBehaviour obj, ActionType type)
+        public static bool HasAction(ObjectContainer obj, ActionType type)
         {
             return obj.GetAction().HasFlag(type);
         }

@@ -7,10 +7,10 @@ namespace Steamwar.Core
 {
     public class PropManager : Singleton<PropManager>
     {
-        public Stack<ObjectBehaviour> props = new Stack<ObjectBehaviour>();
+        public Stack<ObjectContainer> props = new Stack<ObjectContainer>();
         private bool _init = false;
 
-        public static void CheckForProp(ObjectBehaviour behaviour)
+        public static void CheckForProp(ObjectContainer behaviour)
         {
             if(!Instance._init)
             {

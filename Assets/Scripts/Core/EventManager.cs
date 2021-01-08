@@ -13,6 +13,9 @@ namespace Steamwar.Core
 {
     public class EventManager : Singleton<EventManager>
     {
+        public SessionEvent sessionLoaded;
+        public SessionEvent sessionUpdated;
+        public SessionEvent factionChanged;
         // IBoardListener
         public UnityEvent boardCreation;
         // IBoardListener
@@ -26,7 +29,7 @@ namespace Steamwar.Core
     }
 
     [Serializable]
-    public class ObjectEvent : UnityEvent<ObjectBehaviour>
+    public class ObjectEvent : UnityEvent<ObjectContainer>
     {
     }
 
@@ -38,6 +41,12 @@ namespace Steamwar.Core
 
     [Serializable]
     public class ResourceEvent : UnityEvent<ResourceContainer>
+    {
+
+    }
+
+    [Serializable]
+    public class SessionEvent : UnityEvent<Session>
     {
 
     }

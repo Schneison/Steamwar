@@ -50,7 +50,7 @@ namespace Steamwar.Factions
             get => SessionManager.session.factions;
         }
 
-        public static FactionData GetData(ObjectBehaviour obj)
+        public static FactionData GetData(ObjectContainer obj)
         {
             Faction faction = GetFaction(obj);
             if(faction == Faction.None)
@@ -85,7 +85,7 @@ namespace Steamwar.Factions
             return true;
         }
 
-        public static Faction GetFaction(ObjectBehaviour obj)
+        public static Faction GetFaction(ObjectContainer obj)
         {
             ObjectData data = obj.Data;
             if (data == null)

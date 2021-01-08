@@ -1,4 +1,5 @@
 ﻿using Steamwar.Buildings;
+using Steamwar.Move;
 using Steamwar.Objects;
 using Steamwar.Units;
 using System;
@@ -18,14 +19,18 @@ namespace Steamwar.Interaction
         /// This should be used if no object is currently selected.
         /// </summary>
         public static readonly SelectionData EMPTY = new SelectionData(null);
-        private readonly ObjectBehaviour obj;
+        private readonly ObjectContainer obj;
+        private readonly SelectionBehaviour objSelectable;
+        private readonly MovementController movement;
         private Vector3Int? _cellPos;
 
 
-        public SelectionData(ObjectBehaviour obj)
+        public SelectionData(ObjectContainer obj)
         {
             this.obj = obj;
             this._cellPos = null;
+            this.objSelectable = obj != null ? obj.GetComponent<SelectionBehaviour>() : null;
+            this.movement = obj != null ? obj.GetComponent<MovementController>() : null;
         }
 
         /// <summary>
@@ -51,29 +56,12 @@ namespace Steamwar.Interaction
             }
         }
 
-
-        /// <summary>
-        /// Retuns the object as a unit if the object is an unit.
-        /// </summary>
-        public UnitBehaviour Unit
-        {
-            get => Obj as UnitBehaviour;
-        }
-
-        /// <summary>
-        /// Retuns the object as a building if the object is a building.
-        /// </summary>
-        public BuildingBehaviour Building
-        {
-            get => Obj as BuildingBehaviour;
-        }
-
         /// <summary>
         /// If the player can move this unit.
         /// </summary>
         public bool AllowedToMove
         {
-            get => HasPlayerFaction && Unit != null && Unit.Data.CanMove;
+            get => HasPlayerFaction && Movement != null && Movement.CanMove;
         }
 
 
@@ -88,7 +76,11 @@ namespace Steamwar.Interaction
         /// <summary>
         /// The current object.
         /// </summary>
-        public ObjectBehaviour Obj => obj;
+        public ObjectContainer Obj => obj;
+
+        public SelectionBehaviour Selectable => objSelectable;
+
+        public MovementController Movement => movement;
 
 
         /// <summary>
@@ -96,7 +88,7 @@ namespace Steamwar.Interaction
         /// </summary>
         /// <param name="other">An other object that should be compared to the selected object.</param>
         /// <returns>True if they are the same</returns>
-        public bool IsSameObject(ObjectBehaviour other)
+        public bool IsSameObject(ObjectContainer other)
         {
             return other == Obj;
         }

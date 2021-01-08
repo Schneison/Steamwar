@@ -11,6 +11,7 @@ namespace Steamwar.Objects
     {
         Undefined = -1,
         None = 0,
-        Storage = 1
+        Storage = 1,
+        Movable = 2,
     }
 }

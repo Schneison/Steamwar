@@ -32,7 +32,7 @@ namespace Steamwar.Objects
         /// Can be used to calculate a max progress that the object should exceed to produce an effect.
         /// </summary>
         /// <returns>0 if the object produces nothing.</returns>
-        public virtual int CalculateProgressrMax(ObjectBehaviour obj)
+        public virtual int CalculateProgressrMax(ObjectContainer obj)
         {
             return 0;
         }
@@ -41,7 +41,7 @@ namespace Steamwar.Objects
         /// Determines if the object can currently progress.
         /// </summary>
         /// <returns>True if the object can make progress</returns>
-        public virtual bool CanProgress(ObjectBehaviour obj, ProductContext context)
+        public virtual bool CanProgress(ObjectContainer obj, ProductContext context)
         {
             return false;
         }
@@ -50,7 +50,7 @@ namespace Steamwar.Objects
         /// Determines if the object can start to produce
         /// </summary>
         /// <returns>True if the object can start the production</returns>
-        public virtual bool CanStartProduction(ObjectBehaviour obj, ProductContext context)
+        public virtual bool CanStartProduction(ObjectContainer obj, ProductContext context)
         {
             return false;
         }
@@ -58,7 +58,7 @@ namespace Steamwar.Objects
         /// <summary>
         /// Called after the progress exceed the max progress
         /// </summary>
-        public virtual void OnProduce(ObjectBehaviour obj, ProductContext context)
+        public virtual void OnProduce(ObjectContainer obj, ProductContext context)
         {
 
         }
@@ -92,12 +92,12 @@ namespace Steamwar.Objects
             public Resources.Resource type;
             public int amount;
 
-            public override bool CanProgress(ObjectBehaviour obj, ProductContext context)
+            public override bool CanProgress(ObjectContainer obj, ProductContext context)
             {
                 return true;
             }
 
-            public override bool CanStartProduction(ObjectBehaviour obj, ProductContext context)
+            public override bool CanStartProduction(ObjectContainer obj, ProductContext context)
             { 
                 FactionData data = FactionManager.GetData(obj);
                 int amount = data.Exists() ? data.Resources[type] : 0;
@@ -105,7 +105,7 @@ namespace Steamwar.Objects
                 return amount < maxAmount;
             }
 
-            public override void OnProduce(ObjectBehaviour obj, ProductContext context)
+            public override void OnProduce(ObjectContainer obj, ProductContext context)
             {
                 FactionData data = obj.Data.faction.Data;
                 if(data.Exists())

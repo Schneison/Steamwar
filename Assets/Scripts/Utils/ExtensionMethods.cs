@@ -3,12 +3,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Steamwar.Utils
 {
     public static class ExtensionMethods
     {
+        /// <summary>
+        /// Copies the content of both arrays into a new array
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public static T[] Merge<T>(this T[] source, T[] other)
+        {
+            return source.Concat(other).ToArray();
+        }
+
+        public static String Capitalize(this String source)
+        {
+            return Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(source);
+        }
 
         public static bool Exists(this FactionData data)
         {

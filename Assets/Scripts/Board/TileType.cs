@@ -4,15 +4,18 @@ using UnityEngine.Tilemaps;
 
 using Steamwar.Utils;
 
-public class TileType : Tile
+namespace Steamwar.Board
 {
-    public string id;
-    public string displayName;
-    public bool chessable;
-
-    [MenuItem("Create/Tile")]
-    static void CreateType()
+    public class TileType : Tile
     {
-        ScriptableObjectUtility.CreateAsset<TileType>();
+        public string id;
+        public string displayName;
+        public bool chessable;
+
+        [MenuItem("Create/Tile")]
+        static void CreateType()
+        {
+            ScriptableObjectUtility.CreateAsset<TileType>();
+        }
     }
 }

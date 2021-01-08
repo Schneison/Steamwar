@@ -10,7 +10,7 @@ namespace Steamwar.Objects
     {
         public const uint MAX_BARS = 7;
 
-        private ObjectBehaviour objBehaviour;
+        private ObjectContainer objBehaviour;
         public Color[] colors;
         public GameObject container;
         public GameObject barPrefab;
@@ -21,7 +21,12 @@ namespace Steamwar.Objects
 
         void Start()
         {
-            objBehaviour = GetComponentInParent<ObjectBehaviour>();
+            objBehaviour = GetComponentInParent<ObjectContainer>();
+            if(objBehaviour == null)
+            {
+                Debug.Log("Failed to find Object for Health Indicator.");
+                return;
+            }
             maxHealth = objBehaviour.Data.Type.Health;
             barCount = Math.Min(MAX_BARS, maxHealth);
             health  = objBehaviour.Data.Health;
@@ -37,7 +42,11 @@ namespace Steamwar.Objects
 
         void FixedUpdate()
         {
-            if(objBehaviour.Data.Health != health)
+            if (objBehaviour == null)
+            {
+                return;
+            }
+            if (objBehaviour.Data.Health != health)
             {
                 health = objBehaviour.Data.Health;
                 for (uint i = 0; i < barCount; i++)

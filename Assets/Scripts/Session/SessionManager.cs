@@ -7,6 +7,7 @@ using Steamwar.Sectors;
 using Steamwar.UI;
 using Steamwar.Utils;
 using System;
+using Steamwar.Core;
 
 namespace Steamwar
 {
@@ -41,10 +42,8 @@ namespace Steamwar
         public void StartSession()
         {
             SaveManager.Load(out session);
-        }
-
-        public void Update()
-        {
+            EventManager.Instance.sessionLoaded.Invoke(session);
+            EventManager.Instance.factionChanged.Invoke(session);
         }
 
         public void OnApplicationQuit()

@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace Steamwar.Board
 {
@@ -12,6 +13,7 @@ namespace Steamwar.Board
         public Tilemap overlayGrid;
         public Tilemap groundGrid;
         public Tile overlayTile;
+        public TileBase[] chessables;
         public Vector3Int startPos = Vector3Int.zero;
         public BitArray visited = new BitArray(0xFFFF, false);
 
@@ -40,10 +42,11 @@ namespace Steamwar.Board
             while (posToVisit.Count != 0)
             {
                 Vector3Int pos = posToVisit.Pop();
-                TileType tile = groundGrid.GetTile<TileType>(pos);
+                TileBase tile = groundGrid.GetTile(pos);
+                //TileType tile = groundGrid.GetTile<TileType>(pos);
                 int xDiff = Math.Abs(pos.x % 2);
                 int yDiff = Math.Abs(pos.y % 2);
-                if (xDiff == yDiff && tile != null && tile.chessable)
+                if (xDiff == yDiff /*&& tile != null && tile.chessable*/ && chessables.Contains(tile))
                 {
                     overlayGrid.SetTile(new Vector3Int(pos.x, pos.y, 0), overlayTile);
                 }

@@ -17,9 +17,11 @@ MonoBehaviour:
   spriteBlue: {fileID: 0}
   spriteRed: {fileID: 0}
   sprite: {fileID: 0}
+  baseSprites: []
+  coloredSprites: []
+  elementPrefab: {fileID: 0}
+  _tag: -1
   animation: {fileID: 0}
-  cost:
-    moneyAmount: 0
   damage: 0
   health: 25
   speed: 1

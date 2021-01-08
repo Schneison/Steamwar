@@ -6,6 +6,8 @@ namespace Steamwar.Objects
 {
     public class ObjectType : ScriptableObject
     {
+        public const uint FALLBACK_SPEED = 1;
+
         [Header("Identifiers")]
         public string id;
         public string displayName;
@@ -13,6 +15,10 @@ namespace Steamwar.Objects
         public Sprite spriteBlue;
         public Sprite spriteRed;
         public Sprite sprite;
+        public Sprite[] baseSprites;
+        public Sprite[] coloredSprites;
+        [Range(0, 1)]
+        public float speed;
         public GameObject elementPrefab;
         public ObjectTag _tag = ObjectTag.Undefined;
 
@@ -21,6 +27,19 @@ namespace Steamwar.Objects
             get
             {
                 return 0;
+            }
+        }
+
+        public float Speed
+        {
+            get
+            {
+                if (speed == 0)
+                {
+                    Debug.Log($"Found 'speed' value of the unit type with the name '{name}' with the value zero. This is bug, please report!");
+                    speed = FALLBACK_SPEED;
+                }
+                return speed;
             }
         }
 

@@ -24,7 +24,6 @@ namespace Steamwar.Resources
         ///Serialised
         public MyDictionary<string, int> resources = new MyDictionary<string, int>();
         private int faction;
-
         public ResourceContainer()
         {
             _capacity = new CapacityCallback(this);
@@ -74,7 +73,7 @@ namespace Steamwar.Resources
             return _capacities[resource.id];
         }
 
-        public void OnObjectConstructed(ObjectBehaviour obj)
+        public void OnObjectConstructed(ObjectContainer obj)
         {
             obj.ActOnBuilding(
                (data, type, building) => data.HasFaction(faction) && type.Tag.HasFlag(ObjectTag.Storage),
@@ -95,7 +94,7 @@ namespace Steamwar.Resources
                });
         }
 
-        public void OnObjectDeconstructed(ObjectBehaviour obj)
+        public void OnObjectDeconstructed(ObjectContainer obj)
         {
             obj.ActOnBuilding(
                  (data, type, building) => data.HasFaction(faction) && type.Tag.HasFlag(ObjectTag.Storage),

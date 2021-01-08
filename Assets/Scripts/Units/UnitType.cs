@@ -8,7 +8,6 @@ namespace Steamwar.Units {
 
     public class UnitType : ObjectType
     {
-        public const uint FALLBACK_SPEED = 1;
         public const uint FALLBACK_HEALTH = 25;
         public const uint FALLBACK_MOVMENT = 3;
 
@@ -18,21 +17,8 @@ namespace Steamwar.Units {
         public uint damage;
         [Range(0, 60)]
         public uint health;
-        [Range(0, 1)]
-        public float speed;
         [Range(0, 20)]
         public uint movment;
-
-        public float Speed {
-            get {
-                if (speed == 0)
-                {
-                    Debug.Log($"Found 'speed' value of the unit type with the name '{name}' with the value zero. This is bug, please report!");
-                    speed = FALLBACK_SPEED;
-                }
-                return speed;
-            }
-        }
 
         public override uint Health
         {

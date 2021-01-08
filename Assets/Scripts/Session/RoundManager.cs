@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Steamwar.Core;
 using Steamwar.Factions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -57,6 +58,13 @@ namespace Steamwar
             {
                 SessionManager.session.roundState = RoundState.PRE;
             }
+        }
+
+        public void NextRound()
+        {
+            Session game = SessionManager.session;
+            game.activeFaction = game.factions[game.activeFaction.index == 1 ? 0 : 1];
+            EventManager.Instance.factionChanged.Invoke(game);
         }
 
         public void ProgressRound()

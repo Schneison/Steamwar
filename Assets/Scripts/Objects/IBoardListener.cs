@@ -10,8 +10,8 @@ namespace Steamwar.Objects
     {
         //public void OnBoardConstruction();
 
-        public void OnObjectConstructed(ObjectBehaviour obj);
+        public void OnObjectConstructed(ObjectContainer obj);
 
-        public void OnObjectDeconstructed(ObjectBehaviour obj);
+        public void OnObjectDeconstructed(ObjectContainer obj);
     }
 }

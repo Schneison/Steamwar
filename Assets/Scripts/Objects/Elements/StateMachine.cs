@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Steamwar.Objects.Elements
 {
-    public class StateMachine<O> where O: ObjectBehaviour
+    public class StateMachine<O> where O: ObjectContainer
     {
 
         public class Shape

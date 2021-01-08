@@ -74,7 +74,7 @@ namespace Steamwar.Objects
         public static GameObject CreateBaseObject(ObjectType type)
         {
             GameObject objInstance = Instance.CreateFromPrefab(type);
-            ObjectBehaviour obj = objInstance.GetComponent<ObjectBehaviour>();
+            ObjectContainer obj = objInstance.GetComponent<ObjectContainer>();
             if(obj != null)
             {
                 obj.OnPrefabInit();
@@ -96,9 +96,9 @@ namespace Steamwar.Objects
         public static GameObject CreateUnitFromType(UnitType type)
         {
             GameObject obj = CreateBaseObject(type);
-            SpriteRenderer renderer = obj.GetComponentInChildren<SpriteRenderer>();
-            renderer.sprite = type.spriteBlue;
-            renderer.gameObject.AddComponent<Animator>().runtimeAnimatorController= type.animation;
+            ObjectRenderer renderer = obj.GetComponentInChildren<ObjectRenderer>();
+            //renderer.sprite = type.spriteBlue;
+            // renderer.gameObject.AddComponent<Animator>().runtimeAnimatorController= type.animation;
             return obj;
         }
 
@@ -127,7 +127,7 @@ namespace Steamwar.Objects
             }
             GameObject unitObj = CreateObjectFromType(selectedType);
             unitObj.transform.position = pos;
-            ObjectBehaviour unit = unitObj.GetComponent<ObjectBehaviour>();
+            ObjectContainer unit = unitObj.GetComponent<ObjectContainer>();
             unit.OnConstruction(selectedType);
             selectedType = null;
             return true;

@@ -82,7 +82,7 @@ namespace Steamwar.Board
             List<BuildingData> buildings = new List<BuildingData>();
             foreach (Transform unitObj in unitContainer)
             {
-                UnitBehaviour unit = unitObj.GetComponent<UnitBehaviour>();
+                UnitContainer unit = unitObj.GetComponent<UnitContainer>();
                 if (unit != null)
                 {
                     units.Add(unit.Data.Copy());
@@ -90,7 +90,7 @@ namespace Steamwar.Board
             }
             foreach (Transform buildingObj in buildingContainer)
             {
-                BuildingBehaviour building = buildingObj.GetComponent<BuildingBehaviour>();
+                BuildingContainer building = buildingObj.GetComponent<BuildingContainer>();
                 if (building != null)
                 {
                    buildings.Add(building.Data.Copy());

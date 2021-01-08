@@ -2,6 +2,7 @@
 using UnityEngine;
 using Steamwar.Objects;
 using Steamwar.Utils;
+using Steamwar.Buildings;
 
 namespace Steamwar.Interaction
 {
@@ -39,11 +40,12 @@ namespace Steamwar.Interaction
         /// Selects the given unit
         /// </summary>
         /// <param name="obj">Unit to be selected</param>
-        public void Select(ObjectBehaviour obj)
+        public void Select(ObjectContainer obj)
         {
             SelectionData oldSelected = selected;
             Deselect();
-            if (!obj.Select())
+            SelectionBehaviour selection = obj.GetComponent<SelectionBehaviour>();
+            if (selection == null || !selection.Select())
             {
                 return;
             }
@@ -66,7 +68,7 @@ namespace Steamwar.Interaction
         /// <returns>True if a unit was deselected, false if no unit was selected before.</returns>
         public bool Deselect()
         {
-            if(selected.IsEmpty || !selected.Obj.Deselect())
+            if(selected.IsEmpty || !selected.Selectable.Deselect())
             {
                 return false;
             }
@@ -99,7 +101,7 @@ namespace Steamwar.Interaction
             if(hit.collider != null)
             {
                 GameObject unitObj = hit.collider.gameObject;
-                ObjectBehaviour unit = unitObj.GetComponent<ObjectBehaviour>();
+                ObjectContainer unit = unitObj.GetComponent<ObjectContainer>();
                 if(unit != null && !selected.IsSameObject(unit))
                 {
                     Select(unit);
@@ -117,7 +119,7 @@ namespace Steamwar.Interaction
         {
             Grid world = SessionManager.Instance.world;
             Camera camera = SessionManager.Instance.mainCamera;
-            ObjectBehaviour currentObj = selected.Obj;
+            ObjectContainer currentObj = selected.Obj;
             if(currentObj == null)
             {
                 return false;
@@ -153,7 +155,7 @@ namespace Steamwar.Interaction
             Camera camera = SessionManager.Instance.mainCamera;
             Grid world = SessionManager.Instance.world;
             Vector3Int cellPosition = world.WorldToCell(camera.ScreenToWorldPoint(mousePosition));
-            if ((lastMouseCell == null || !lastMouseCell.Equals(cellPosition)) && !selected.IsEmpty && selected.Obj.Selected)
+            if ((lastMouseCell == null || !lastMouseCell.Equals(cellPosition)) && !selected.IsEmpty && selected.Selectable.Selected)
             {
                 foreach (ISelectionListener listener in listeners)
                 {

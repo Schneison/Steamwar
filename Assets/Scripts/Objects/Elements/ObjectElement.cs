@@ -3,11 +3,11 @@ using System.Collections;
 
 namespace Steamwar.Objects {
 
-    public abstract class ObjectElement<O> : ObjectElement where O : ObjectBehaviour
+    public abstract class ObjectElement<O> : ObjectElement where O : ObjectContainer
     {
         protected O objectBehaviour;
 
-        public override ObjectBehaviour Behaviour
+        public override ObjectContainer Behaviour
         {
             get => objectBehaviour;
         }
@@ -26,7 +26,7 @@ namespace Steamwar.Objects {
         /// <summary>
         /// Object that this element belongs to
         /// </summary>
-        public abstract ObjectBehaviour Behaviour
+        public abstract ObjectContainer Behaviour
         {
             get;
         }
