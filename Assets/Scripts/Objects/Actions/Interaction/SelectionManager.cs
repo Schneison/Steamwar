@@ -51,7 +51,7 @@ namespace Steamwar.Interaction
             }
             selected = new SelectionData(obj);
             //Change type to the default type of the object
-            ActionManager.ActivateType(obj.GetDefaultType());
+            ActionManager.ActivateType(obj.Type.GetDefaultAction());
             unitSlectionBox = Instantiate(unitSelectionPrefab, obj.gameObject.transform);
             unitSlectionBox.transform.position -= new Vector3(0.5F, 0.5F, 0);
             selectedCollider = obj.GetComponent<Collider2D>();

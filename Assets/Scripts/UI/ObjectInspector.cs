@@ -4,6 +4,7 @@ using Steamwar.Units;
 using Steamwar.Interaction;
 using Steamwar.Objects;
 using Steamwar.Buildings;
+using Steamwar.Factions;
 
 namespace Steamwar.UI
 {
@@ -53,14 +54,12 @@ namespace Steamwar.UI
             switch (currentObj.Kind)
             {
                 case ObjectKind.BUILDING:
-                    BuildingData buildingData = currentData as BuildingData;
-                    healthText.text = "Helath: " + buildingData.Health;
+                    healthText.text = "Helath: " + currentData.Health;
                     movmentText.text = "";
                     break;
                 case ObjectKind.UNIT:
-                    UnitData unitData = currentData as UnitData;
-                    healthText.text = "Helath: " + unitData.Health;
-                    movmentText.text = "Movment: " + unitData.movment;
+                    healthText.text = "Helath: " + currentData.Health;
+                    movmentText.text = "Movment: " + currentData.movment;
                     break;
             }
 
@@ -74,9 +73,9 @@ namespace Steamwar.UI
                     button.Deactivate();
                 }
             }
-
-            factionName.text = currentData.faction.name;
-            factionColor.color = currentData.faction.color;
+            Faction faction = currentData.GetFaction();
+            factionName.text = faction.name;
+            factionColor.color = faction.color;
             this.selection = data;
         }
 

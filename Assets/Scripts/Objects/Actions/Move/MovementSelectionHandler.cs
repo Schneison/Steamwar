@@ -1,4 +1,5 @@
 ﻿using Steamwar.Interaction;
+using Steamwar.Navigation;
 using Steamwar.Objects;
 using Steamwar.Units;
 using System;

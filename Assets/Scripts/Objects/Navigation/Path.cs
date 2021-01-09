@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Steamwar.Units
+namespace Steamwar.Navigation
 {
     public class Path : IEnumerable<PathNode>
     {

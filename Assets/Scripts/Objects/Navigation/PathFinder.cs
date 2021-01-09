@@ -9,7 +9,7 @@ using Steamwar.Utils;
 using Steamwar.Units;
 using Steamwar.Objects;
 
-namespace Steamwar.Units
+namespace Steamwar.Navigation
 {
     /// <summary>
     /// A A* implementation for Path finding. 

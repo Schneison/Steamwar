@@ -26,6 +26,9 @@ namespace Steamwar.Core
         public FactionEvent factionUpdate;
         public ResourceEvent capacityUpdate;
         public ResourceEvent resourceUpdate;
+        //IJudgeListener
+        public ObjectEvent judgeChange;
+        public ObjectEvent judgeClear;
     }
 
     [Serializable]

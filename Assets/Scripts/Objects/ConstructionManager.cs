@@ -25,7 +25,7 @@ namespace Steamwar.Objects
 
         public static GameObject CreateObjectFromData(ObjectData data)
         {
-            GameObject obj = CreateObjectFromType(data.Type);
+            GameObject obj = CreateBaseObject(data.Type);
             if (obj != null)
             {
                 obj.transform.position = data.Position;
@@ -33,42 +33,27 @@ namespace Steamwar.Objects
             return obj;
         }
 
-        public static GameObject CreateObjectFromType(ObjectType type)
-        {
-            if (type is UnitType)
-            {
-                return CreateUnitFromType(type as UnitType);
-            }else if(type is BuildingType)
-            {
-                return CreateBuildingFromType(type as BuildingType);
-            }
-            return null;
-        }
-
         private GameObject CreateFromPrefab(ObjectType type)
         {
-            if (type is UnitType)
+            switch (type.kind)
             {
-                return Instantiate(unitPrefab, unitContainer.transform);
+                case ObjectKind.UNIT:
+                    return Instantiate(unitPrefab, unitContainer.transform);
+                case ObjectKind.BUILDING:
+                    return Instantiate(buildingPrefab, buildingContainer.transform);
+                default:
+                    GameObject obj = new GameObject(type.id, new Type[] { typeof(SpriteRenderer),typeof(Rigidbody2D)});
+                    obj.transform.parent = Instance.transform;
+                    SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
+                    Rigidbody2D rigidbody = obj.GetComponent<Rigidbody2D>();
+                    rigidbody.bodyType = RigidbodyType2D.Kinematic;
+                    renderer.sprite = type.spriteBlue;
+                    renderer.sortingLayerID = type.kind == ObjectKind.UNIT ? SortingLayer.NameToID("Units") : SortingLayer.NameToID("Objects");
+                    renderer.sortingOrder = 0;
+                    obj.layer = 8;//Id of the unit layer
+                    obj.AddComponent<PolygonCollider2D>();
+                    return obj;
             }
-            else if (type is BuildingType)
-            {
-                return Instantiate(buildingPrefab, buildingContainer.transform);
-            }
-            GameObject obj = new GameObject(type.id, new Type[] {
-                typeof(SpriteRenderer),
-                typeof(Rigidbody2D)
-            });
-            obj.transform.parent = Instance.transform;
-            SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
-            Rigidbody2D rigidbody = obj.GetComponent<Rigidbody2D>();
-            rigidbody.bodyType = RigidbodyType2D.Kinematic;
-            renderer.sprite = type.spriteBlue;
-            renderer.sortingLayerID = type is UnitType ? SortingLayer.NameToID("Units") : SortingLayer.NameToID("Objects");
-            renderer.sortingOrder = 0;
-            obj.layer = 8;//Id of the unit layer
-            obj.AddComponent<PolygonCollider2D>();
-            return obj;
         }
 
         public static GameObject CreateBaseObject(ObjectType type)
@@ -93,21 +78,6 @@ namespace Steamwar.Objects
             }
         }
 
-        public static GameObject CreateUnitFromType(UnitType type)
-        {
-            GameObject obj = CreateBaseObject(type);
-            ObjectRenderer renderer = obj.GetComponentInChildren<ObjectRenderer>();
-            //renderer.sprite = type.spriteBlue;
-            // renderer.gameObject.AddComponent<Animator>().runtimeAnimatorController= type.animation;
-            return obj;
-        }
-
-        public static GameObject CreateBuildingFromType(BuildingType type)
-        {
-            GameObject obj = CreateBaseObject(type);
-            return obj;
-        }
-
         public bool MouseDown()
         {
 
@@ -125,7 +95,7 @@ namespace Steamwar.Objects
             {
                 return false;
             }
-            GameObject unitObj = CreateObjectFromType(selectedType);
+            GameObject unitObj = CreateBaseObject(selectedType);
             unitObj.transform.position = pos;
             ObjectContainer unit = unitObj.GetComponent<ObjectContainer>();
             unit.OnConstruction(selectedType);

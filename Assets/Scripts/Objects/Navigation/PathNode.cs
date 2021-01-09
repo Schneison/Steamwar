@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using Steamwar.Utils;
 
-namespace Steamwar.Units
+namespace Steamwar.Navigation
 {
     public class PathNode : IComparable<PathNode>
     {

@@ -98,7 +98,7 @@ namespace Steamwar.InternalEditor
             GUI.enabled = boardObj != null;
             if (GUILayout.Button("Load Board Data"))
             {
-                board = BoardManager.CreateBoard(boardObj);
+                //board = BoardManager.CreateBoard(boardObj);
             }
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();

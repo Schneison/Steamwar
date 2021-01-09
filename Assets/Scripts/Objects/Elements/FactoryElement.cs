@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Steamwar.Objects
 {
 
-    public class FactoryElement<O> : ObjectElement<O> where O : ObjectContainer
+    public class FactoryElement : ObjectElement
     {
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Steamwar.Objects
         /// <returns>True if the object can make progress</returns>
         public virtual bool CanProgress()
         {
-            return Product?.Config?.CanProgress(Behaviour, context) ?? false;
+            return Product?.Config?.CanProgress(Container, context) ?? false;
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Steamwar.Objects
         /// <returns>True if the object can start the production</returns>
         public virtual bool CanStartProduction()
         {
-            return Product?.Config?.CanStartProduction(Behaviour, context) ?? false;
+            return Product?.Config?.CanStartProduction(Container, context) ?? false;
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Steamwar.Objects
         /// </summary>
         public virtual void OnProduce()
         {
-            Product?.Config?.OnProduce(Behaviour, context);
+            Product?.Config?.OnProduce(Container, context);
         }
 
         public void FixedUpdate()

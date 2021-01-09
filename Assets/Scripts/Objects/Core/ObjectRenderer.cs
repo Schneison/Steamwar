@@ -9,10 +9,10 @@ namespace Steamwar.Objects
 {
     public class ObjectRenderer : SteamBehaviour
     {
+        public ObjectContainer obj;
         SpriteRenderer[] baseRenderer;
         SpriteRenderer[] colorRenderer;
         SpriteRenderer[] renderers;
-        ObjectContainer obj;
         Animator[] baseAnimators;
         Animator[] colorAnimators;
         Animator[] animators;
@@ -22,7 +22,9 @@ namespace Steamwar.Objects
         protected override void OnInit()
         {
             base.OnInit();
-            obj = GetComponentInParent<ObjectContainer>();
+            if (obj == null) {
+                obj = GetComponentInParent<ObjectContainer>();
+            }
             Transform baseTransorm = transform.Find("Base");
             Transform colorTransorm = transform.Find("Color");
             baseRenderer = baseTransorm.GetComponentsInChildren<SpriteRenderer>();
@@ -36,8 +38,10 @@ namespace Steamwar.Objects
         protected override void OnSpawn()
         {
             base.OnSpawn();
-            ObjectData data = obj.GetOrLoadData();
-            Faction faction = data.faction;
+            ObjectData data = obj.Data;
+            Faction faction = data.GetFaction();
+            RuntimeAnimatorController[] animations = data.Type.animations;
+            RuntimeAnimatorController[] coloredCnimations = data.Type.coloredAnimations;
             int i;
             for (i = 0; i < baseRenderer.Length; i++)
             {
@@ -47,9 +51,8 @@ namespace Steamwar.Objects
                 }
                 SpriteRenderer render = baseRenderer[i];
                 render.sprite = data.Type.baseSprites[i];
-                if (obj is UnitContainer)
-                {
-                    render.GetComponent<Animator>().runtimeAnimatorController = (data.Type as UnitType).animation;
+                if(baseAnimators.Length > i) {
+                baseAnimators[i].runtimeAnimatorController = animations.Length > i ? animations[i] : null;
                 }
             }
             for (i= 0;i< colorRenderer.Length;i++)
@@ -61,6 +64,10 @@ namespace Steamwar.Objects
                 SpriteRenderer render = colorRenderer[i];
                 render.sprite = data.Type.coloredSprites[i];
                 render.color = faction.color;
+                if (colorAnimators.Length > i)
+                {
+                    colorAnimators[i].runtimeAnimatorController = coloredCnimations.Length > i ? coloredCnimations[i] : null;
+                }
             }
         }
 
@@ -76,7 +83,7 @@ namespace Steamwar.Objects
             {
                 if(!animator.isInitialized || animator.runtimeAnimatorController == null)
                 {
-                    return;
+                    continue;
                 }
                 animator.SetBool("moving", moves && (facingDirection == Direction.LEFT || facingDirection == Direction.RIGHT));
                 animator.SetBool("moving_up", facingDirection == Direction.UP);

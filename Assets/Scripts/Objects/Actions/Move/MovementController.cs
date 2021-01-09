@@ -1,5 +1,6 @@
 ﻿using Steamwar;
 using Steamwar.Move;
+using Steamwar.Navigation;
 using Steamwar.Objects;
 using Steamwar.Units;
 using Steamwar.Utils;

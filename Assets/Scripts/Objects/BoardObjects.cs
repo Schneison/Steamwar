@@ -12,15 +12,13 @@ namespace Steamwar.Objects
     [Serializable]
     public class BoardObjects
     {
-        public List<UnitData> units;
-        public List<BuildingData> buildings;
+        public List<ObjectData> objects;
 
         internal BoardObjects Copy()
         {
             return new BoardObjects
             {
-                units = new List<UnitData>(units),
-                buildings = new List<BuildingData>(buildings)
+                objects = new List<ObjectData>(objects),
             };
         }
     }

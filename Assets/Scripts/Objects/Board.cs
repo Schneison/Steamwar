@@ -63,7 +63,7 @@ namespace Steamwar.Objects
             }
             ObjectType type = data.Type;
             objectByType.AddToSub(type, id);
-            objectsByFaction.AddToSub(obj.Data.faction.index, id);
+            objectsByFaction.AddToSub(obj.Data.FactionIndex, id);
             ObjectTag tag = type.Tag;
             if (tag == ObjectTag.None)
             {
@@ -104,7 +104,7 @@ namespace Steamwar.Objects
             }
             ObjectType type = obj.Data.Type;
             objectByType.RemoveFromSub(type, id);
-            objectsByFaction.RemoveFromSub(obj.Data.faction.index, id);
+            objectsByFaction.RemoveFromSub(obj.Data.FactionIndex, id);
             objectById.Remove(id);
             ObjectTag tag = type.Tag;
             if (tag == ObjectTag.None)

@@ -107,7 +107,7 @@ namespace Steamwar.Objects
 
             public override void OnProduce(ObjectContainer obj, ProductContext context)
             {
-                FactionData data = obj.Data.faction.Data;
+                FactionData data = obj.Data.GetFaction().Data;
                 if(data.Exists())
                 {
                     data.Resources[type] += amount;

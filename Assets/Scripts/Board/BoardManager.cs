@@ -24,8 +24,8 @@ namespace Steamwar.Board
 
         public static void ApplyObjects(BoardObjects objects)
         {
-            ApplyObjects(objects.buildings);
-            ApplyObjects(objects.units);
+           // ApplyObjects(objects.buildings);
+           // ApplyObjects(objects.units);
         }
 
         private static void ApplyObjects<D>(List<D> objects) where D : ObjectData, new()
@@ -36,7 +36,7 @@ namespace Steamwar.Board
             }
         }
 
-        public static SectorBoard CreateBoard(GameObject boardObj)
+       /* public static SectorBoard CreateBoard(GameObject boardObj)
         {
             Transform world = boardObj.transform.Find("World");
             if (world == null)
@@ -139,7 +139,7 @@ namespace Steamwar.Board
                 tiles = tileStorage.ToArray(),
                 version = "1.0"
             };
-        }
+        }*/
 
         public static void ApplyBoard(GameObject boardObj, SectorBoard board)
         {

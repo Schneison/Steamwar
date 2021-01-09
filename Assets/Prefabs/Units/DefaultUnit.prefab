@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a639374ab06a1f54d86192a9e9d44cd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obj: {fileID: 0}
 --- !u!1 &3581173603242520166
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,9 +262,9 @@ GameObject:
   - component: {fileID: 8990082240775771849}
   - component: {fileID: 8990082240775771851}
   - component: {fileID: 8990082240775771852}
-  - component: {fileID: 659630834360600353}
   - component: {fileID: 8717326872741019211}
   - component: {fileID: 6146919798174283953}
+  - component: {fileID: 4119668374014919578}
   m_Layer: 8
   m_Name: DefaultUnit
   m_TagString: Untagged
@@ -337,25 +338,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &659630834360600353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8990082240775771853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c89a0fa161fb0c428642fdc99067ffa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rendererChild: {fileID: 2487991548258902782}
-  dataSerializable:
-    position: {x: 0, y: 0}
-    type: 
-    factionIndex: 0
-    health: 0
-    movment: 0
 --- !u!114 &8717326872741019211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,9 +362,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45761ed0b4f997246b962c359f43b157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 659630834360600353}
+  container: {fileID: 0}
   controlledObject: {fileID: 8990082240775771853}
   objectRenderer: {fileID: 2953940033710493588}
+--- !u!114 &4119668374014919578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8990082240775771853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a5a053671738a8439accc58710361c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    position: {x: 0, y: 0, z: 0}
+    faction: 0
+    health: 0
+    movment: 0
+    type: {fileID: 11400000, guid: 0f696baddf40710458900e7372481991, type: 2}
 --- !u!1001 &9006257752748924352
 PrefabInstance:
   m_ObjectHideFlags: 0

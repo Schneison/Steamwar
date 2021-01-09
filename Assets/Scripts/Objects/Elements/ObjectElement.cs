@@ -1,36 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Steamwar.Objects {
 
-    public abstract class ObjectElement<O> : ObjectElement where O : ObjectContainer
+    public abstract class ObjectElement : SteamBehaviour
     {
-        protected O objectBehaviour;
+        protected ObjectContainer container;
 
-        public override ObjectContainer Behaviour
+        public ObjectContainer Container => container;
+
+        protected override void OnSpawn()
         {
-            get => objectBehaviour;
+            if(container == null) {
+                List<MonoBehaviour> results = new List<MonoBehaviour>();
+                GetComponentsInParent(true, results);
+                container = GetComponentInParent<ObjectContainer>();
+            }
         }
-
-        void Start()
-        {
-            objectBehaviour = GetComponentInParent<O>();
-        }
-    }
-
-    /// <summary>
-    /// Logoc class for all behaviour. Handles the logic for a specific object type.
-    /// </summary>
-    public abstract class ObjectElement : MonoBehaviour
-    {
-        /// <summary>
-        /// Object that this element belongs to
-        /// </summary>
-        public abstract ObjectContainer Behaviour
-        {
-            get;
-        }
-
     }
 
 }

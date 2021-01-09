@@ -2,46 +2,20 @@
 using UnityEngine;
 using Steamwar.Factions;
 using Steamwar.Utils;
+using System.Collections.Generic;
 
 namespace Steamwar.Objects
 {
-    public abstract class ObjectData<T, S> : ObjectData where T : ObjectType where S : ObjectDataSerializable, new()
+
+    [Serializable]
+    public class ObjectData : IFactionProvider
     {
-
-        public new T Type
-        {
-            get => _type as T;
-            set => _type = value;
-        }
-
-        public virtual void WriteData(S serializable)
-        {
-            serializable.position = new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y));
-            serializable.type = Type.id;
-            serializable.Faction = faction;
-        }
-
-        public S WriteData()
-        {
-            S serializable = new S();
-            WriteData(serializable);
-            return serializable;
-        }
-
-        public virtual void ReadData(S serializable)
-        {
-            Position = new Vector3(serializable.position.x, serializable.position.y, 0);
-            _type = SessionManager.registry.GetType<T>(serializable.type);
-            faction = serializable.Faction;
-        }
-
-    }
-
-    public abstract class ObjectData {
-        internal Vector3 position;
-        public Faction faction;
-        public int hash;
-        protected ObjectType _type;
+        public Vector3 position;
+        public int faction;
+        public uint health;
+        public float movment;
+        [SerializeField]
+        public ObjectType type;
 
         public Vector3 Position
         {
@@ -49,48 +23,46 @@ namespace Steamwar.Objects
 
             set {
                 position = value;
-                hash = GetHash(value);
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Blocker Code Smell", "S3237:\"value\" parameters should be used", Justification = "<Pending>")]
         public virtual uint Health
         {
             get {
-                return 0;
+                return health;
             }
 
             set {
-                // Placholder for depending types like unit or building
+                health = value;
             }
         }
 
-
-        public override bool Equals(object obj)
-        {
-            return obj is ObjectData data && position.Equals(data.position);
-        }
-
-        public override int GetHashCode()
-        {
-            return hash;
-        }
+        public bool IsAlive => Health <= 0;
 
         /// <summary>
         /// The object type of this object.
         /// </summary>
         public ObjectType Type
         {
-            get => _type;
-            set => _type = value;
+            get => type;
+            set
+            {
+                type = value;
+            }
         }
 
         /// <summary>
         /// The kind of the object this data represents.
         /// </summary>
-        public abstract ObjectKind Kind
+        public ObjectKind Kind => type.kind;
+
+        public int FactionIndex
         {
-            get;
+            get => faction;
+            set
+            {
+                faction = value;
+            }
         }
 
         public static int GetHash(Vector2 position)
@@ -99,14 +71,23 @@ namespace Steamwar.Objects
             return pos2.y & short.MaxValue | (pos2.x & short.MaxValue) << 16 | (pos2.x < 0 ? int.MinValue : 0);
         }
 
-        public bool HasFaction(Faction faction)
+        public override bool Equals(object obj)
         {
-            return HasFaction(faction.index);
+            return obj is ObjectData data &&
+                   Position.Equals(data.Position) &&
+                   EqualityComparer<ObjectType>.Default.Equals(Type, data.Type) &&
+                   Kind == data.Kind &&
+                   FactionIndex == data.FactionIndex;
         }
 
-        public bool HasFaction(int index)
+        public override int GetHashCode()
         {
-            return faction.index == index;
+            int hashCode = 431111939;
+            hashCode = hashCode * -1521134295 + Position.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<ObjectType>.Default.GetHashCode(Type);
+            hashCode = hashCode * -1521134295 + Kind.GetHashCode();
+            hashCode = hashCode * -1521134295 + FactionIndex.GetHashCode();
+            return hashCode;
         }
     }
 

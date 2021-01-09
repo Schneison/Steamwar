@@ -1,4 +1,5 @@
 ﻿using Steamwar.Buildings;
+using Steamwar.Factions;
 using Steamwar.Move;
 using Steamwar.Objects;
 using Steamwar.Units;
@@ -70,7 +71,7 @@ namespace Steamwar.Interaction
         /// </summary>
         public bool HasPlayerFaction
         {
-            get => !IsEmpty && Obj.Data.faction.IsPlayer;
+            get => !IsEmpty && Obj.Data.HasPlayerFaction();
         }
 
         /// <summary>

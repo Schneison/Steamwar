@@ -92,7 +92,7 @@ namespace Steamwar.Factions
             {
                 return Faction.None;
             }
-            return data.faction;
+            return GetFaction(data.FactionIndex);
            // return GetFaction(data.faction);
         }
 

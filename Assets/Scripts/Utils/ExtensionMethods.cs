@@ -10,6 +10,7 @@ namespace Steamwar.Utils
 {
     public static class ExtensionMethods
     {
+
         /// <summary>
         /// Copies the content of both arrays into a new array
         /// </summary>
