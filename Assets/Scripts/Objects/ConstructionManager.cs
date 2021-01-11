@@ -6,6 +6,7 @@ using Steamwar.Buildings;
 using Steamwar.Utils;
 using Steamwar.Units;
 using Steamwar.Interaction;
+using UnityEngine.Tilemaps;
 
 namespace Steamwar.Objects
 {
@@ -21,7 +22,9 @@ namespace Steamwar.Objects
         public GameObject unitContainer;
         public GameObject buildingContainer;
 
-        internal ObjectType selectedType;
+        private ObjectType selectedType;
+        [MyBox.ReadOnly]
+        private GameObject blueprintObj;
 
         public static GameObject CreateObjectFromData(ObjectData data)
         {
@@ -81,7 +84,7 @@ namespace Steamwar.Objects
         public bool MouseDown()
         {
 
-            if (selectedType == null || EventSystem.current.IsPointerOverGameObject()) {
+            if (selectedType == null || InputUtil.IsPointerOverUI()) {
                 return false;
             }
             Camera camera = SessionManager.Instance.mainCamera;
@@ -95,12 +98,24 @@ namespace Steamwar.Objects
             {
                 return false;
             }
+            Destroy(blueprintObj);
+            blueprintObj = null;
             GameObject unitObj = CreateBaseObject(selectedType);
             unitObj.transform.position = pos;
             ObjectContainer unit = unitObj.GetComponent<ObjectContainer>();
             unit.OnConstruction(selectedType);
             selectedType = null;
             return true;
+        }
+
+        public void SetSelectedType(ObjectType selectedType)
+        {
+            this.selectedType = selectedType;
+            blueprintObj = CreateBaseObject(selectedType);
+            ObjectContainer unit = blueprintObj.GetComponent<ObjectContainer>();
+            Destroy(unit.GetComponent<Collider2D>());
+            unit.OnConstruction(selectedType);
+            UpdateBlueprint();
         }
 
         public bool MouseUp()
@@ -110,7 +125,31 @@ namespace Steamwar.Objects
 
         public bool MouseMove(Vector2 mousePosition, Vector2 lastMouse)
         {
+            UpdateBlueprint();
             return false;
+        }
+
+        private void UpdateBlueprint()
+        {
+            if (blueprintObj == null)
+            {
+                return;
+            }
+            Camera camera = SessionManager.Instance.mainCamera;
+            Grid world = SessionManager.Instance.world;
+            Tilemap groundMap = SessionManager.Instance.ground;
+            Vector2 mousePosition = Input.mousePosition;
+            Vector2 worldPos = camera.ScreenToWorldPoint(mousePosition);
+            Vector3Int cellPos = world.WorldToCell(worldPos);
+            Vector2 pos = (Vector2)world.CellToWorld(cellPos) + new Vector2(0.5F, 0.5F);
+            var a = groundMap.GetTile(cellPos);
+            blueprintObj.transform.position = pos;
+            blueprintObj.transform.parent = transform;
+            ObjectRenderer renderer = blueprintObj.GetComponentInChildren<ObjectRenderer>();
+            if (renderer != null)
+            {
+                renderer.SetTransparency(0.5F);
+            }
         }
     }
 }

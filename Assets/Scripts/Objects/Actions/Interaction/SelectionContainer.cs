@@ -12,7 +12,7 @@ namespace Steamwar.Objects
         { 
             { ActionType.None, new HashSet<ISelectionListener>() },
             { ActionType.Move, new HashSet<ISelectionListener>() },
-            { ActionType.Atttack, new HashSet<ISelectionListener>() },
+            { ActionType.Attack, new HashSet<ISelectionListener>() },
             { ActionType.Skip, new HashSet<ISelectionListener>() },
             { ActionType.Repair, new HashSet<ISelectionListener>() },
             { ActionType.Destroy, new HashSet<ISelectionListener>() }

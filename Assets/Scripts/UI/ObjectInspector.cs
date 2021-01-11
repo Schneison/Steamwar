@@ -44,6 +44,7 @@ namespace Steamwar.UI
 
         public void OnSelection(SelectionData data, SelectionData oldData)
         {
+            return;
             ObjectContainer currentObj = data.Obj;
             gameObject.SetActive(true);
             ObjectData currentData = currentObj.Data;
@@ -93,7 +94,8 @@ namespace Steamwar.UI
 
         public void OnDeselection(SelectionData oldData)
         {
-            if(gameObject != null)
+            return;
+            if (gameObject != null)
             {
                 gameObject.SetActive(false);
             }

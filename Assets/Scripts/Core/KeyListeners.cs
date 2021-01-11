@@ -96,11 +96,11 @@ namespace Steamwar.Core
         });
 
         public static KeyListener attackAction = AddListener(KeyCode.Alpha2, 0, () => {
-            return ActionManager.ActivateType(ActionType.Atttack);
+            return ActionManager.ActivateType(ActionType.Attack);
         });
 
         public static KeyListener skipAction = AddListener(KeyCode.Alpha3, 0, () => {
-            return ActionManager.ActivateType(ActionType.Move);
+            return ActionManager.ActivateType(ActionType.Skip);
         });
 
         public static KeyListener repairAction = AddListener(KeyCode.Alpha4, 0, () => {

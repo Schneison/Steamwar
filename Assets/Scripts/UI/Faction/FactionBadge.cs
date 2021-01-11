@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Steamwar.UI
 {
-    public class FactionBadge : SteamBehaviour
+    public class FactionBadge : ExpandableElement
     {
 
         public Text nameText;
@@ -14,6 +14,14 @@ namespace Steamwar.UI
         public GameObject unselectedMask;
         public GameObject child;
         public bool selected;
+
+        public override GameObject Controlled => child;
+
+        public override Vector2 DefaultPos => Vector2.zero;
+
+        public override Vector2 ExpandedPos => new Vector2(-8, 0);
+
+        public override float Speed => 2;
 
         public void SetFaction(Faction faction)
         {
@@ -25,11 +33,12 @@ namespace Steamwar.UI
         {
             this.selected = selected;
             unselectedMask.SetActive(!selected);
-            StartCoroutine(MoveSelected());
+            SetExpanded(selected);
+            //StartCoroutine(MoveSelected());
         }
 
 
-        public IEnumerator MoveSelected()
+        /*public IEnumerator MoveSelected()
         {
 
             RectTransform childTrans = child.GetComponent<RectTransform>();
@@ -59,7 +68,7 @@ namespace Steamwar.UI
                 yield return null;
             }
             roundMessage.gameObject.SetActive(false);*/
-        }
+        /*}*/
 
     }
 }

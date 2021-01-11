@@ -1,4 +1,5 @@
-﻿using Steamwar.Factions;
+﻿using MyBox;
+using Steamwar.Factions;
 using Steamwar.Units;
 using Steamwar.Utils;
 using System;
@@ -33,6 +34,14 @@ namespace Steamwar.Objects
             baseAnimators = baseTransorm.GetComponentsInChildren<Animator>();
             colorAnimators = colorTransorm.GetComponentsInChildren<Animator>();
             animators = baseAnimators.Merge(colorAnimators);
+        }
+
+        public void SetTransparency(float transparency)
+        {
+            foreach(SpriteRenderer renderer in renderers)
+            {
+                renderer.SetAlpha(transparency);
+            }
         }
 
         protected override void OnSpawn()

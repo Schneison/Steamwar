@@ -3,6 +3,7 @@ using UnityEngine;
 using Steamwar.Objects;
 using Steamwar.Utils;
 using Steamwar.Buildings;
+using System.Linq;
 
 namespace Steamwar.Interaction
 {
@@ -20,6 +21,7 @@ namespace Steamwar.Interaction
         public SelectionData selected = SelectionData.EMPTY;
 
         internal Vector3Int? lastMouseCell = null;
+        private bool mouseOverUI = false;
 
         protected override void OnInit()
         {
@@ -152,6 +154,32 @@ namespace Steamwar.Interaction
         /// <returns>True if no other handlers should be called after this one.</returns>
         public bool MouseMove(Vector2 mousePosition, Vector2 lastMouse)
         {
+            if (InputUtil.IsPointerOverUI())
+            {
+                if (mouseOverUI)
+                {
+                    return false;
+                }
+                else
+                {
+                    foreach (ISelectionUIListener listener in listeners.OfType<ISelectionUIListener>())
+                    {
+                        listener.OnSelectionUIEnter(selected);
+                    }
+                    mouseOverUI = true;
+                }
+            }
+            else
+            {
+                if (mouseOverUI)
+                {
+                    foreach (ISelectionUIListener listener in listeners.OfType<ISelectionUIListener>())
+                    {
+                        listener.OnSelectionUIExit(selected);
+                    }
+                    mouseOverUI = false;
+                }
+            }
             Camera camera = SessionManager.Instance.mainCamera;
             Grid world = SessionManager.Instance.world;
             Vector3Int cellPosition = world.WorldToCell(camera.ScreenToWorldPoint(mousePosition));

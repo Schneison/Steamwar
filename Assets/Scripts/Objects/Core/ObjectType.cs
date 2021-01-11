@@ -137,7 +137,7 @@ namespace Steamwar.Objects
             }
             if(canAttack)
             {
-                type |= ActionType.Atttack;
+                type |= ActionType.Attack;
                 type |= ActionType.Skip;
             }
 

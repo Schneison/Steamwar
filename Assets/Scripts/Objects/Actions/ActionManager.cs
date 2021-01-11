@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine.Events;
 
 namespace Steamwar.Objects
 {
@@ -13,7 +14,7 @@ namespace Steamwar.Objects
     {
         None = 0b0,
         Move = 0b1,
-        Atttack = 0b10,
+        Attack = 0b10,
         Skip = 0b100,
         Repair = 0b1000,
         Destroy = 0b10000,
@@ -22,6 +23,8 @@ namespace Steamwar.Objects
 
     public class ActionManager : Singleton<ActionManager>
     {
+        public ActionEvent onActionSelected;
+
         private ActionType activeType = ActionType.Move;
 
         public static bool HasAction(ObjectContainer obj, ActionType type)
@@ -42,6 +45,7 @@ namespace Steamwar.Objects
             }
             activeType = ActionType.None;
             SelectionManager.Instance.listeners.OnActionUpdate(ActionType.None);
+            Instance.onActionSelected.Invoke(ActionType.None);
             return true;
         }
 
@@ -54,7 +58,14 @@ namespace Steamwar.Objects
         {
             Instance.activeType = type;
             SelectionManager.Instance.listeners.OnActionUpdate(type);
+            Instance.onActionSelected.Invoke(type);
             return true;
         }
+    }
+
+    [Serializable]
+    public class ActionEvent : UnityEvent<ActionType>
+    {
+
     }
 }

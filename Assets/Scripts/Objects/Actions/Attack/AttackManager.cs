@@ -19,25 +19,25 @@ namespace Assets.Attack
         public GameObject attackLine;
         public GameObject attackCross;
         [SerializeField]
-        [ReadOnly]
+        [MyBox.ReadOnly]
         private Vector2Int selectedCell;
         [SerializeField]
-        [ReadOnly]
+        [MyBox.ReadOnly]
         private Vector2Int mouseCell;
         [SerializeField]
-        [ReadOnly]
+        [MyBox.ReadOnly]
         private Vector2Int originCell;
         [SerializeField]
-        [ReadOnly]
+        [MyBox.ReadOnly]
         private GameObject currentLine;
         [SerializeField]
-        [ReadOnly]
+        [MyBox.ReadOnly]
         private GameObject currentCross;
         private SpriteRenderer lineRenderer;
 
         public ActionType GetActionType()
         {
-            return ActionType.Atttack;
+            return ActionType.Attack;
         }
 
         public void OnDeselection(SelectionData oldData)
