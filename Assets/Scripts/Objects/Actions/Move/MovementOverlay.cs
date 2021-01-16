@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace Steamwar.Move
 {
-    class MovementSelectionHandler : MonoBehaviour, ISelectionListener
+    public class MovementOverlay : MonoBehaviour, ISelectionListener
     {
         public GameObject selectionPrefab;
 

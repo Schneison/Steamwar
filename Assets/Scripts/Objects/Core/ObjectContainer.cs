@@ -62,7 +62,7 @@ namespace Steamwar.Objects
             PropManager.CheckForProp(this);
         }
 
-        public void OnConstruction(ObjectType type)
+        public void OnConstruction(ObjectType type, bool boardObject = true)
         {
             data = new ObjectData
             {
@@ -70,7 +70,9 @@ namespace Steamwar.Objects
                 Health = type.Health,
                 faction = SessionManager.session.playerIndex
             };
-            SessionManager.session.board.Add(gameObject);
+            if (boardObject) {
+                SessionManager.session.board.Add(gameObject);
+            }
         } 
 
         protected override void OnCleanUp()

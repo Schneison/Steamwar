@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using Steamwar.Objects;
 
 namespace Steamwar.UI
 {
@@ -31,9 +32,7 @@ namespace Steamwar.UI
             {
                 if (selectedButton == this)
                 {
-                    selectedButton = null;
-                    selected = false;
-                    StartCoroutine(FadeOut());
+                    Close();
                     return;
                 }
                 selectedButton.activeBackground.SetActive(false);
@@ -41,7 +40,25 @@ namespace Steamwar.UI
             }
             selectedButton = this;
             selected = true;
+            ActionManager.DeselectType();
             StartCoroutine(FadeIn());
+        }
+
+        private bool Close()
+        {
+            if(selectedButton != this)
+            {
+                return false;
+            }
+            selectedButton = null;
+            selected = false;
+            StartCoroutine(FadeOut());
+            return true;
+        }
+
+        public static bool CloseWindow()
+        {
+            return selectedButton != null && selectedButton.Close();
         }
 
         public IEnumerator FadeIn()

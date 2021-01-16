@@ -27,7 +27,7 @@ namespace Steamwar {
         {
             List<IMouseListener> mouseListeners = new List<IMouseListener>
             {
-                ConstructionManager.Instance
+
             };
             foreach (GameObject obj in listenersObjects)
             {

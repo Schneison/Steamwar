@@ -137,7 +137,6 @@ namespace Steamwar.Objects
             if(isDestroyable)
             {
                 type |= ActionType.Repair;
-                type |= ActionType.Destroy;
             }
             if(canAttack)
             {

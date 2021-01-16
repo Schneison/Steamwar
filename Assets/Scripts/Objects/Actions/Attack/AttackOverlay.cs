@@ -15,7 +15,7 @@ namespace Assets.Attack
     /// <summary>
     /// Handles the attacks of units and buildings
     /// </summary>
-    class AttackManager : Singleton<AttackManager>, ISelectionListener
+    public class AttackOverlay : Singleton<AttackOverlay>, ISelectionListener
     {
         public GameObject attackLine;
         public GameObject attackCross;

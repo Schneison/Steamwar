@@ -1,5 +1,6 @@
 ﻿using Steamwar.Factions;
 using Steamwar.Grid;
+using Steamwar.Interaction;
 using Steamwar.Objects;
 using System;
 using System.Collections;

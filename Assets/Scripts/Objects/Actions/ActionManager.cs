@@ -18,7 +18,7 @@ namespace Steamwar.Objects
         Skip = 0b100,
         Repair = 0b1000,
         Destroy = 0b10000,
-        All = 0b11111
+        All = 0b111111
     }
 
     public class ActionManager : Singleton<ActionManager>

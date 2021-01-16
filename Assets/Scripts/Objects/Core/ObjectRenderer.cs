@@ -36,17 +36,8 @@ namespace Steamwar.Objects
             animators = baseAnimators.Merge(colorAnimators);
         }
 
-        public void SetTransparency(float transparency)
+        public void UpdateTextures()
         {
-            foreach(SpriteRenderer renderer in renderers)
-            {
-                renderer.SetAlpha(transparency);
-            }
-        }
-
-        protected override void OnSpawn()
-        {
-            base.OnSpawn();
             ObjectData data = obj.Data;
             Faction faction = data.GetFaction();
             RuntimeAnimatorController[] animations = data.Type.animations;
@@ -60,13 +51,14 @@ namespace Steamwar.Objects
                 }
                 SpriteRenderer render = baseRenderer[i];
                 render.sprite = data.Type.baseSprites[i];
-                if(baseAnimators.Length > i) {
-                baseAnimators[i].runtimeAnimatorController = animations.Length > i ? animations[i] : null;
+                if (baseAnimators.Length > i)
+                {
+                    baseAnimators[i].runtimeAnimatorController = animations.Length > i ? animations[i] : null;
                 }
             }
-            for (i= 0;i< colorRenderer.Length;i++)
+            for (i = 0; i < colorRenderer.Length; i++)
             {
-                if(i >= data.Type.coloredSprites.Length)
+                if (i >= data.Type.coloredSprites.Length)
                 {
                     break;
                 }
@@ -78,6 +70,20 @@ namespace Steamwar.Objects
                     colorAnimators[i].runtimeAnimatorController = coloredCnimations.Length > i ? coloredCnimations[i] : null;
                 }
             }
+        }
+
+        public void SetTransparency(float transparency)
+        {
+            foreach(SpriteRenderer renderer in renderers)
+            {
+                renderer.SetAlpha(transparency);
+            }
+        }
+
+        protected override void OnSpawn()
+        {
+            base.OnSpawn();
+            UpdateTextures();
         }
 
         public void UpdateAnimation(bool moves, Direction facingDirection)

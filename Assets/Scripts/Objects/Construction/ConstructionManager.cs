@@ -14,7 +14,7 @@ namespace Steamwar.Objects
     /// <summary>
     /// Helper class to create objects.
     /// </summary>
-    public class ConstructionManager : Singleton<ConstructionManager>, IMouseListener
+    public class ConstructionManager : Singleton<ConstructionManager>
     {
         [Header("Prefabs")]
         public GameObject unitPrefab;
@@ -22,10 +22,6 @@ namespace Steamwar.Objects
         [Header("Object Containers")]
         public GameObject unitContainer;
         public GameObject buildingContainer;
-
-        private ObjectType selectedType;
-        [MyBox.ReadOnly]
-        private GameObject blueprintObj;
 
         public static GameObject CreateObjectFromData(ObjectData data)
         {
@@ -72,6 +68,14 @@ namespace Steamwar.Objects
             return objInstance;
         }
 
+        public static void CreateOnPos(Vector2 pos, ObjectType selectedType)
+        {
+            GameObject unitObj = CreateBaseObject(selectedType);
+            unitObj.transform.position = pos;
+            ObjectContainer unit = unitObj.GetComponent<ObjectContainer>();
+            unit.OnConstruction(selectedType);
+        }
+
         public static void AddElement(MonoBehaviour obj, ObjectType type)
         {
             if (type.elementPrefab != null)
@@ -79,68 +83,6 @@ namespace Steamwar.Objects
                 GameObject element = Instantiate(type.elementPrefab);
                 element.name = "Element";
                 element.transform.parent = obj.transform;
-            }
-        }
-
-        public bool MouseDown()
-        {
-
-            if (selectedType == null || InputUtil.IsPointerOverUI())
-            {
-                return false;
-            }
-            Vector2 pos = BoardManager.ScreenToUnit(Input.mousePosition);
-            RaycastHit2D ray = Physics2D.BoxCast(pos, new Vector2(0.5F, 0.5F), 0.0F, Vector2.zero, ObjectManager.Instance.groundLayer);
-            if (ray.collider != null)
-            {
-                return false;
-            }
-            Destroy(blueprintObj);
-            blueprintObj = null;
-            GameObject unitObj = CreateBaseObject(selectedType);
-            unitObj.transform.position = pos;
-            ObjectContainer unit = unitObj.GetComponent<ObjectContainer>();
-            unit.OnConstruction(selectedType);
-            selectedType = null;
-            return true;
-        }
-
-        public void SetSelectedType(ObjectType selectedType)
-        {
-            this.selectedType = selectedType;
-            blueprintObj = CreateBaseObject(selectedType);
-            ObjectContainer unit = blueprintObj.GetComponent<ObjectContainer>();
-            Destroy(unit.GetComponent<Collider2D>());
-            unit.OnConstruction(selectedType);
-            UpdateBlueprint();
-        }
-
-        public bool MouseUp()
-        {
-            return false;
-        }
-
-        public bool MouseMove(Vector2 mousePosition, Vector2 lastMouse)
-        {
-            UpdateBlueprint();
-            return false;
-        }
-
-        private void UpdateBlueprint()
-        {
-            if (blueprintObj == null)
-            {
-                return;
-            }
-            Vector3Int cellPos = BoardManager.ScreenToCell(Input.mousePosition);
-            Vector2 pos = BoardManager.ScreenToUnit(Input.mousePosition);
-            var tile = BoardManager.GetTile(cellPos);
-            blueprintObj.transform.position = pos;
-            blueprintObj.transform.parent = transform;
-            ObjectRenderer renderer = blueprintObj.GetComponentInChildren<ObjectRenderer>();
-            if (renderer != null)
-            {
-                renderer.SetTransparency(0.5F);
             }
         }
     }

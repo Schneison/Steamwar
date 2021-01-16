@@ -7,9 +7,10 @@ using Steamwar.Utils;
 using Steamwar.Units;
 using Steamwar.Buildings;
 using Steamwar.Objects;
+using UnityEngine.EventSystems;
 
 namespace Steamwar.UI {
-    public class ObjectCreator : SteamBehaviour
+    public class ObjectCreator : Singleton<ObjectCreator>
     {
         public GameObject container;
         public GameObject buttonPrefab;
@@ -100,7 +101,7 @@ namespace Steamwar.UI {
         public void OnButtonSelection(ObjectButton button)
         {
             selectedButton = button;
-            ConstructionManager.Instance.SetSelectedType(button.Type);
+            ConstructionOverlay.Instance.SelectedType(button.Type);
         }
 
     }

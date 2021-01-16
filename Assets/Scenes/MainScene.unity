@@ -5092,7 +5092,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &521709720
 Transform:
   m_ObjectHideFlags: 0
@@ -9917,6 +9917,7 @@ GameObject:
   - component: {fileID: 765831669}
   - component: {fileID: 765831668}
   - component: {fileID: 765831667}
+  - component: {fileID: 765831670}
   m_Layer: 0
   m_Name: ActionManager
   m_TagString: Untagged
@@ -10000,6 +10001,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &765831670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765831665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 924c38e97313527439ada6709dbe20b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueprint: {fileID: 7599335866866406142, guid: e919337b614a8c5478c876bf378360a7,
+    type: 3}
+  constructionLayer: {fileID: 521709719}
+  blueprintObj: {fileID: 0}
 --- !u!1 &770449056
 GameObject:
   m_ObjectHideFlags: 0
@@ -23462,6 +23479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listenersObjects:
   - {fileID: 1928070391}
+  - {fileID: 765831665}
   minScroll: 3.5
   maxScroll: 7.5
   lastMouse: {x: 0, y: 0}

@@ -107,6 +107,15 @@ namespace Steamwar.Core
             return ActionManager.ActivateType(ActionType.Repair);
         });
 
+        public static KeyListener abortCreation = AddListener(KeyCode.Escape, 3, () =>
+        {
+            if (ConstructionOverlay.Instance.DeselectType())
+            {
+                return true;
+            }
+            return CreatorButton.CloseWindow();
+        });
+
         /// <summary>
         /// Deselects the currently active action type
         /// </summary>
