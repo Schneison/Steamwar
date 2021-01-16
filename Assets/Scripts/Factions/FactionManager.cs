@@ -1,6 +1,7 @@
 ﻿
 using Steamwar.Buildings;
 using Steamwar.Core;
+using Steamwar.Grid;
 using Steamwar.Objects;
 using Steamwar.Resources;
 using Steamwar.Utils;
@@ -30,8 +31,8 @@ namespace Steamwar.Factions
                 FactionData dataObj = Instantiate(factionPrefab, transform);
                 dataObj.name = $"Faction({faction.index}={faction.name})";
                 factionData.Add(dataObj);
-                EventManager.Instance.objectConstrcuted.AddListener(dataObj.Resources.OnObjectConstructed);
-                EventManager.Instance.objectDeconstructed.AddListener(dataObj.Resources.OnObjectDeconstructed);
+                BoardManager.Instance.objectConstrcuted.AddListener(dataObj.Resources.OnObjectConstructed);
+                BoardManager.Instance.objectDeconstructed.AddListener(dataObj.Resources.OnObjectDeconstructed);
             }
             datas = factionData.ToArray();
         }

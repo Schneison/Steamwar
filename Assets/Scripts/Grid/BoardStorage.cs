@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 
-namespace Steamwar.Board
+namespace Steamwar.Grid
 {
     public class BoardStorage
     {

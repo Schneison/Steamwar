@@ -1,4 +1,5 @@
 ﻿using Steamwar.Factions;
+using Steamwar.Grid;
 using Steamwar.Objects;
 using Steamwar.Resources;
 using Steamwar.Utils;
@@ -18,22 +19,10 @@ namespace Steamwar.Core
         public SessionEvent factionChanged;
         // IBoardListener
         public UnityEvent boardCreation;
-        // IBoardListener
-        public ObjectEvent objectConstrcuted;
-        // IBoardListener
-        public ObjectEvent objectDeconstructed;
         // IFractionListener
         public FactionEvent factionUpdate;
         public ResourceEvent capacityUpdate;
         public ResourceEvent resourceUpdate;
-        //IJudgeListener
-        public ObjectEvent judgeChange;
-        public ObjectEvent judgeClear;
-    }
-
-    [Serializable]
-    public class ObjectEvent : UnityEvent<ObjectContainer>
-    {
     }
 
     [Serializable]

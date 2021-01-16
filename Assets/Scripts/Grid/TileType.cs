@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 using Steamwar.Utils;
 
-namespace Steamwar.Board
+namespace Steamwar.Grid
 {
     public class TileType : Tile
     {

@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 using Steamwar.Utils;
 using Steamwar.Units;
 using Steamwar.Objects;
+using Steamwar.Grid;
 
 namespace Steamwar.Navigation
 {
@@ -17,8 +18,6 @@ namespace Steamwar.Navigation
     public class PathFinder
     {
 
-        public readonly Grid world;
-        public readonly Camera camera;
         public readonly Vector2 destination;
         public readonly GameObject unit;
         public readonly Collider2D collider;
@@ -28,13 +27,8 @@ namespace Steamwar.Navigation
         private readonly Dictionary<int, PathNode> points = new Dictionary<int, PathNode>();
         private readonly PathNode[] options = new PathNode[4];
 
-        public PathFinder(Vector2 destination, Vector2 origin, GameObject unit) : this(SessionManager.Instance.world, SessionManager.Instance.mainCamera, destination, origin, unit, 32)
-        { }
-
-        public PathFinder(Grid world, Camera camera, Vector2 destination, Vector2 origin, GameObject unit, int maxDistance)
+        public PathFinder(Vector2 destination, Vector2 origin, GameObject unit, int maxDistance = 32)
         {
-            this.world = world;
-            this.camera = camera;
             this.destination = destination;
             this.origin = origin;
             this.unit = unit;
@@ -140,7 +134,7 @@ namespace Steamwar.Navigation
 
         public NodeType GetType(Vector2 from, Vector2 to)
         {
-            TileBase tile = SessionManager.Instance.ground.GetTile(world.WorldToCell(to));
+            TileBase tile = BoardManager.GetTileWorld(to);
 
             RaycastHit2D groundHit = Physics2D.Linecast(from, to, ObjectManager.Instance.groundLayer);
             RaycastHit2D hit = Physics2D.Linecast(to, from, ObjectManager.Instance.groundLayer);

@@ -1,5 +1,6 @@
 ﻿using Steamwar.Buildings;
 using Steamwar.Factions;
+using Steamwar.Grid;
 using Steamwar.Move;
 using Steamwar.Objects;
 using Steamwar.Units;
@@ -51,7 +52,7 @@ namespace Steamwar.Interaction
             {
                 if (_cellPos == null)
                 {
-                    _cellPos = SessionManager.Instance.world.WorldToCell(obj.transform.position);
+                    _cellPos = BoardManager.WorldToCell(obj.transform.position);
                 }
                 return _cellPos ?? Vector3Int.zero;
             }

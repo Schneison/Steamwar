@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Steamwar
 {
-    public class RoundManager : MonoBehaviour
+    public class RoundManager : SteamBehaviour
     {
         public Text roundText;
         public Text maxRoundText;
@@ -35,7 +35,7 @@ namespace Steamwar
             ProgressRound();
         }
 
-        public void Start()
+        protected override void OnSpawn()
         {
             StartRound();
         }

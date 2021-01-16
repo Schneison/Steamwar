@@ -7,12 +7,13 @@ using Steamwar.Utils;
 using Steamwar.Units;
 using Steamwar.Interaction;
 using UnityEngine.Tilemaps;
+using Steamwar.Grid;
 
 namespace Steamwar.Objects
 {
-     /// <summary>
-     /// Helper class to create objects.
-     /// </summary>
+    /// <summary>
+    /// Helper class to create objects.
+    /// </summary>
     public class ConstructionManager : Singleton<ConstructionManager>, IMouseListener
     {
         [Header("Prefabs")]
@@ -45,7 +46,7 @@ namespace Steamwar.Objects
                 case ObjectKind.BUILDING:
                     return Instantiate(buildingPrefab, buildingContainer.transform);
                 default:
-                    GameObject obj = new GameObject(type.id, new Type[] { typeof(SpriteRenderer),typeof(Rigidbody2D)});
+                    GameObject obj = new GameObject(type.id, new Type[] { typeof(SpriteRenderer), typeof(Rigidbody2D) });
                     obj.transform.parent = Instance.transform;
                     SpriteRenderer renderer = obj.GetComponent<SpriteRenderer>();
                     Rigidbody2D rigidbody = obj.GetComponent<Rigidbody2D>();
@@ -63,7 +64,7 @@ namespace Steamwar.Objects
         {
             GameObject objInstance = Instance.CreateFromPrefab(type);
             ObjectContainer obj = objInstance.GetComponent<ObjectContainer>();
-            if(obj != null)
+            if (obj != null)
             {
                 obj.OnPrefabInit();
                 AddElement(obj, type);
@@ -84,17 +85,13 @@ namespace Steamwar.Objects
         public bool MouseDown()
         {
 
-            if (selectedType == null || InputUtil.IsPointerOverUI()) {
+            if (selectedType == null || InputUtil.IsPointerOverUI())
+            {
                 return false;
             }
-            Camera camera = SessionManager.Instance.mainCamera;
-            Grid world = SessionManager.Instance.world;
-            Vector2 mousePosition = Input.mousePosition;
-            Vector2 worldPos = camera.ScreenToWorldPoint(mousePosition);
-            Vector3Int cellPos = world.WorldToCell(worldPos);
-            Vector2 pos = (Vector2)world.CellToWorld(cellPos) + new Vector2(0.5F, 0.5F);
+            Vector2 pos = BoardManager.ScreenToUnit(Input.mousePosition);
             RaycastHit2D ray = Physics2D.BoxCast(pos, new Vector2(0.5F, 0.5F), 0.0F, Vector2.zero, ObjectManager.Instance.groundLayer);
-            if(ray.collider != null)
+            if (ray.collider != null)
             {
                 return false;
             }
@@ -135,14 +132,9 @@ namespace Steamwar.Objects
             {
                 return;
             }
-            Camera camera = SessionManager.Instance.mainCamera;
-            Grid world = SessionManager.Instance.world;
-            Tilemap groundMap = SessionManager.Instance.ground;
-            Vector2 mousePosition = Input.mousePosition;
-            Vector2 worldPos = camera.ScreenToWorldPoint(mousePosition);
-            Vector3Int cellPos = world.WorldToCell(worldPos);
-            Vector2 pos = (Vector2)world.CellToWorld(cellPos) + new Vector2(0.5F, 0.5F);
-            var a = groundMap.GetTile(cellPos);
+            Vector3Int cellPos = BoardManager.ScreenToCell(Input.mousePosition);
+            Vector2 pos = BoardManager.ScreenToUnit(Input.mousePosition);
+            var tile = BoardManager.GetTile(cellPos);
             blueprintObj.transform.position = pos;
             blueprintObj.transform.parent = transform;
             ObjectRenderer renderer = blueprintObj.GetComponentInChildren<ObjectRenderer>();

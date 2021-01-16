@@ -49,7 +49,7 @@ namespace Steamwar.Objects
             {
                 ConstructionManager.AddElement(this, Data.Type);
             }
-            Board.Add(gameObject);
+            SessionManager.session.board.Add(gameObject);
         }
 
         public virtual void OnPrefabInit()
@@ -70,12 +70,12 @@ namespace Steamwar.Objects
                 Health = type.Health,
                 faction = SessionManager.session.playerIndex
             };
-            Board.Add(gameObject);
-        }
+            SessionManager.session.board.Add(gameObject);
+        } 
 
-        public virtual void OnDisable()
+        protected override void OnCleanUp()
         {
-            Board.Remove(gameObject);
+            SessionManager.session.board.Remove(gameObject);
         }
     }
 }

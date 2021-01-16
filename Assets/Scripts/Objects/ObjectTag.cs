@@ -13,5 +13,6 @@ namespace Steamwar.Objects
         None = 0,
         Storage = 1,
         Movable = 2,
+        Construction = 4
     }
 }

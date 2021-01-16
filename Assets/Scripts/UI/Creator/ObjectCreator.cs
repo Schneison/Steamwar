@@ -9,14 +9,14 @@ using Steamwar.Buildings;
 using Steamwar.Objects;
 
 namespace Steamwar.UI {
-    public class ObjectCreator : MonoBehaviour
+    public class ObjectCreator : SteamBehaviour
     {
         public GameObject container;
         public GameObject buttonPrefab;
         public CreatorType type;
         internal ObjectButton selectedButton;
 
-        void Start()
+        protected override void OnSpawn()
         {
             for(int i = 0; i < 10; i++)
             {

@@ -15,6 +15,7 @@ using Steamwar.Units;
 using Steamwar.Factions;
 using Steamwar.Sectors;
 using Steamwar.Utils;
+using Steamwar.Grid;
 
 namespace Steamwar
 {
@@ -126,6 +127,7 @@ namespace Steamwar
             session.factions = new Faction[] { faction, new Faction(1, "Team RED", 0xFFB94427) };
             session.roundFactionsSequence = session.factions;
             session.activeSector = ScriptableObjectUtility.GetAllInstances<Sector>()[0].ToData();
+            session.board = new Board();
             SessionManager.Instance.rounds.OnLoad(session);
         }
 

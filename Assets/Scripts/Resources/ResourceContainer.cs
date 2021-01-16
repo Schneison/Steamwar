@@ -12,6 +12,7 @@ using Steamwar.Utils;
 using System.Collections;
 using UnityEngine;
 using Steamwar.Factions;
+using Steamwar.Grid;
 
 namespace Steamwar.Resources
 {

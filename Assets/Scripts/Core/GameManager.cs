@@ -3,17 +3,53 @@
 using UnityEngine;
 using Steamwar.UI;
 using Steamwar.Utils;
+using UnityEngine.Events;
+using System;
 
 namespace Steamwar
 {
+    [Serializable]
+    public class LifecycleEvent : UnityEvent<LifecycleState>
+    {
+
+    }
+
     public class GameManager : Singleton<GameManager>
     {
-        internal static LifcycleState state;
+        public LifecycleEvent stateChange;
+
+        private static LifecycleState state;
+
+        public static LifecycleState State
+        {
+            get => state; set
+            {
+                if (state != value)
+                {
+                    state = value;
+                    if (Instance != null)
+                    {
+                        Instance.stateChange.Invoke(value);
+                    }
+                }
+            }
+        }
+
+        protected override void OnInit()
+        {
+            base.OnInit();
+            DontDestroyOnLoad(gameObject);
+        }
 
         public void StartLoading(int sceneIndex)
         {
-            state = LifcycleState.LOADING;
+            State = LifecycleState.LOADING;
             LoadingScreen.Instance.Show(SceneManager.LoadSceneAsync(sceneIndex));
+        }
+
+        public void StartSession()
+        {
+            State = LifecycleState.SESSION;
         }
 
         public void StartPlaying()
@@ -28,31 +64,31 @@ namespace Steamwar
 
         public static bool Menu()
         {
-            return state == LifcycleState.MAIN_MENU;
+            return State == LifecycleState.MAIN_MENU;
         }
 
         public static bool Loading()
         {
-            return state == LifcycleState.LOADING;
+            return State == LifecycleState.LOADING;
         }
 
         public static bool Playing()
         {
-            return state == LifcycleState.SESSION;
+            return State == LifecycleState.SESSION;
         }
 
         public static bool ShuttDown()
         {
-            return state == LifcycleState.SHUTTTING_DOWN;
+            return State == LifecycleState.SHUTTTING_DOWN;
         }
 
         public void ShuttingDown()
         {
-            state = LifcycleState.SHUTTTING_DOWN;
+            State = LifecycleState.SHUTTTING_DOWN;
         }
     }
 
-    public enum LifcycleState
+    public enum LifecycleState
     {
         NONE,
         PERSISTENT, 

@@ -66,6 +66,9 @@ TagManager:
   - name: Unit UI
     uniqueID: 2033684533
     locked: 0
+  - name: Area Overlay
+    uniqueID: 4100273385
+    locked: 0
   - name: Clouds
     uniqueID: 2700745953
     locked: 0

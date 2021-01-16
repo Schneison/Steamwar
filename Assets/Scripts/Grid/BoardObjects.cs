@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Steamwar.Buildings;
+using Steamwar.Objects;
 using Steamwar.Units;
 
-namespace Steamwar.Objects
+namespace Steamwar.Grid
 {
     [Serializable]
     public class BoardObjects

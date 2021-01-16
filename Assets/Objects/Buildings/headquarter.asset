@@ -30,11 +30,15 @@ MonoBehaviour:
   isDestroyable: 1
   isMovable: 0
   canAttack: 0
-  speed: 0
+  canConstruct: 1
+  speed: 1
   movment: 0
-  health: 30
+  health: 3
   damage: 0
   storageCapacity:
     moneyAmount: 500
+  construction:
+    constrcutionType: 0
+    areaSize: 2
   elementPrefab: {fileID: 0}
-  _tag: 1
+  _tag: 5

@@ -8,7 +8,10 @@ namespace Steamwar
 {
     public enum ServiceState
     {
+        None,
         Uninitialized,
+        Uninitializing,
+        Initializing,
         Initialized,
         ShutDown
     }

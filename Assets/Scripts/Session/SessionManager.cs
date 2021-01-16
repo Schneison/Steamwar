@@ -14,12 +14,7 @@ namespace Steamwar
 
     public class SessionManager : Singleton<SessionManager>
     {
-        public static ServiceContainer<Registry> registryService = new ServiceContainer<Registry>(()=>new Registry(), (state) => state == LifcycleState.SESSION);
-
         public Camera mainCamera;
-        public Grid world;
-        public Tilemap ground;
-        public Tilemap objects;
 
         internal RoundManager rounds;
         internal SectorManager sectors;
@@ -32,6 +27,7 @@ namespace Steamwar
             registry = new Registry();
             rounds = GetComponent<RoundManager>();
             sectors = GetComponent<SectorManager>();
+            Services.registry.Create(()=>new Registry(), (state) => state == LifecycleState.SESSION);
 
             StartSession();
         }
@@ -42,6 +38,7 @@ namespace Steamwar
         public void StartSession()
         {
             SaveManager.Load(out session);
+            GameManager.Instance.StartSession();
             EventManager.Instance.sessionLoaded.Invoke(session);
             EventManager.Instance.factionChanged.Invoke(session);
         }
@@ -57,5 +54,16 @@ namespace Steamwar
             SessionManager.session = session;
             rounds.OnLoad(session);
         }
+    }
+
+    [Flags]
+    public enum SessionState
+    {
+        NONE,
+        BOARD_CREATED = 1,
+        OBJECTS_CONSTRUCTED = 2,
+        LOADING = 4,
+        SESSION = 8,
+        SHUTTTING_DOWN = 16
     }
 }

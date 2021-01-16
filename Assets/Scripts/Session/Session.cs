@@ -6,7 +6,7 @@ using Steamwar.Factions;
 using Steamwar.Sectors;
 using Steamwar.Objects;
 using Steamwar.Utils;
-using Steamwar.Board;
+using Steamwar.Grid;
 
 namespace Steamwar
 {
@@ -23,6 +23,7 @@ namespace Steamwar
         public RoundState roundState;
         /* Board */
         public BoardObjects objects;
+        public Board board;
 
         public Faction PlayerFaction { get => factions[playerIndex]; }
 

@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using Steamwar.Objects;
 using Steamwar.Utils;
+using System.Collections;
 
 namespace Steamwar.Core
 {
-    public class PropManager : Singleton<PropManager>
+    public class PropManager : Singleton<PropManager>, IService
     {
         public Stack<ObjectContainer> props = new Stack<ObjectContainer>();
         private bool _init = false;
+
+        protected override void OnInit()
+        {
+            Services.props.Create<PropManager>((state)=>state == LifecycleState.SESSION, ()=>new ServiceContainer[] { Services.board });
+        }
 
         public static void CheckForProp(ObjectContainer behaviour)
         {
@@ -18,20 +24,24 @@ namespace Steamwar.Core
             }
         }
 
-        void Update()
+        public IEnumerator CleanUp()
         {
-            if(SessionManager.session != null) {
-                while (props.Count > 0)
-                {
-                    var prop = props.Pop();
-                    prop.OnPropInit();
+            yield return null;
+        }
 
-                }
-                if (!_init)
-                {
-                    _init = true;
-                }
+        public IEnumerator Initialize()
+        {
+            while (props.Count > 0)
+            {
+                var prop = props.Pop();
+                prop.OnPropInit();
+
             }
+            if (!_init)
+            {
+                _init = true;
+            }
+            yield return null;
         }
     }
 }

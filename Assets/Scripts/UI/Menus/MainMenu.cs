@@ -33,7 +33,7 @@ namespace Steamwar.UI.Menus
             switch (type)
             {
                 case ButtonType.CONTINUE:
-                    LoadingScreen.Instance.Show(SceneManager.LoadSceneAsync(1));
+                    GameManager.Instance.StartLoading(1);
                     break;
                 case ButtonType.NEW_GAME:
                     break;

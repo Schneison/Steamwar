@@ -34,6 +34,7 @@ namespace Steamwar.UI
         {
             Configure();
             Hide();
+            DontDestroyOnLoad(gameObject);
         }
 
 

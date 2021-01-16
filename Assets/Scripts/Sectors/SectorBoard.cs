@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Steamwar.Buildings;
 using Steamwar.Units;
 using Steamwar.Objects;
+using Steamwar.Grid;
 
 namespace Steamwar.Sectors
 {

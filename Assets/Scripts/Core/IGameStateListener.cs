@@ -8,6 +8,6 @@ namespace Steamwar
 {
     public interface IGameStateListener
     {
-        public void OnState(LifcycleState state);
+        public void UpdateState(LifecycleState state);
     }
 }

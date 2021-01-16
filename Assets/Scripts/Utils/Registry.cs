@@ -7,6 +7,7 @@ using Steamwar.Objects;
 using UnityEngine;
 using System.Collections;
 using Steamwar.Resources;
+using UnityEngine.Tilemaps;
 
 namespace Steamwar.Utils
 {
@@ -15,10 +16,6 @@ namespace Steamwar.Utils
         private readonly Dictionary<ObjectKind, Dictionary<string, ObjectType>> objects = new Dictionary<ObjectKind, Dictionary<string, ObjectType>>();
         private readonly Dictionary<string, Sector> sectors = new Dictionary<string, Sector>();
         private readonly Dictionary<string, Resource> resources = new Dictionary<string, Resource>();
-
-        public LifcycleState AvailableState => LifcycleState.SESSION;
-
-        public ServiceState State { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public Registry()
         {
@@ -73,6 +70,21 @@ namespace Steamwar.Utils
         public Resource GetResource(string name)
         {
             return resources[name];
+        }
+
+        public static string GetName(TileBase tile)
+        {
+            return tile.name.ToLower().Replace(' ', '_');
+        }
+
+        public IEnumerator Initialize()
+        {
+            yield return null;
+        }
+
+        public IEnumerator CleanUp()
+        {
+            yield return null;
         }
     }
 }

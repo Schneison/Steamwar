@@ -1,4 +1,5 @@
-﻿using Steamwar.Interaction;
+﻿using Steamwar.Grid;
+using Steamwar.Interaction;
 using Steamwar.Navigation;
 using Steamwar.Objects;
 using Steamwar.Units;
@@ -115,10 +116,9 @@ namespace Steamwar.Move
         public void OnSelectionMouseMove(SelectionData data, Vector3Int cellPosition)
         {
             ObjectContainer currentObj = data.Obj;
-            Grid world = SessionManager.Instance.world;
             if (data.AllowedToMove)
             {
-                PathFinder finder = new PathFinder(world.CellToWorld(cellPosition) + new Vector3(0.5F, 0.5F), new Vector2(currentObj.transform.position.x, currentObj.transform.position.y), currentObj.gameObject);
+                PathFinder finder = new PathFinder(BoardManager.CellToWorld(cellPosition) + new Vector3(0.5F, 0.5F), currentObj.transform.position, currentObj.gameObject);
                 Path path = finder.FindPath();
                 lastPath = path;
                 // TODO: Find a better way to handle the path nodes (Don't remove / reconstruct them every time) 

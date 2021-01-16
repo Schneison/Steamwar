@@ -1,4 +1,5 @@
 ﻿using Steamwar;
+using Steamwar.Grid;
 using Steamwar.Interaction;
 using Steamwar.Objects;
 using Steamwar.Utils;
@@ -75,7 +76,7 @@ namespace Assets.Attack
             {
                 selectedPos = selectedPos.normalized * 6;
             }
-            Vector3Int cellPos = SessionManager.Instance.world.WorldToCell(selectedPos);
+            Vector3Int cellPos = BoardManager.WorldToCell(selectedPos);
             length = Vector3Int.Distance(Vector3Int.zero, cellPos);
             // Direction of the diff vector to calculate the angle
             Vector3 dir = new Vector3(cellPos.x, cellPos.y).normalized;

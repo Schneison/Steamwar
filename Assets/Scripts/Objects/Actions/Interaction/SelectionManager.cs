@@ -4,6 +4,7 @@ using Steamwar.Objects;
 using Steamwar.Utils;
 using Steamwar.Buildings;
 using System.Linq;
+using Steamwar.Grid;
 
 namespace Steamwar.Interaction
 {
@@ -119,15 +120,13 @@ namespace Steamwar.Interaction
         /// <returns>True if no other handlers should be called after this one.</returns>
         public bool MouseUp()
         {
-            Grid world = SessionManager.Instance.world;
-            Camera camera = SessionManager.Instance.mainCamera;
             ObjectContainer currentObj = selected.Obj;
             if(currentObj == null)
             {
                 return false;
             }
-            Vector3Int mousePos = world.LocalToCell(camera.ScreenToWorldPoint(Input.mousePosition));
-            Vector3Int unitPos = world.LocalToCell(currentObj.transform.position);
+            Vector3Int mousePos = BoardManager.ScreenToCell(Input.mousePosition);
+            Vector3Int unitPos = BoardManager.WorldToCell(currentObj.transform.position);
             if (unitPos != mousePos)
             {
                 bool deselect = false;
@@ -180,9 +179,7 @@ namespace Steamwar.Interaction
                     mouseOverUI = false;
                 }
             }
-            Camera camera = SessionManager.Instance.mainCamera;
-            Grid world = SessionManager.Instance.world;
-            Vector3Int cellPosition = world.WorldToCell(camera.ScreenToWorldPoint(mousePosition));
+            Vector3Int cellPosition = BoardManager.ScreenToCell(mousePosition);
             if ((lastMouseCell == null || !lastMouseCell.Equals(cellPosition)) && !selected.IsEmpty && selected.Selectable.Selected)
             {
                 foreach (ISelectionListener listener in listeners)

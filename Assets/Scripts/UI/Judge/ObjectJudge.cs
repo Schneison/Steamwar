@@ -1,5 +1,6 @@
 ﻿using Steamwar.Buildings;
 using Steamwar.Core;
+using Steamwar.Grid;
 using Steamwar.Interaction;
 using Steamwar.Objects;
 using System.Collections;

@@ -46,9 +46,6 @@ namespace Steamwar.Utils {
                             var singletonObject = new GameObject();
                             _instance = singletonObject.AddComponent<T>();
                             singletonObject.name = typeof(T).ToString() + " (Singleton)";
-
-                            // Make instance persistent.
-                            DontDestroyOnLoad(singletonObject);
                         }
                     }
 
@@ -70,7 +67,7 @@ namespace Steamwar.Utils {
 
         private void OnDestroy()
         {
-            if (!GameManager.ShuttDown())
+            if (!GameManager.Loading() && !GameManager.ShuttDown())
             {
                 GameManager.Instance.ShuttingDown();
             }

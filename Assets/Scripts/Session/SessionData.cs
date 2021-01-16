@@ -5,6 +5,7 @@ using System.Text;
 using Steamwar.Factions;
 using Steamwar.Sectors;
 using Steamwar.Objects;
+using Steamwar.Grid;
 
 namespace Steamwar
 {

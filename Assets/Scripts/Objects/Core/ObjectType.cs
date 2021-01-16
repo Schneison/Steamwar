@@ -34,6 +34,7 @@ namespace Steamwar.Objects
         public bool isDestroyable;
         public bool isMovable;
         public bool canAttack;
+        public bool canConstruct;
 
         [ConditionalField(nameof(isMovable))]
         [Range(0, 1)]
@@ -53,6 +54,9 @@ namespace Steamwar.Objects
         //[HideInInspector]
         [ConditionalField(nameof(hasStorage))]
         public ResourceProps storageCapacity;
+
+        [ConditionalField(nameof(canConstruct))]
+        public ConstructionProvider construction;
 
         public GameObject elementPrefab;
         public ObjectTag _tag = ObjectTag.Undefined;

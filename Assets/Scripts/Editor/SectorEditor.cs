@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Globalization;
 using System.IO;
 
-using Steamwar.Board;
+using Steamwar.Grid;
 using Steamwar.Sectors;
 using Steamwar.Buildings;
 using Steamwar.Units;
