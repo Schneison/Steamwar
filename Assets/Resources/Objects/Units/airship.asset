@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85261c51c1103ec4c83ab7ac436b01a9, type: 3}
+  m_Name: airship
+  m_EditorClassIdentifier: 
+  id: airship
+  displayName: Airship
+  spriteBlue: {fileID: -7734894807949795715, guid: 82ffb675ba9cc7b41b18b08214e8ed78,
+    type: 3}
+  spriteRed: {fileID: -7734894807949795715, guid: 82ffb675ba9cc7b41b18b08214e8ed78,
+    type: 3}
+  sprite: {fileID: -7734894807949795715, guid: 82ffb675ba9cc7b41b18b08214e8ed78, type: 3}
+  baseSprites:
+  - {fileID: -7734894807949795715, guid: 82ffb675ba9cc7b41b18b08214e8ed78, type: 3}
+  coloredSprites: []
+  animations:
+  - {fileID: 9100000, guid: c6858e44b64917c469f2a71d187ab6e1, type: 2}
+  coloredAnimations: []
+  kind: 1
+  hasStorage: 0
+  isDestroyable: 1
+  isMovable: 1
+  canAttack: 1
+  canConstruct: 0
+  speed: 0.35
+  movment: 5
+  health: 6
+  damage: 2
+  storageCapacity:
+    moneyAmount: 0
+  construction:
+    constrcutionType: 0
+    areaSize: 0
+  elementPrefab: {fileID: 5026028412070512748, guid: d73b349780750134a812c8b8b3c37747,
+    type: 3}
+  _tag: 0

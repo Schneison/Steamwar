@@ -3,7 +3,7 @@ using Steamwar.Buildings;
 using Steamwar.Core;
 using Steamwar.Grid;
 using Steamwar.Objects;
-using Steamwar.Resources;
+using Steamwar.Supplies;
 using Steamwar.Utils;
 using System;
 using System.Collections.Generic;

@@ -36,10 +36,13 @@ namespace Steamwar.Sectors
             return new SectorData(this);
         }
 
+#if UNITY_EDITOR
         [MenuItem("Create/Sector")]
         static void CreateType()
         {
             ScriptableObjectUtility.CreateAsset<Sector>();
         }
+#endif
+
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Steamwar.Core;
-using Steamwar.Resources;
+using Steamwar.Supplies;
 using Steamwar.Utils;
 using System;
 using System.Collections.Generic;
@@ -11,11 +11,11 @@ using UnityEngine;
 namespace Steamwar.Factions
 {
     [Serializable]
-    [RequireComponent(typeof(ResourceContainer))]
+    [RequireComponent(typeof(SupplyContainer))]
     public class FactionData : SteamBehaviour
     {
         public readonly int factionIndex;
-        private ResourceContainer _resources;
+        private SupplyContainer _resources;
 
         public FactionData(int factionIndex)
         {
@@ -24,7 +24,7 @@ namespace Steamwar.Factions
 
         protected override void OnInit()
         {
-            _resources = GetComponent<ResourceContainer>();
+            _resources = GetComponent<SupplyContainer>();
         }
 
         public bool IsPlayer
@@ -32,7 +32,7 @@ namespace Steamwar.Factions
             get => FactionManager.IsPlayerFaction(factionIndex);
         }
 
-        public ResourceContainer Resources 
+        public SupplyContainer Resources 
         { 
             get => _resources;
         }

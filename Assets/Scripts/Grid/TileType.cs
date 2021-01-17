@@ -12,10 +12,12 @@ namespace Steamwar.Grid
         public string displayName;
         public bool chessable;
 
+#if UNITY_EDITOR
         [MenuItem("Create/Tile")]
         static void CreateType()
         {
             ScriptableObjectUtility.CreateAsset<TileType>();
         }
+#endif
     }
 }

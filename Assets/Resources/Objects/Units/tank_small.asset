@@ -10,27 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85261c51c1103ec4c83ab7ac436b01a9, type: 3}
-  m_Name: missing
+  m_Name: tank_small
   m_EditorClassIdentifier: 
-  id: missing
-  displayName: Missing
-  spriteBlue: {fileID: 0}
-  spriteRed: {fileID: 0}
+  id: tank_small
+  displayName: Tank Small
+  spriteBlue: {fileID: 3223520312254037464, guid: f1804e0f4a006b6408f4dbd0d4e32ccb,
+    type: 3}
+  spriteRed: {fileID: 5483856315839760767, guid: f1804e0f4a006b6408f4dbd0d4e32ccb,
+    type: 3}
   sprite: {fileID: 0}
-  baseSprites: []
+  baseSprites:
+  - {fileID: 3223520312254037464, guid: f1804e0f4a006b6408f4dbd0d4e32ccb, type: 3}
   coloredSprites: []
   animations: []
   coloredAnimations: []
-  kind: 0
+  kind: 1
   hasStorage: 0
   isDestroyable: 1
-  isMovable: 0
-  canAttack: 0
-  speed: 0
-  movment: 0
-  health: 0
-  damage: 0
+  isMovable: 1
+  canAttack: 1
+  canConstruct: 0
+  speed: 0.35
+  movment: 5
+  health: 4
+  damage: 4
   storageCapacity:
     moneyAmount: 0
+  construction:
+    constrcutionType: 0
+    areaSize: 0
   elementPrefab: {fileID: 0}
-  _tag: -1
+  _tag: 0

@@ -1,6 +1,6 @@
 ﻿using MyBox;
 using Steamwar.Factions;
-using Steamwar.Resources;
+using Steamwar.Supplies;
 using Steamwar.Utils;
 using System;
 using System.Linq;
@@ -69,7 +69,7 @@ namespace Steamwar.Objects
         [Serializable]
         public class Object : EffektConfig
         {
-            public ResourceProps resources;
+            public SupplyProps resources;
             public ObjectType type;
         }
 
@@ -89,7 +89,7 @@ namespace Steamwar.Objects
         [Serializable]
         public class Resource : EffektConfig
         {
-            public Resources.Resource type;
+            public Supplies.Supply type;
             public int amount;
 
             public override bool CanProgress(ObjectContainer obj, ProductContext context)
@@ -221,10 +221,12 @@ namespace Steamwar.Objects
                 ?? ProductConfig.Missing;
         }
 
+#if UNITY_EDITOR
         [MenuItem("Create/Factory Config")]
         public static void CreateType()
         {
             ScriptableObjectUtility.CreateAsset<FactoryConfig>();
         }
+#endif
     }
 }

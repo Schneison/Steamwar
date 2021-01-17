@@ -2,7 +2,6 @@
 #define DEBUG
 #undef DEBUG
 
-using NUnit.Framework;
 using Steamwar.Utils;
 using System;
 using System.Collections;
@@ -12,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Steamwar
 {

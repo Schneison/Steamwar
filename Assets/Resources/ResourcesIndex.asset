@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba55dc8b56b687468e51b23844166a0, type: 3}
+  m_Name: ResourcesIndex
+  m_EditorClassIdentifier: 
+  assets:
+  - id: 0
+    assetPath: Objects/Buildings/headquarter
+  - id: 1
+    assetPath: Objects/Buildings/house_large
+  - id: 2
+    assetPath: Objects/Buildings/house_small
+  - id: 3
+    assetPath: Objects/Buildings/missing
+  - id: 4
+    assetPath: Objects/Units/airship
+  - id: 5
+    assetPath: Objects/Units/missing
+  - id: 6
+    assetPath: Objects/Units/tank_large
+  - id: 7
+    assetPath: Objects/Units/tank_small
+  - id: 8
+    assetPath: Objects/Sectors/Ilands
+  - id: 9
+    assetPath: Objects/Supplies/money
+  - id: 10
+    assetPath: Objects/Factories/house

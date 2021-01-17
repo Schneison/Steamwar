@@ -12,6 +12,7 @@ namespace Steamwar.Utils
 {
     public static class ScriptableObjectUtility
     {
+#if UNITY_EDITOR
         /// <summary>
         //	This makes it easy to create, name and place unique new ScriptableObject asset files.
         /// </summary>
@@ -54,9 +55,11 @@ namespace Steamwar.Utils
             object obj = getActiveFolderPath.Invoke(null, new object[0]);
             return obj.ToString();
         }
-
+#endif
         public static T[] GetAllInstances<T>() where T : ScriptableObject
         {
+            return UnityEngine.Resources.FindObjectsOfTypeAll<T>();
+#if UNITY_EDITOR
             string[] guids = AssetDatabase.FindAssets("t:" + typeof(T).Name);  //FindAssets uses tags check documentation for more info
             T[] a = new T[guids.Length];
             for (int i = 0; i < guids.Length; i++)         //probably could get optimized 
@@ -64,8 +67,10 @@ namespace Steamwar.Utils
                 string path = AssetDatabase.GUIDToAssetPath(guids[i]);
                 a[i] = AssetDatabase.LoadAssetAtPath<T>(path);
             }
-
             return a;
+#else
+            return UnityEngine.Resources.FindObjectsOfTypeAll<T>();
+#endif
         }
     }
 }

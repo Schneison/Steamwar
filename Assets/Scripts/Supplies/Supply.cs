@@ -2,18 +2,21 @@
 using UnityEditor;
 using Steamwar.Utils;
 
-namespace Steamwar.Resources {
-    public class Resource : ScriptableObject
+namespace Steamwar.Supplies
+{
+    public class Supply : ScriptableObject
     {
         public string id;
         public string displayName;
         public Sprite sprite;
 
 
-        [MenuItem("Create/Resource")]
+#if UNITY_EDITOR
+        [MenuItem("Create/Supply")]
         static void CreateType()
         {
-            ScriptableObjectUtility.CreateAsset<Resource>();
+            ScriptableObjectUtility.CreateAsset<Supply>();
         }
+#endif
     }
 }

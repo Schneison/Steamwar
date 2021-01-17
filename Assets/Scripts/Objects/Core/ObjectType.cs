@@ -1,6 +1,6 @@
 ﻿
 using Steamwar.Buildings;
-using Steamwar.Resources;
+using Steamwar.Supplies;
 using UnityEngine;
 using UnityEditor;
 using MyBox;
@@ -53,7 +53,7 @@ namespace Steamwar.Objects
 
         //[HideInInspector]
         [ConditionalField(nameof(hasStorage))]
-        public ResourceProps storageCapacity;
+        public SupplyProps storageCapacity;
 
         [ConditionalField(nameof(canConstruct))]
         public ConstructionProvider construction;
@@ -147,11 +147,12 @@ namespace Steamwar.Objects
             return type;
         }
 
-
+#if UNITY_EDITOR
         [MenuItem("Create/Object Type")]
         static void CreateType()
         {
             ScriptableObjectUtility.CreateAsset<ObjectType>();
         }
+#endif
     }
 }

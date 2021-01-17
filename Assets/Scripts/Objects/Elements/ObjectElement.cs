@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace Steamwar.Objects {

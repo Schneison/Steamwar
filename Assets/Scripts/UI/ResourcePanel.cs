@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using Steamwar.Resources;
+using Steamwar.Supplies;
 using Steamwar.Factions;
 using System;
 
@@ -9,11 +9,11 @@ namespace Steamwar.UI
 {
     public class ResourcePanel : MonoBehaviour
     {
-        public Resource resource;
+        public Supply resource;
         public Text currentAmount;
         public Text maxAmount;
 
-        public void UpdateText(ResourceContainer container)
+        public void UpdateText(SupplyContainer container)
         {
             if (!container.IsPlayer)
             {

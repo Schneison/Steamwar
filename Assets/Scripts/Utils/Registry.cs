@@ -6,7 +6,7 @@ using Steamwar.Sectors;
 using Steamwar.Objects;
 using UnityEngine;
 using System.Collections;
-using Steamwar.Resources;
+using Steamwar.Supplies;
 using UnityEngine.Tilemaps;
 
 namespace Steamwar.Utils
@@ -15,7 +15,7 @@ namespace Steamwar.Utils
     {
         private readonly Dictionary<ObjectKind, Dictionary<string, ObjectType>> objects = new Dictionary<ObjectKind, Dictionary<string, ObjectType>>();
         private readonly Dictionary<string, Sector> sectors = new Dictionary<string, Sector>();
-        private readonly Dictionary<string, Resource> resources = new Dictionary<string, Resource>();
+        private readonly Dictionary<string, Supply> resources = new Dictionary<string, Supply>();
 
         public Registry()
         {
@@ -32,7 +32,7 @@ namespace Steamwar.Utils
             {
                 sectors[type.id] = type;
             }
-            foreach (Resource type in ScriptableObjectUtility.GetAllInstances<Resource>())
+            foreach (Supply type in ScriptableObjectUtility.GetAllInstances<Supply>())
             {
                 resources[type.id] = type;
             }
@@ -57,7 +57,7 @@ namespace Steamwar.Utils
             return objects[kind].Values;
         }
 
-        public IEnumerable<Resource> GetResources()
+        public IEnumerable<Supply> GetResources()
         {
             return resources.Values;
         }
@@ -67,7 +67,7 @@ namespace Steamwar.Utils
             return sectors[name];
         }
 
-        public Resource GetResource(string name)
+        public Supply GetResource(string name)
         {
             return resources[name];
         }

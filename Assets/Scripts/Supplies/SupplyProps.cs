@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Steamwar.Resources
+namespace Steamwar.Supplies
 {
     [Serializable]
-    public class ResourceProps
+    public class SupplyProps
     {
         [Range(0, 8192)]
         public int moneyAmount = 0;

@@ -1,7 +1,7 @@
 ﻿using Steamwar.Factions;
 using Steamwar.Grid;
 using Steamwar.Objects;
-using Steamwar.Resources;
+using Steamwar.Supplies;
 using Steamwar.Utils;
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace Steamwar.Core
     }
 
     [Serializable]
-    public class ResourceEvent : UnityEvent<ResourceContainer>
+    public class ResourceEvent : UnityEvent<SupplyContainer>
     {
 
     }

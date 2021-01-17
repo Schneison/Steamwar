@@ -2,7 +2,7 @@
 using Steamwar.Core;
 using Steamwar.Objects;
 using Steamwar.Buildings;
-using Steamwar.Resources;
+using Steamwar.Supplies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +14,10 @@ using UnityEngine;
 using Steamwar.Factions;
 using Steamwar.Grid;
 
-namespace Steamwar.Resources
+namespace Steamwar.Supplies
 {
     [Serializable]
-    public class ResourceContainer : SteamBehaviour, IBoardListener
+    public class SupplyContainer : SteamBehaviour, IBoardListener
     {
         private readonly CapacityCallback _capacity;
         private readonly IDictionary<string, int> _capacities = new Dictionary<string, int>();
@@ -25,7 +25,7 @@ namespace Steamwar.Resources
         ///Serialised
         public MyDictionary<string, int> resources = new MyDictionary<string, int>();
         private int faction;
-        public ResourceContainer()
+        public SupplyContainer()
         {
             _capacity = new CapacityCallback(this);
         }
@@ -35,7 +35,7 @@ namespace Steamwar.Resources
         protected override void OnSpawn()
         {
             faction = GetComponent<FactionData>().factionIndex;
-            foreach (Resource resource in SessionManager.registry.GetResources())
+            foreach (Supply resource in SessionManager.registry.GetResources())
             {
                 if (!resources.ContainsKey(resource.id))
                 {
@@ -45,7 +45,7 @@ namespace Steamwar.Resources
             }
         }
 
-        public int this[Resource resource]
+        public int this[Supply resource]
         {
             get => resources[resource.id];
 
@@ -69,7 +69,7 @@ namespace Steamwar.Resources
             get => _capacity;
         }
 
-        public int GetCapacity(Resource resource)
+        public int GetCapacity(Supply resource)
         {
             return _capacities[resource.id];
         }
@@ -80,7 +80,7 @@ namespace Steamwar.Resources
                (data, type, building) => data.HasFaction(faction) && type.Tag.HasFlag(ObjectTag.Storage),
                (data, type, building) =>
                {
-                   ResourceProps capacity = type.storageCapacity;
+                   SupplyProps capacity = type.storageCapacity;
                    if(capacity == null)
                    {
                        return;
@@ -101,7 +101,7 @@ namespace Steamwar.Resources
                  (data, type, building) => data.HasFaction(faction) && type.Tag.HasFlag(ObjectTag.Storage),
                  (data, type, building) =>
                  {
-                     ResourceProps capacity = type.storageCapacity;
+                     SupplyProps capacity = type.storageCapacity;
                      if (capacity == null)
                      {
                          return;
@@ -144,14 +144,14 @@ namespace Steamwar.Resources
 
         public class CapacityCallback
         {
-            private readonly ResourceContainer container;
+            private readonly SupplyContainer container;
 
-            public CapacityCallback(ResourceContainer container)
+            public CapacityCallback(SupplyContainer container)
             {
                 this.container = container;
             }
 
-            public int this[Resource resource]
+            public int this[Supply resource]
             {
                 get => this[resource.id];
                 set => this[resource.id] = value;

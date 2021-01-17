@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85261c51c1103ec4c83ab7ac436b01a9, type: 3}
-  m_Name: house_small
+  m_Name: house_large
   m_EditorClassIdentifier: 
-  id: house_small
-  displayName: Small House
-  spriteBlue: {fileID: -5146551468114596993, guid: 967687b2f3332ea4b8dd89327e8af729,
+  id: house_large
+  displayName: Large House
+  spriteBlue: {fileID: -5635123962534760068, guid: 967687b2f3332ea4b8dd89327e8af729,
     type: 3}
-  spriteRed: {fileID: -5222731076989381716, guid: 967687b2f3332ea4b8dd89327e8af729,
+  spriteRed: {fileID: -206605710745942502, guid: 967687b2f3332ea4b8dd89327e8af729,
     type: 3}
-  sprite: {fileID: 8008666036969442670, guid: 967687b2f3332ea4b8dd89327e8af729, type: 3}
+  sprite: {fileID: 7114983493517918410, guid: 967687b2f3332ea4b8dd89327e8af729, type: 3}
   baseSprites:
   - {fileID: -3830429595640007434, guid: 911d4e31f0fd2c5499ce0b439ccb8bbf, type: 3}
   coloredSprites:
@@ -30,12 +30,16 @@ MonoBehaviour:
   isDestroyable: 1
   isMovable: 0
   canAttack: 0
+  canConstruct: 0
   speed: 0
   movment: 0
-  health: 5
+  health: 10
   damage: 0
   storageCapacity:
     moneyAmount: 0
+  construction:
+    constrcutionType: 0
+    areaSize: 0
   elementPrefab: {fileID: 1581119584410000213, guid: c4f98eb6bf6774247b73a1261c565ae7,
     type: 3}
-  _tag: -1
+  _tag: 0

@@ -20,6 +20,7 @@ using UnityEngine.Tilemaps;
 
 namespace Steamwar.InternalEditor
 {
+#if UNITY_EDITOR
     public class SectorEditor : EditorWindow
     {
         string assetPath;
@@ -230,4 +231,5 @@ namespace Steamwar.InternalEditor
         public int roundsMax;
         public string boardPath;
     }
+#endif
 }

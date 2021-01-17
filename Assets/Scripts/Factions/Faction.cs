@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using Steamwar.Resources;
+using Steamwar.Supplies;
 
 namespace Steamwar.Factions
 {
