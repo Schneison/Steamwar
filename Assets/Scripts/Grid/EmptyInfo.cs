@@ -34,7 +34,7 @@ namespace Steamwar.Grid
 
         public int Index => -1;
 
-        public Vector2Int? Pos => null;
+        public CellPos? Pos => null;
 
         public bool IsEmpty => true;
 

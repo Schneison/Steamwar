@@ -1,13 +1,9 @@
-﻿using Steamwar.Core;
-using Steamwar.Objects;
+﻿using Steamwar.Objects;
 using Steamwar.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Analytics;
 using UnityEngine.Tilemaps;
 
 namespace Steamwar.Grid
@@ -17,10 +13,28 @@ namespace Steamwar.Grid
     /// </summary>
     public class Board
     {
+        public const int CHUNK_AMOUNT = 32 * 32; // 256 / 8
         public const sbyte MAX_POSITION_SIZE = sbyte.MaxValue;
         public const sbyte MIN_POSITION_SIZE = sbyte.MinValue;
-        public const byte MAX_SIZE = byte.MaxValue;
         public const int ARRAY_SIZE = ushort.MaxValue + 1;
+        /// <summary>
+        /// Maximal value of a position on one axis on the board
+        /// </summary>
+        public const byte BOARD_MASK = byte.MaxValue;
+        /// <summary>
+        /// Maximal value of a position on one axis in one chunk
+        /// </summary>
+        public const byte CHUNK_MASK = 7; // 7 -> Chunk Lenght 8
+        public const byte CHUNK_POS_MASK = 31;
+        /// <summary>
+        /// Amount of bits of the board mask (255 = 8)
+        /// </summary>
+        public const byte BOARD_BITS = 8; // 
+        /// <summary>
+        /// Amount of bits of the chunk mask (7 = 3)
+        /// </summary>
+        public const byte CHUNK_BITS = 3;
+        public const byte CHUNK_POS_BITS = 5;
 
         /// <summary>
         /// All objects on the board by there kind
@@ -44,31 +58,34 @@ namespace Steamwar.Grid
         /// All objects on the boartd by there faction index.
         /// </summary>
         public IDictionary<int, HashSet<int>> objectsByFaction = new Dictionary<int, HashSet<int>>();
-        private CellInfo[] cells = new CellInfo[0];
-        public int width, height;
+        private BoardChunk[] chunks = new BoardChunk[0];
         public Board()
         {
-            this.width = MAX_SIZE;
-            this.height = MAX_SIZE;
-            cells = new CellInfo[ARRAY_SIZE];
-            for (int x = MIN_POSITION_SIZE; x <= MAX_POSITION_SIZE; x++)
+            chunks = new BoardChunk[CHUNK_AMOUNT];
+        }
+
+        public bool HasChunk(CellPos pos)
+        {
+            return GetChunk(pos, false) != null;
+        }
+
+        public BoardChunk GetChunk(CellPos pos, bool createEmpty = false)
+        {
+            int chunkIndex = pos.ChunkIndex;
+            if (chunks.Length > chunkIndex)
             {
-                for (int y = MIN_POSITION_SIZE; y <= MAX_POSITION_SIZE; y++)
+                if(createEmpty && chunks[chunkIndex] == null)
                 {
-                    int index = GetCellIndex(new Vector2Int(x, y));
-                    cells[index] = new CellInfo(index);
+                    chunks[chunkIndex] = new BoardChunk(chunkIndex);
                 }
+                return chunks[chunkIndex];
             }
+            return null;
         }
 
-        public void Clear()
+        public bool SetTile(CellPos pos, TileBase tile, BoardLayerType type)
         {
-            cells = new CellInfo[0];
-        }
-
-        public bool SetTile(Vector2Int pos, TileBase tile, BoardLayerType type)
-        {
-            ICellInfo info = GetCell(pos);
+            ICellInfo info = GetCell(pos, true);
             if (!info.Exists)
             {
                 return false;
@@ -78,12 +95,7 @@ namespace Steamwar.Grid
             return true;
         }
 
-        public bool SetTile(Vector3Int pos, TileBase tile, BoardLayerType type)
-        {
-            return SetTile(new Vector2Int(pos.x, pos.y), tile, type);
-        }
-
-        public bool RemoveTile(Vector2Int pos, BoardLayerType type)
+        public bool RemoveTile(CellPos pos, BoardLayerType type)
         {
             ICellInfo info = GetCell(pos);
             if (!info.Exists)
@@ -93,22 +105,6 @@ namespace Steamwar.Grid
             info.RemoveTile(type);
             return true;
         }
-
-        public bool RemoveTile(Vector3Int pos, BoardLayerType type)
-        {
-            return RemoveTile(new Vector2Int(pos.x, pos.y), type);
-        }
-
-        /*public CellVendor AddCellVendor(Vector3Int pos)
-        {
-            ICellInfo info = GetCell(pos);
-            info.
-        }
-
-        public bool AddCellCustomer(Vector3Int pos)
-        {
-
-        }*/
 
         public void Add(GameObject gameObject)
         {
@@ -225,80 +221,24 @@ namespace Steamwar.Grid
                    select (pair.Key, (from id in pair.Value select GetObject(id)));
         }
 
-        public ICellInfo GetCell(Vector2Int pos)
+        public ICellInfo GetCell(CellPos pos, bool createEmpty = false)
         {
-            if (pos.x > MAX_POSITION_SIZE || pos.x < MIN_POSITION_SIZE)
+            if (pos.X > MAX_POSITION_SIZE || pos.X < MIN_POSITION_SIZE)
             {
                 return CellInfo.Empty;
             }
-            if (pos.y > MAX_POSITION_SIZE || pos.y < MIN_POSITION_SIZE)
+            if (pos.Y > MAX_POSITION_SIZE || pos.Y < MIN_POSITION_SIZE)
             {
                 return CellInfo.Empty;
             }
-            return GetCell(GetCellIndex(pos));
+            BoardChunk chunk = GetChunk(pos, createEmpty);
+            return chunk != null ? chunk.GetCell(pos, createEmpty) : CellInfo.Empty;
         }
 
-        public ICellInfo GetCell(Vector3Int pos)
+        public bool HasCell(CellPos pos)
         {
-            return GetCell(new Vector2Int(pos.x, pos.y));
-        }
-
-        public ICellInfo GetCell(int index)
-        {
-            return cells[index];
-        }
-
-        public static int GetCellIndex(Vector3Int pos)
-        {
-            return GetCellIndex((sbyte)pos.x, (sbyte)pos.y);
-        }
-
-        public static int GetCellIndex(Vector2Int pos)
-        {
-            return GetCellIndex((sbyte)pos.x, (sbyte)pos.y);
-        }
-
-        public static int GetCellIndex(sbyte posX, sbyte posY)
-        {
-            byte x = unchecked((byte)posX);
-            byte y = unchecked((byte)posY);
-            return ((int)(x & MAX_SIZE)) << 8 | y & MAX_SIZE;
-        }
-
-        public static int GetOffsetIndex(int pos, sbyte offsetX, sbyte offsetY)
-        {
-            sbyte x = (sbyte)((byte)(pos >> 8) & MAX_SIZE);
-            sbyte y = (sbyte) ((byte)pos & MAX_SIZE);
-            x += offsetX;
-            y += offsetY;
-            return GetCellIndex(x, y);
-        }
-
-        public static Vector2Int GetPosFromIndex(int pos)
-        {
-            sbyte x = (sbyte)((byte)(pos >> 8) & MAX_SIZE);
-            sbyte y = (sbyte)((byte)pos & MAX_SIZE);
-            return new Vector2Int(x, y);
-        }
-
-        public static int CellLeft(int pos)
-        {
-            return GetOffsetIndex(pos, -1, 0);
-        }
-
-        public static int CellRight(int pos)
-        {
-            return GetOffsetIndex(pos, 1, 0);
-        }
-
-        public static int CellUp(int pos)
-        {
-            return GetOffsetIndex(pos, 0, 1);
-        }
-
-        public static int CellDown(int pos)
-        {
-            return GetOffsetIndex(pos, 0, -1);
+            BoardChunk chunk = GetChunk(pos, false);
+            return chunk != null && chunk.HasCell(pos);
         }
 
     }

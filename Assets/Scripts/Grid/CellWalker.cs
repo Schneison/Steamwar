@@ -12,29 +12,33 @@ namespace Steamwar.Grid
     public class CellWalker
     {
         public readonly Board board;
-        public readonly int startPos;
+        public readonly CellPos startPos;
         public readonly BitArray visited = new BitArray(Board.ARRAY_SIZE, false);
         public readonly int maxAmount;
 
         public CellWalker(Board board, Vector3Int startPos, int maxAmount)
         {
             this.board = board;
-            this.startPos = Board.GetCellIndex(startPos);
+            this.startPos = new CellPos(startPos);
             this.maxAmount = maxAmount;
         }
 
         public IEnumerator Walk()
         {
             int count = 0;
-            Stack<int> posToVisit = new Stack<int>();
-            void addIfValid(int currentPos)
+            Stack<CellPos> posToVisit = new Stack<CellPos>();
+            void addIfValid(CellPos currentPos)
             {
-                ICellInfo info = board.GetCell(currentPos);
-                if (!visited[currentPos] && info.Exists && BoardManager.AnyTile(currentPos, out (TileBase tile, BoardLayerType layer) tile))
+                if(!BoardManager.AnyTile(currentPos, out (TileBase tile, BoardLayerType layer) tile))
+                {
+                    return;
+                }
+                ICellInfo info = board.GetCell(currentPos, true);
+                if (!visited[currentPos.PosIndex] && info.Exists)
                 {
                     BoardManager.Instance.tileAdded.Invoke(tile.tile, tile.layer, info, board);
 
-                    visited[currentPos] = true;
+                    visited[currentPos.PosIndex] = true;
                     posToVisit.Push(currentPos);
                 }
             }
@@ -46,12 +50,12 @@ namespace Steamwar.Grid
                     yield return null;
                     count = 0;
                 }
-                int pos = posToVisit.Pop();
+                CellPos pos = posToVisit.Pop();
 
-                addIfValid(Board.CellLeft(pos));
-                addIfValid(Board.CellRight(pos));
-                addIfValid(Board.CellUp(pos));
-                addIfValid(Board.CellDown(pos));
+                addIfValid(pos.Left());
+                addIfValid(pos.Right());
+                addIfValid(pos.Up());
+                addIfValid(pos.Down());
                 count++;
             }
         }

@@ -59,7 +59,7 @@ public class ServiceTest
             //Assert.True();
             Debug.Log(cycled);
         }
-        organizer.QueueUpdate();
+        organizer.QueueUpdate(LifecycleState.LOADING);
         while (coroutines.Any())
         {
             IEnumerator coroutine = coroutines.Pop();

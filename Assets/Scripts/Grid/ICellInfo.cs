@@ -39,7 +39,7 @@ namespace Steamwar.Grid
         /// </summary>
         public int Index { get; }
 
-        public Vector2Int? Pos { get; }
+        public CellPos? Pos { get; }
 
         /// <summary>
         /// If the cell contains no tile.

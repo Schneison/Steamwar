@@ -135,17 +135,15 @@ namespace Steamwar.Grid
             return GetMapForLayer(layer).GetTile(pos);
         }
 
-        public static bool AnyTile(int index, out (TileBase, BoardLayerType) tile)
+        public static bool AnyTile(CellPos pos, out (TileBase, BoardLayerType) tile)
         {
-            Vector2Int pos = Board.GetPosFromIndex(index);
-            Vector3Int newPos = new Vector3Int(pos.x, pos.y, 0);
             TileBase baseTile;
             foreach (BoardLayerType type in Enum.GetValues(typeof(BoardLayerType))) {
                 if(type == BoardLayerType.None)
                 {
                     continue;
                 }
-                baseTile = GetTile(newPos, type);
+                baseTile = GetTile(pos, type);
                 if (baseTile != null)
                 {
                     tile = (baseTile, type);
@@ -185,7 +183,7 @@ namespace Steamwar.Grid
             yield return null;
         }
 
-       /* public static SectorBoard CreateBoard(GameObject boardObj)
+       /*public static SectorBoard CreateBoard(GameObject boardObj)
         {
             Transform world = boardObj.transform.Find("World");
             if (world == null)
@@ -193,7 +191,7 @@ namespace Steamwar.Grid
                 Debug.Log("Missing World Object in the selected board object");
                 return null;
             }
-            Grid grid = world.GetComponent<Grid>();
+            UnityEngine.Grid grid = world.GetComponent<UnityEngine.Grid>();
             if (grid == null)
             {
                 Debug.Log("Missing Grid Object in the selected board object");

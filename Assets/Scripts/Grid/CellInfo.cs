@@ -37,7 +37,7 @@ namespace Steamwar.Grid
 
         public int Index { get => pos; }
 
-        public Vector2Int? Pos => Board.GetPosFromIndex(Index);
+        public CellPos? Pos => new CellPos(Index);
 
         public bool IsEmpty => Layers == BoardLayerType.None;
 

@@ -32,16 +32,16 @@ public class BoardTest
     }
 
     [Test]
-    public void BoardPositionConvertion()
+    public void CellPositionConvertion()
     {
         for (int x = -5; x <= 5; x++)
         {
             for (int y = -5; y <= 5; y++)
             {
-                Vector2Int startPos = new Vector2Int(x, y);
-                int posIndex = Board.GetCellIndex(startPos);
-                Vector2Int endPos = Board.GetPosFromIndex(posIndex);
-                Assert.True(startPos == endPos, $"Board convertion failed. start={startPos}, end={endPos}, index={posIndex}");
+                CellPos startPos = new CellPos(x, y);
+                CellPos endPos = new CellPos(startPos.PosIndex);
+                Debug.Log($"start={startPos}, end={endPos}, index={startPos.PosIndex}");
+                Assert.True(startPos == endPos, $"Board convertion failed. start={startPos}, end={endPos}, index={startPos.PosIndex}");
             }
         }
     }
@@ -49,12 +49,12 @@ public class BoardTest
     private void InvalidCell(Vector2Int pos)
     {
         ICellInfo cell = Board.GetCell(pos);
-        Assert.False(cell.Exists, $"{cell} should be exist.");
+        Assert.False(cell.Exists, $"{cell} should not exist.");
     }
 
     private void ValidCell(Vector2Int pos)
     {
         ICellInfo cell = Board.GetCell(pos);
-        Assert.True(cell.Exists, $"{cell} should be exist.");
+        Assert.True(cell.Exists, $"{cell} should exist.");
     }
 }
