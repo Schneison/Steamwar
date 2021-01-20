@@ -11,7 +11,7 @@ namespace Steamwar.Grid
         public const int INT_BITS = 32;
         public const long LONG_BITS = INT_BITS * 2;
 
-        private BitArray array;
+        private readonly BitArray array;
         private readonly int bitsPerEntry;
 
         public BoardStorage(int lenght, int bitsPerEntry)

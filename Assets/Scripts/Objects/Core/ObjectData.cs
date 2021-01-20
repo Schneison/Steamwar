@@ -17,6 +17,10 @@ namespace Steamwar.Objects
         [SerializeField]
         public ObjectType type;
 
+        public ObjectData Copy() {
+            return new ObjectData { position = position, faction = faction, health = health, movment = movment, type = type };
+        }
+
         public Vector3 Position
         {
             get => position; 

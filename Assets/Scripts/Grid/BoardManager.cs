@@ -15,6 +15,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Events;
 using System.Collections;
+using System.IO;
 
 namespace Steamwar.Grid
 {
@@ -27,6 +28,10 @@ namespace Steamwar.Grid
         [Header("World Overlay Layers")]
         public Tilemap chessOverlay;
         public Tilemap areaOverlay;
+
+        [Header("Containers")]
+        public GameObject unitContainer;
+        public GameObject buildingContainer;
 
         [Header("Events")]
         public TileEvent tileAdded;
@@ -183,66 +188,34 @@ namespace Steamwar.Grid
             yield return null;
         }
 
-       /*public static SectorBoard CreateBoard(GameObject boardObj)
+        private void AddObjectsData(List<ObjectData> objects, params GameObject[] containers)
         {
-            Transform world = boardObj.transform.Find("World");
-            if (world == null)
-            {
-                Debug.Log("Missing World Object in the selected board object");
-                return null;
+            foreach (GameObject  container in containers) {
+                foreach (Transform obj in container.transform)
+                {
+                    AddObjectData(objects, obj);
+                }
             }
-            UnityEngine.Grid grid = world.GetComponent<UnityEngine.Grid>();
-            if (grid == null)
+        }
+
+        private void AddObjectData(List<ObjectData> objects, Transform obj)
+        {
+            ObjectContainer unit = obj.GetComponent<ObjectContainer>();
+            if(unit == null)
             {
-                Debug.Log("Missing Grid Object in the selected board object");
-                return null;
+                return;
             }
-            Transform ground = world.Find("Ground");
-            if (ground == null)
+            objects.Add(unit.Data.Copy());
+        }
+
+      /* public SectorBoard CreateBoard(GameObject boardObj)
+       {
+            Dictionary<string, Sectors.BoardCellData> tileDatas = new Dictionary<string, Sectors.BoardCellData>
             {
-                Debug.Log("Missing Ground Object in the selected board object");
-                return null;
-            }
-            Tilemap groundTiles = ground.GetComponent<Tilemap>();
-            if (grid == null)
-            {
-                Debug.Log("Missing Tilemap Object in the selected board object");
-                return null;
-            }
-            Transform buildingContainer = boardObj.transform.Find("Buildings");
-            if (buildingContainer == null)
-            {
-                Debug.Log("Missing Buildings Object in the selected board object");
-                return null;
-            }
-            Transform unitContainer = boardObj.transform.Find("UnitController");
-            if (unitContainer == null)
-            {
-                Debug.Log("Missing UnitController Object in the selected board object");
-                return null;
-            }
-            Dictionary<string, Sectors.TileData> tileDatas = new Dictionary<string, Sectors.TileData>
-            {
-                { "dummy", new Sectors.TileData() { index = 0 } }
+                { "dummy", new Sectors.BoardCellData() { index = 0 } }
             };
-            List<UnitData> units = new List<UnitData>();
-            List<BuildingData> buildings = new List<BuildingData>();
-            foreach (Transform unitObj in unitContainer)
-            {
-                UnitContainer unit = unitObj.GetComponent<UnitContainer>();
-                if (unit != null)
-                {
-                    units.Add(unit.Data.Copy());
-                }
-            }
-            foreach (Transform buildingObj in buildingContainer)
-            {
-                BuildingContainer building = buildingObj.GetComponent<BuildingContainer>();
-                if (building != null)
-                {
-                   buildings.Add(building.Data.Copy());
-                }
-            }
+            List<ObjectData> objects = new List<ObjectData>();
+            AddObjectsData(objects, unitContainer, buildingContainer);
             BoardStorage tileStorage = new BoardStorage(MAX_SIZE, 8);
             byte tileId = 1;
             for (byte xIndex = 0; xIndex < MAX_SIZE; xIndex++)
@@ -259,7 +232,7 @@ namespace Steamwar.Grid
                         if (!tileDatas.ContainsKey(tile.id))
                         {
                             index = tileId++;
-                            tileDatas.Add(tile.id, new Sectors.TileData()
+                            tileDatas.Add(tile.id, new Sectors.BoardCellData()
                             {
                                 index = index,
                                 id = tile.id
@@ -333,7 +306,7 @@ namespace Steamwar.Grid
             }
             groundTiles.ClearAllTiles();
 
-            Sectors.TileData[] datas = board.tileDatas;
+            Sectors.BoardCellData[] datas = board.tileDatas;
             BoardStorage tileStrorage = new BoardStorage(8, board.tiles);
             for (int xIndex = 0; xIndex < 64; xIndex++)
             {
@@ -343,7 +316,7 @@ namespace Steamwar.Grid
                     int yPos = -32 + yIndex;
                     Vector3Int cellPos = new Vector3Int(xPos, yPos, 0);
                     int tileIndex = tileStrorage[xIndex, yIndex];
-                    Sectors.TileData tileData = datas[tileIndex];
+                    Sectors.BoardCellData tileData = datas[tileIndex];
                     if (tileIndex > 0)
                     {
                         TileType tile = tileByName[tileData.id];

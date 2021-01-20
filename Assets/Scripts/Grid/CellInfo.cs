@@ -1,21 +1,28 @@
 ﻿using MyBox;
+using Steamwar.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
 namespace Steamwar.Grid
 {
+    public delegate byte TileIdCallback(string tileName);
+
+    public delegate string TileNameCallback(byte id);
+
     public class CellInfo : ICellInfo
     {
+        public const BoardLayerType SAVED_LAYERS_MASK = BoardLayerType.Ground | BoardLayerType.Level1 | BoardLayerType.Level2 | BoardLayerType.Level3;
         public static readonly ICellInfo Empty = new EmptyInfo();
 
-        private readonly int pos;
+        private readonly CellPos pos;
         public List<CellPiece> pieces;
         public BoardLayerType layers;
         public string[] tiles;
 
-        public CellInfo(int pos)
+        public CellInfo(CellPos pos)
         {
             this.pos = pos;
             this.layers = BoardLayerType.None;
@@ -35,13 +42,74 @@ namespace Steamwar.Grid
 
         public IEnumerable<string> Tiles { get => tiles; }
 
-        public int Index { get => pos; }
+        public int Index { get => pos.PosIndex; }
 
-        public CellPos? Pos => new CellPos(Index);
+        public CellPos? Pos => pos;
 
         public bool IsEmpty => Layers == BoardLayerType.None;
 
         public bool Exists => true;
+
+        public void Serialize(BinaryWriter writer, TileIdCallback tileRegistry)
+        {
+            writer.Write((byte)(layers & SAVED_LAYERS_MASK));
+            foreach(string tile in tiles)
+            {
+                writer.Write(tileRegistry(tile));
+            }
+        }
+
+        public void Deserialize(BinaryReader reader, TileNameCallback tileRegistry)
+        {
+            int layers = reader.ReadByte();
+            int i = 0;
+            for (int mask = 0b1000; mask > 0; mask >>= 1)
+            {
+                if ((layers & mask) > 0)
+                {
+                    byte tileId = reader.ReadByte();
+                    string tileName = tileRegistry(tileId);
+                    if (!tileName.IsNullOrEmpty())
+                    {
+                        tiles[i] = tileRegistry(tileId);
+                    }
+                    else
+                    {
+                        layers &= ~mask;
+                    }
+                }
+                i++;
+            }
+            this.layers = (BoardLayerType)layers;
+        }
+
+        public static ICellInfo Deserialize(BinaryReader reader, TileNameCallback tileRegistry, CellPos chunkPos)
+        {
+            int regionIndex = reader.ReadInt32();
+            int layers = reader.ReadByte();
+            CellPos pos = chunkPos.FromRegion(regionIndex);
+            CellInfo instance = new CellInfo(pos);
+            int i = 0;
+            for (int mask = 0b1000; mask > 0; mask >>= 1)
+            {
+                if((layers & mask) > 0)
+                {
+                    byte tileId = reader.ReadByte();
+                    string tileName = tileRegistry(tileId);
+                    if (!tileName.IsNullOrEmpty())
+                    {
+                        instance.tiles[i] = tileRegistry(tileId);
+                    }
+                    else
+                    {
+                        layers &= ~mask;
+                    }
+                }
+                i++;
+            }
+            instance.layers = (BoardLayerType)layers;
+            return instance;
+        }
 
         public void AddPiece(CellPiece piece)
         {

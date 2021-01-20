@@ -146,42 +146,47 @@ namespace Steamwar.Grid
 
         public readonly CellPos Add(int x, int y)
         {
-            return new CellPos(X + x, Y + y);
+            return new CellPos(X + x, Y + y, layer);
         }
 
         public readonly CellPos Sub(int x, int y)
         {
-            return new CellPos(X - x, Y - y);
+            return new CellPos(X - x, Y - y, layer);
         }
 
         public readonly CellPos AddChunk(int x, int y)
         {
-            return new CellPos(X + x << REGION_BITS, Y + y << REGION_BITS);
+            return new CellPos(X + x << REGION_BITS, Y + y << REGION_BITS, layer);
         }
 
         public readonly CellPos SubChunk(int x, int y)
         {
-            return new CellPos(X - x << REGION_BITS, Y - y << REGION_BITS);
+            return new CellPos(X - x << REGION_BITS, Y - y << REGION_BITS, layer);
+        }
+
+        public readonly CellPos FromRegion(int regionIndex)
+        {
+            return new CellPos(X + ((regionIndex >> REGION_BITS) & REGION_MASK), Y + y & REGION_MASK, layer);
         }
 
         public readonly CellPos Left()
         {
-            return new CellPos(X - 1, Y);
+            return new CellPos(X - 1, Y, layer);
         }
 
         public readonly CellPos Right()
         {
-            return new CellPos(X + 1, Y);
+            return new CellPos(X + 1, Y, layer);
         }
 
         public readonly CellPos Down()
         {
-            return new CellPos(X, Y - 1);
+            return new CellPos(X, Y - 1, layer);
         }
 
         public readonly CellPos Up()
         {
-            return new CellPos(X, Y + 1);
+            return new CellPos(X, Y + 1, layer);
         }
 
 
