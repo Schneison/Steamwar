@@ -9144,6 +9144,8 @@ MonoBehaviour:
   objects: {fileID: 1640934085}
   chessOverlay: {fileID: 1262506971}
   areaOverlay: {fileID: 521709722}
+  unitContainer: {fileID: 1327306380}
+  buildingContainer: {fileID: 229100232}
   tileAdded:
     m_PersistentCalls:
       m_Calls:

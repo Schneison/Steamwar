@@ -47,7 +47,7 @@ namespace Steamwar.Objects
                    {
                        continue;
                    }
-                   BoardManager.Board.SetTile(pos, constructAreaTile, BoardLayerType.AreaOverlay);
+                   BoardManager.Board.SetTile(((CellPos)pos).WithLayer(BoardLayerType.AreaOverlay), constructAreaTile);
                }
                info.AddPiece(vendor);
            });
@@ -60,18 +60,18 @@ namespace Steamwar.Objects
 
         public override void OnTileCreated(TileBase tile, BoardLayerType layer, ICellInfo info, Board board)
         {
-            Vector2Int pos = info.Pos ?? Vector2Int.left;
+            CellPos pos = info.Pos ?? Vector2Int.left;
             if (info.Flags.HasFlag(CellFlag.ConstructionBuilding))
             {
                 return;
             }
-            board.SetTile(pos, areaTile, BoardLayerType.AreaOverlay);
+            board.SetTile(pos.WithLayer(BoardLayerType.AreaOverlay), areaTile);
         }
 
         public override void OnTileRemoved(TileBase tile, BoardLayerType layer, ICellInfo info, Board board)
         {
-            Vector2Int pos = info.Pos ?? Vector2Int.left;
-            board.RemoveTile(pos, BoardLayerType.AreaOverlay);
+            CellPos pos = info.Pos ?? Vector2Int.left;
+            board.RemoveTile(pos.WithLayer(BoardLayerType.AreaOverlay));
         }
     }
 }

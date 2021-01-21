@@ -24,14 +24,14 @@ namespace Steamwar.Grid
             this.chunkPos = chunkPos;
             this.cells = new CellInfo[SIZE];
             this.occupiedCells = new BitArray(SIZE);
-            for (int x = 0; x < LENGHT; x++)
+            /*for (int x = 0; x < LENGHT; x++)
             {
                 for (int y = 0; y < LENGHT; y++)
                 {
                     CellPos regionPos = chunkPos.Add(x, y);
                     this.cells[regionPos.RegionIndex] = new CellInfo(regionPos);
                 }
-            }
+            }*/
         }
 
         public BoardChunk(int chunkPos) : this(CellPos.FromChunk(chunkPos))
@@ -43,7 +43,7 @@ namespace Steamwar.Grid
         {
             byte[] cellOccupied = reader.ReadBytes(LENGHT);
             occupiedCells = new BitArray(cellOccupied);
-            byte lenght = reader.ReadByte();
+            int lenght = reader.ReadInt32();
             byte[] cellBytes = reader.ReadBytes(lenght);
             using MemoryStream memoryStream = new MemoryStream(cellBytes);
             using BinaryReader cellReader = new BinaryReader(memoryStream);
@@ -80,10 +80,10 @@ namespace Steamwar.Grid
                     cells[i].Serialize(cellWriter, tileRegistry);
                 }
             }
-            int newPos = (int)writer.BaseStream.Position;
             writer.Write(memoryStream.ToArray());
+            int newPos = (int)writer.BaseStream.Position;
             writer.BaseStream.Position = oldPos;
-            writer.Write(newPos - oldPos);
+            writer.Write(newPos - oldPos - 4);
             writer.BaseStream.Position = newPos;
         }
 
@@ -99,6 +99,7 @@ namespace Steamwar.Grid
                         return CellInfo.Empty;
                     }
                     cells[regionIndex] = new CellInfo(pos);
+                    info = cells[regionIndex];
                 }
 
                 return info;

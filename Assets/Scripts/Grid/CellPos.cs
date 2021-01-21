@@ -68,6 +68,11 @@ namespace Steamwar.Grid
             return new CellPos(x, y, layer);
         }
 
+        public CellPos WithLayer(BoardLayerType type)
+        {
+            return new CellPos(x, y, type);
+        }
+
         public Vector3Int GetTilemapPos()
         {
             return new Vector3Int(X, Y, 0);

@@ -16,6 +16,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine.Events;
 using System.Collections;
 using System.IO;
+using GitHub.Unity;
 
 namespace Steamwar.Grid
 {
@@ -208,43 +209,48 @@ namespace Steamwar.Grid
             objects.Add(unit.Data.Copy());
         }
 
-      /* public SectorBoard CreateBoard(GameObject boardObj)
-       {
-            Dictionary<string, Sectors.BoardCellData> tileDatas = new Dictionary<string, Sectors.BoardCellData>
+        /*public void Deserialize(BinaryReader reader, TileNameCallback tileRegistry)
+        {
+            Board.Deserialize(reader, tileRegistry);
+            byte[] cellOccupied = reader.ReadBytes(LENGHT);
+            occupiedCells = new BitArray(cellOccupied);
+            int lenght = reader.ReadInt32();
+            byte[] cellBytes = reader.ReadBytes(lenght);
+            using MemoryStream memoryStream = new MemoryStream(cellBytes);
+            using BinaryReader cellReader = new BinaryReader(memoryStream);
+            for (int i = 0; i < occupiedCells.Length; i++)
             {
-                { "dummy", new Sectors.BoardCellData() { index = 0 } }
+                if (!occupiedCells.Get(i))
+                {
+                    continue;
+                }
+                if (cells[i] == null)
+                {
+                    cells[i] = new CellInfo(chunkPos.FromRegion(i));
+                }
+                cells[i].Deserialize(cellReader, tileRegistry);
+            }
+        }*/
+
+        public SectorBoard CreateBoard()
+        {
+            byte i = 0;
+            Dictionary<string, BoardCellData> tileDatas = new Dictionary<string, BoardCellData>
+            {
+                { "dummy", new BoardCellData() { index = 0, id = "dummy" } }
             };
             List<ObjectData> objects = new List<ObjectData>();
             AddObjectsData(objects, unitContainer, buildingContainer);
-            BoardStorage tileStorage = new BoardStorage(MAX_SIZE, 8);
-            byte tileId = 1;
-            for (byte xIndex = 0; xIndex < MAX_SIZE; xIndex++)
+            using MemoryStream memoryStream = new MemoryStream();
+            using (BinaryWriter writer = new BinaryWriter(memoryStream))
             {
-                for (byte yIndex = 0; yIndex < MAX_SIZE; yIndex++)
-                {
-                    int xPos = -MAX_HALF + xIndex;
-                    int yPos = -MAX_HALF + yIndex;
-                    Vector3Int position = new Vector3Int(xPos, yPos, 0);
-                    TileType tile = groundTiles.GetTile<TileType>(position);
-                    if (tile != null)
+                Board.Serialize(writer, (name) => {
+                    if(!tileDatas.ContainsKey(name))
                     {
-                        byte index;
-                        if (!tileDatas.ContainsKey(tile.id))
-                        {
-                            index = tileId++;
-                            tileDatas.Add(tile.id, new Sectors.BoardCellData()
-                            {
-                                index = index,
-                                id = tile.id
-                            });
-                        }
-                        else
-                        {
-                            index = tileDatas[tile.id].index;
-                        }
-                        tileStorage[xIndex, yIndex] = index;
+                        tileDatas[name] = new BoardCellData { id = name, index = i++ };
                     }
-                }
+                    return tileDatas[name].index;
+                });
             }
             return new SectorBoard()
             {
@@ -253,17 +259,16 @@ namespace Steamwar.Grid
                              select data).ToArray(),
                 objects = new BoardObjects
                 {
-                    units = units,
-                    buildings = buildings,
+                    objects = objects
                 },
-                tiles = tileStorage.ToArray(),
+                tiles = memoryStream.ToArray(),
                 version = "1.0"
             };
-        }*/
+        }
 
         public static void ApplyBoard(GameObject boardObj, SectorBoard board)
         {
-            Transform world = boardObj.transform.Find("World");
+            /*Transform world = boardObj.transform.Find("World");
             if (world == null)
             {
                 Debug.Log("Missing World Object in the selected board object");
@@ -323,7 +328,7 @@ namespace Steamwar.Grid
                         groundTiles.SetTile(cellPos, tile);
                     }
                 }
-            }
+            }´*/
         }
     }
 

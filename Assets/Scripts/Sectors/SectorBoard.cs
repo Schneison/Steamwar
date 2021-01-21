@@ -14,7 +14,7 @@ namespace Steamwar.Sectors
     public class SectorBoard
     {
         public BoardCellData[] tileDatas;//{tileId: grass, tileIndex: 0}, {tileId: tree, tileIndex: 1}, ...
-        public long[] tiles;
+        public byte[] tiles;
         public BoardObjects objects;
         public string version;//1.0.0
     }

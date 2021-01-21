@@ -53,8 +53,13 @@ namespace Steamwar.Grid
         public void Serialize(BinaryWriter writer, TileIdCallback tileRegistry)
         {
             writer.Write((byte)(layers & SAVED_LAYERS_MASK));
-            foreach(string tile in tiles)
+            for (int i = 0; i < Math.Min(4, tiles.Length); i++)
             {
+                string tile = tiles[i];
+                if (tile == null)
+                {
+                    continue;
+                }
                 writer.Write(tileRegistry(tile));
             }
         }
@@ -63,7 +68,7 @@ namespace Steamwar.Grid
         {
             int layers = reader.ReadByte();
             int i = 0;
-            for (int mask = 0b1000; mask > 0; mask >>= 1)
+            for (int mask = 0b1; mask <= (int)SAVED_LAYERS_MASK; mask <<= 1)
             {
                 if ((layers & mask) > 0)
                 {
@@ -71,11 +76,11 @@ namespace Steamwar.Grid
                     string tileName = tileRegistry(tileId);
                     if (!tileName.IsNullOrEmpty())
                     {
-                        tiles[i] = tileRegistry(tileId);
+                        SetTile(tileName, (BoardLayerType)mask);
                     }
                     else
                     {
-                        layers &= ~mask;
+                        RemoveTile((BoardLayerType)mask, true);
                     }
                 }
                 i++;

@@ -58,6 +58,8 @@ namespace Steamwar.Grid
                 addIfValid(pos.Down());
                 count++;
             }
+            var b = BoardManager.Instance.CreateBoard();
+            board.ToString();
         }
     }
 }

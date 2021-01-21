@@ -1,7 +1,9 @@
 ﻿using Steamwar.Objects;
 using Steamwar.Utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -14,9 +16,11 @@ namespace Steamwar.Grid
     public class Board
     {
         public const int CHUNK_AMOUNT = 32 * 32; // 256 / 8
+        public const int CHUNK_BYTE_AMOUNT = CHUNK_AMOUNT / 8;
         public const sbyte MAX_POSITION_SIZE = sbyte.MaxValue;
         public const sbyte MIN_POSITION_SIZE = sbyte.MinValue;
         public const int ARRAY_SIZE = ushort.MaxValue + 1;
+
         /// <summary>
         /// Maximal value of a position on one axis on the board
         /// </summary>
@@ -59,9 +63,59 @@ namespace Steamwar.Grid
         /// </summary>
         public IDictionary<int, HashSet<int>> objectsByFaction = new Dictionary<int, HashSet<int>>();
         private BoardChunk[] chunks = new BoardChunk[0];
+        private BitArray occupiedChunks;
         public Board()
         {
             chunks = new BoardChunk[CHUNK_AMOUNT];
+            this.occupiedChunks = new BitArray(CHUNK_AMOUNT);
+        }
+
+        public void Deserialize(BinaryReader reader, TileNameCallback tileRegistry)
+        {
+            byte[] chunksOccupied = reader.ReadBytes(32);
+            occupiedChunks = new BitArray(chunksOccupied);
+            int lenght = reader.ReadInt32();
+            byte[] cellBytes = reader.ReadBytes(lenght);
+            using MemoryStream memoryStream = new MemoryStream(cellBytes);
+            using BinaryReader cellReader = new BinaryReader(memoryStream);
+            for (int i = 0; i < occupiedChunks.Length; i++)
+            {
+                if (!occupiedChunks.Get(i))
+                {
+                    continue;
+                }
+                if (chunks[i] == null)
+                {
+                    chunks[i] = new BoardChunk(CellPos.FromChunk(i));
+                }
+                chunks[i].Deserialize(cellReader, tileRegistry);
+            }
+        }
+
+        public void Serialize(BinaryWriter writer, TileIdCallback tileRegistry)
+        {
+            byte[] cellOccupied = new byte[CHUNK_BYTE_AMOUNT];
+            occupiedChunks.CopyTo(cellOccupied, 0);
+            writer.Write(cellOccupied);
+            int oldPos = (int)writer.BaseStream.Position;
+            writer.Write(0);
+            using MemoryStream memoryStream = new MemoryStream();
+            using (BinaryWriter cellWriter = new BinaryWriter(memoryStream))
+            {
+                for (int i = 0; i < occupiedChunks.Length; i++)
+                {
+                    if (!occupiedChunks.Get(i))
+                    {
+                        continue;
+                    }
+                    chunks[i].Serialize(cellWriter, tileRegistry);
+                }
+            }
+            writer.Write(memoryStream.ToArray());
+            int newPos = (int)writer.BaseStream.Position;
+            writer.BaseStream.Position = oldPos;
+            writer.Write(newPos - oldPos - 4);
+            writer.BaseStream.Position = newPos;
         }
 
         public bool HasChunk(CellPos pos)
@@ -77,32 +131,32 @@ namespace Steamwar.Grid
                 if(createEmpty && chunks[chunkIndex] == null)
                 {
                     chunks[chunkIndex] = new BoardChunk(chunkIndex);
+                    occupiedChunks.Set(chunkIndex, true);
                 }
                 return chunks[chunkIndex];
             }
             return null;
         }
 
-        public bool SetTile(CellPos pos, TileBase tile, BoardLayerType type)
+        public bool SetTile(CellPos pos, TileBase tile)
         {
-            ICellInfo info = GetCell(pos, true);
-            if (!info.Exists)
+            BoardChunk chunk = GetChunk(pos, true);
+            if(chunk == null)
             {
                 return false;
             }
-            BoardManager.SetTile(pos, tile, type);
-            info.SetTile(Registry.GetName(tile), type);
+            chunk.SetTile(pos, tile, true, true);
             return true;
         }
 
-        public bool RemoveTile(CellPos pos, BoardLayerType type)
+        public bool RemoveTile(CellPos pos)
         {
-            ICellInfo info = GetCell(pos);
-            if (!info.Exists)
+            BoardChunk chunk = GetChunk(pos, true);
+            if (chunk == null)
             {
                 return false;
             }
-            info.RemoveTile(type);
+            chunk.RemoveTile(pos);
             return true;
         }
 

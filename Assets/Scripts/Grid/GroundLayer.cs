@@ -9,7 +9,7 @@ namespace Steamwar.Grid
     {
         public override void OnTileCreated(TileBase tile, BoardLayerType layer, ICellInfo info, Board board)
         {
-            board.SetTile(info.Pos??Vector2Int.zero, tile, layer);
+            board.SetTile((info.Pos??Vector2Int.zero).WithLayer(BoardLayerType.Ground), tile);
         }
     }
 }

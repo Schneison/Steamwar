@@ -14,12 +14,12 @@ namespace Steamwar.Grid
 
         public override void OnTileCreated(TileBase tile, BoardLayerType layer, ICellInfo info, Board board)
         {
-            Vector2Int pos = info.Pos??Vector2Int.left;
-            int xDiff = Math.Abs(pos.x % 2);
-            int yDiff = Math.Abs(pos.y % 2);
+            CellPos pos = info.Pos??Vector2Int.left;
+            int xDiff = Math.Abs(pos.X % 2);
+            int yDiff = Math.Abs(pos.Y % 2);
             if (xDiff == yDiff && chessables.Contains(tile))
             {
-                board.SetTile(pos, overlayTile, BoardLayerType.ChessOverlay);
+                board.SetTile(pos.WithLayer(BoardLayerType.ChessOverlay), overlayTile);
             }
         }
 
