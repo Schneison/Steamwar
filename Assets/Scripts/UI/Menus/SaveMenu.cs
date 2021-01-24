@@ -10,7 +10,7 @@ namespace Steamwar.UI.Menus
 
         public void Start()
         {
-            input.text = SessionManager.session.activeSector.sector.diplayName + " " + SessionManager.session.rounds; 
+            input.text = SessionManager.session.activeSector.sector.diplayName + " " + SessionManager.session.turnCount; 
         }
 
         public void Save()

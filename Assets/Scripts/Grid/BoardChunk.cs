@@ -18,12 +18,15 @@ namespace Steamwar.Grid
         public readonly CellPos chunkPos;
         private readonly CellInfo[] cells;
         private BitArray occupiedCells;
+        /*private BitStorage[] layerCells;
+        private BitStorage layers;*/
 
         public BoardChunk(CellPos chunkPos)
         {
             this.chunkPos = chunkPos;
             this.cells = new CellInfo[SIZE];
             this.occupiedCells = new BitArray(SIZE);
+            //this.layers = new BitStorage(4, SIZE);
             /*for (int x = 0; x < LENGHT; x++)
             {
                 for (int y = 0; y < LENGHT; y++)
@@ -159,6 +162,11 @@ namespace Steamwar.Grid
             }
             return true;
         }
+
+    }
+
+    public abstract class ChunkLogic
+    {
 
     }
 }

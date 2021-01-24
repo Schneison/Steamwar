@@ -42,6 +42,7 @@ namespace Steamwar.UI
             selected = true;
             ActionManager.DeselectType();
             StartCoroutine(FadeIn());
+            ConstructionOverlay.Instance.ActivateLayer();
         }
 
         private bool Close()
@@ -53,6 +54,7 @@ namespace Steamwar.UI
             selectedButton = null;
             selected = false;
             StartCoroutine(FadeOut());
+            ConstructionOverlay.Instance.DeactivateLayer();
             return true;
         }
 

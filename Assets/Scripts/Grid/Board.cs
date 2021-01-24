@@ -62,7 +62,7 @@ namespace Steamwar.Grid
         /// All objects on the boartd by there faction index.
         /// </summary>
         public IDictionary<int, HashSet<int>> objectsByFaction = new Dictionary<int, HashSet<int>>();
-        private BoardChunk[] chunks = new BoardChunk[0];
+        private readonly BoardChunk[] chunks;
         private BitArray occupiedChunks;
         public Board()
         {

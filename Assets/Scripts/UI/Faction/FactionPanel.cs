@@ -34,7 +34,7 @@ namespace Steamwar.UI
             {
                 activeBadge.SetSelected(false);
             }
-            activeBadge = badges[session.activeFaction.index];
+            activeBadge = badges[session.activeFaction];
             activeBadge.SetSelected(true);
         }
 

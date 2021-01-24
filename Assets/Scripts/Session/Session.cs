@@ -17,15 +17,17 @@ namespace Steamwar
         /* Sector */
         public SectorData activeSector;
         /* Round */
-        public int rounds;
-        public Faction[] roundFactionsSequence;
-        public Faction activeFaction;
-        public RoundState roundState;
+        public int turnCount;
+        public int[] factionOrder;
+        public int activeFaction;
         /* Board */
         public BoardObjects objects;
         public Board board;
 
-        public Faction PlayerFaction { get => factions[playerIndex]; }
+        public Faction PlayerFaction => factions[playerIndex];
+
+        public Faction ActiveFaction => factions[activeFaction];
+
 
         public Session()
         {
@@ -46,10 +48,9 @@ namespace Steamwar
 
                 sectorData = activeSector,
 
-                rounds = rounds,
-                roundFactionsSequence = (from faction in factions select faction.index).ToArray(),
-                activeFaction = activeFaction.index,
-                roundState = roundState,
+                turnCount = turnCount,
+                factionOrder = factionOrder,
+                activeFaction = activeFaction,
 
                 objects = objects,
             };

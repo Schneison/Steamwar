@@ -52,7 +52,6 @@ namespace Steamwar
         {
             sectors.Load(session.activeSector);
             SessionManager.session = session;
-            rounds.OnLoad(session);
         }
     }
 

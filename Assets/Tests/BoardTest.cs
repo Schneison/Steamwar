@@ -67,6 +67,14 @@ public class BoardTest
         chunkNew.ToString();
     }
 
+    [Test]
+    public void BitStorageCheck()
+    {
+        BitStorage storage = new BitStorage(4, 16);
+        storage.Set(11, 5);
+        Assert.True(storage.Get(11) == 5, "Failed to test the bit storage");
+    }
+
     private void InvalidCell(Vector2Int pos)
     {
         ICellInfo cell = Board.GetCell(pos);

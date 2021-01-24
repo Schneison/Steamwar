@@ -15,7 +15,8 @@ namespace Steamwar.UI
         public ObjectInspector inspector;
         public ObjectCreator creator;
         public GameObject creatorButtonContainer;
-        public GameObject roundCounter;
+        public Text roundCounter;
+        public Text roundMax;
         public GameObject roundButton;
         public GameObject resourcePanel;
         public ResourcePanel moneyContainer;

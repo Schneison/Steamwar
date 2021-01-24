@@ -34,7 +34,6 @@ namespace Steamwar.Objects
                 Destroy(blueprintObj);
             }
             this.selectedType = selectedType;
-            constructionLayer.SetActive(true);
             blueprintObj = Instantiate(blueprint, transform);
             ObjectContainer unit = blueprintObj.GetComponent<ObjectContainer>();
             unit.OnConstruction(selectedType, false);
@@ -54,11 +53,20 @@ namespace Steamwar.Objects
                 return false;
             }
             selectedType = null;
-            constructionLayer.SetActive(false);
             Destroy(blueprintObj);
             blueprintObj = null;
             EventSystem.current.SetSelectedGameObject(null);
             return true;
+        }
+
+        public void ActivateLayer()
+        {
+            constructionLayer.SetActive(true);
+        }
+
+        public void DeactivateLayer()
+        {
+            constructionLayer.SetActive(false);
         }
 
         private void UpdateBlueprint()
