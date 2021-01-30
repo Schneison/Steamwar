@@ -12,7 +12,6 @@ namespace Steamwar.UI
     public class UIElements : Singleton<UIElements>
     {
         public EscMenu escMenu;
-        public ObjectInspector inspector;
         public ObjectCreator creator;
         public GameObject creatorButtonContainer;
         public Text roundCounter;

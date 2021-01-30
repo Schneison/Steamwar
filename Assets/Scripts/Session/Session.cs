@@ -18,6 +18,7 @@ namespace Steamwar
         public SectorData activeSector;
         /* Round */
         public int turnCount;
+        public int turnMax;
         public int[] factionOrder;
         public int activeFaction;
         /* Board */
@@ -26,7 +27,7 @@ namespace Steamwar
 
         public Faction PlayerFaction => factions[playerIndex];
 
-        public Faction ActiveFaction => factions[activeFaction];
+        public Faction ActiveFaction => factions[activeFaction < 0 ? 0 : activeFaction];
 
 
         public Session()
@@ -49,6 +50,7 @@ namespace Steamwar
                 sectorData = activeSector,
 
                 turnCount = turnCount,
+                turnMax = turnMax,
                 factionOrder = factionOrder,
                 activeFaction = activeFaction,
 
@@ -56,5 +58,28 @@ namespace Steamwar
             };
         }
 
+        public Session With(
+            int? turnCount = null,
+            int? turnMax = null,
+            int[] factionOrder = null,
+            int? activeFaction = null
+            )
+        {
+            return new Session
+            {
+                factions = factions,
+                playerIndex = playerIndex,
+                activeSector = activeSector,
+
+                turnCount = turnCount ?? this.turnCount,
+                turnMax = turnMax ?? this.turnMax,
+                factionOrder = factionOrder ?? this.factionOrder,
+                activeFaction = activeFaction ?? this.activeFaction,
+
+
+                objects = objects,
+                board = board,
+            };
+        }
     }
 }

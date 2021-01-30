@@ -28,13 +28,13 @@ namespace Steamwar.UI
             }
         }
 
-        public void OnFactionActivated(Session session)
+        public void OnFactionActivated(Faction faction)
         {
             if(activeBadge != null)
             {
                 activeBadge.SetSelected(false);
             }
-            activeBadge = badges[session.activeFaction];
+            activeBadge = badges[faction.index];
             activeBadge.SetSelected(true);
         }
 

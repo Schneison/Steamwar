@@ -191,12 +191,12 @@ namespace Steamwar.Grid
             ObjectType type = data.Type;
             objectByType.AddToSub(type, id);
             objectsByFaction.AddToSub(obj.Data.FactionIndex, id);
+            objectById[id] = obj;
             ObjectTag tag = type.Tag;
             if (tag == ObjectTag.None)
             {
                 return;
             }
-            objectById[id] = obj;
             foreach (ObjectTag objTag in Enum.GetValues(typeof(ObjectTag)))
             {
                 if ((tag & objTag) == objTag)

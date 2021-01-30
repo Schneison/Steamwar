@@ -9,21 +9,11 @@ namespace Steamwar.Turns
         /// <summary>
         /// Called at the start of a turn
         /// </summary>
-        public void OnTurnStart();
-
-        /// <summary>
-        /// Called at the start of a turn for a faction
-        /// </summary>
-        public void OnFactionStart(Faction faction);
-
-        /// <summary>
-        /// Called at the end of a turn for a faction
-        /// </summary>
-        public void OnFactionEnd(Faction faction);
+        public void OnTurnStart(TurnStatInstance instance);
 
         /// <summary>
         /// Called at the end of a turn
         /// </summary>
-        public void OnTurnEnd();
+        public void OnTurnEnd(TurnStatInstance instance);
     }
 }

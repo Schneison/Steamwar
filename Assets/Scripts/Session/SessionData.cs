@@ -18,13 +18,14 @@ namespace Steamwar
         public SectorData sectorData;
         /* Round */
         public int turnCount;
+        public int turnMax;
         public int[] factionOrder;
         public int activeFaction;
         /* Board */
         public BoardObjects objects;
 
         public Session CreateGame()
-        { 
+        {
             return new Session(objects) {
                 factions = factions,
                 playerIndex = playerFaction,
@@ -32,6 +33,7 @@ namespace Steamwar
                 activeSector = sectorData,
 
                 turnCount = turnCount,
+                turnMax = turnMax,
                 factionOrder = factionOrder,
                 activeFaction = activeFaction,
                  };

@@ -3,6 +3,7 @@ using UnityEngine;
 using Steamwar.Factions;
 using Steamwar.Utils;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace Steamwar.Objects
 {
@@ -10,15 +11,19 @@ namespace Steamwar.Objects
     [Serializable]
     public class ObjectData : IFactionProvider
     {
-        public Vector3 position;
-        public int faction;
-        public uint health;
-        public float movment;
+        [SerializeField]
+        private Vector3 position;
+        [SerializeField]
+        private int faction;
+        [SerializeField]
+        private uint health;
         [SerializeField]
         public ObjectType type;
+        [SerializeField]
+        public ObjectTurnData turnData;
 
         public ObjectData Copy() {
-            return new ObjectData { position = position, faction = faction, health = health, movment = movment, type = type };
+            return new ObjectData { position = position, faction = faction, health = health, type = type };
         }
 
         public Vector3 Position
@@ -42,6 +47,31 @@ namespace Steamwar.Objects
         }
 
         public bool IsAlive => Health <= 0;
+
+        public bool CanMove => turnData?.moves > 0;
+
+        public bool CanAttack => !turnData?.attacked ?? false;
+
+        public void OnMove(uint moveAmount, Vector3 position)
+        {
+            Assert.IsNotNull(turnData);
+            turnData.moves -= moveAmount;
+            Position = position;
+        }
+
+        public void OnSkip()
+        {
+            Assert.IsNotNull(turnData);
+            turnData.skiped = true;
+            turnData.touched = true;
+        }
+
+        public void OnAttack()
+        {
+            Assert.IsNotNull(turnData);
+            turnData.attacked = true;
+            turnData.touched = true;
+        }
 
         /// <summary>
         /// The object type of this object.
@@ -67,6 +97,27 @@ namespace Steamwar.Objects
             {
                 faction = value;
             }
+        }
+
+        public void SetupTurn()
+        {
+            turnData = new ObjectTurnData
+            {
+                touched = false,
+                skiped = false,
+                attacked = false,
+                moves = Type.movment
+            };
+        }
+
+        public bool CanEndTurn()
+        {
+            return turnData == null || turnData.touched;
+        }
+
+        public void CleanupTurn()
+        {
+            turnData = null;
         }
 
         public static int GetHash(Vector2 position)

@@ -6,27 +6,51 @@ using Steamwar.Objects;
 using Steamwar.Supplies;
 using Steamwar.Utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.PlayerLoop;
 
 namespace Steamwar.Factions
 {
-    public class FactionManager : Singleton<FactionManager>
+    public class FactionManager : Singleton<FactionManager>, ISessionListener, IService
     {
+
+        public FactionDataEvent dataUpdate;
+        public FactionStateEvent factionActivated;
+        public FactionStateEvent factionDeactivated;
 
         public delegate void DataAction(FactionData data);
 
         public FactionData factionPrefab;
         public FactionData[] datas;
+        public int activeFaction;
+        public int playerFaction;
+        public Faction[] factions;
 
-        protected override void OnSpawn()
+        protected override void OnInit()
         {
+            Services.factions.Create<FactionManager>((state) => state == LifecycleState.SESSION, ()=> new ServiceContainer[] { Services.session });
+        }
+
+        public void OnCreateSession(Session session)
+        {
+            session.factionOrder = (from faction in session.factions orderby faction.index select faction.index).ToArray();
+            session.activeFaction = -1;
+        }
+
+        public void OnLoadSession(Session session)
+        {
+            this.factions = session.factions;
+            this.playerFaction = session.playerIndex;
+            this.activeFaction = session.activeFaction;
+
             List<FactionData> factionData = new List<FactionData>();
-            foreach(Faction faction in SessionManager.session.factions)
+            foreach (Faction faction in factions)
             {
                 FactionData dataObj = Instantiate(factionPrefab, transform);
                 dataObj.name = $"Faction({faction.index}={faction.name})";
@@ -35,6 +59,16 @@ namespace Steamwar.Factions
                 BoardManager.Instance.objectDeconstructed.AddListener(dataObj.Resources.OnObjectDeconstructed);
             }
             datas = factionData.ToArray();
+        }
+
+        public void OnSaveSession(Session session)
+        {
+            session.factions = this.factions;
+            session.activeFaction = activeFaction;
+        }
+
+        public void OnFinishLoading()
+        {
         }
 
         public static Faction GetFaction(int index)
@@ -99,7 +133,48 @@ namespace Steamwar.Factions
 
         public static bool IsPlayerFaction(int index)
         {
-            return SessionManager.session.playerIndex == index;
+            return Instance.playerFaction == index;
         }
+
+        public static void Activate(int index)
+        {
+            Instance.ActivateFaction(index);
+        }
+
+        private void ActivateFaction(int index)
+        {
+            Faction oldFaction = GetFaction(activeFaction);
+            if (oldFaction.Exists) {
+                factionDeactivated.Invoke(GetFaction(activeFaction));
+            }
+            activeFaction = index;
+            Faction newFaction = GetFaction(activeFaction);
+            if (newFaction.Exists)
+            {
+                factionActivated.Invoke(GetFaction(activeFaction));
+            }
+        }
+
+        public IEnumerator Initialize()
+        {
+            yield return null;
+        }
+
+        public IEnumerator CleanUp()
+        {
+            yield return null;
+        }
+    }
+
+    [Serializable]
+    public class FactionDataEvent : UnityEvent<FactionData>
+    {
+
+    }
+
+    [Serializable]
+    public class FactionStateEvent : UnityEvent<Faction>
+    {
+
     }
 }

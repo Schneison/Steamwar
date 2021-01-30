@@ -118,7 +118,7 @@ namespace Steamwar.Move
             ObjectContainer currentObj = data.Obj;
             if (data.AllowedToMove)
             {
-                PathFinder finder = new PathFinder(BoardManager.CellToWorld(cellPosition) + new Vector3(0.5F, 0.5F), currentObj.transform.position, currentObj.gameObject);
+                PathFinder finder = new PathFinder(BoardManager.CellToWorld(cellPosition) + new Vector3(0.5F, 0.5F), currentObj.transform.position, currentObj.gameObject, (int)currentObj.Data.turnData.moves);
                 Path path = finder.FindPath();
                 lastPath = path;
                 // TODO: Find a better way to handle the path nodes (Don't remove / reconstruct them every time) 

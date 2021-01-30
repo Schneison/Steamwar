@@ -1,37 +1,27 @@
 ﻿using Steamwar.Factions;
-using Steamwar.UI;
+using Steamwar.Turns;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Steamwar.Turns
+namespace Steamwar.UI
 {
-    public class PlayerTurnHandler : SteamBehaviour, TurnHandler
+    public class UIHandler : MonoBehaviour
     {
 
-        [SerializeField]
-        private bool nextRound;
-
-        protected override void OnSpawn()
+        public void OnSessonLoaded(Session session)
         {
-            //roundText = UIElements.Instance.roundCounter;
-            //maxRoundText = UIElements.Instance.roundMax;
-           // roundMessage = UIElements.Instance.centerMessage;
+            UIElements.Instance.roundMax.text = session.turnMax.ToString("000");
         }
 
-        public bool CanProgress()
+        public void OnTurn(TurnStatInstance instance)
         {
-            return nextRound;
-        }
-
-        public void OnFactionEnd(Faction faction)
-        {
-            if (!faction.IsPlayer)
-            {
-                return;
-            }
-
+            UIElements.Instance.roundCounter.text = instance.turnAmount.ToString("000");
         }
 
         public void OnFactionStart(Faction faction)
@@ -41,17 +31,6 @@ namespace Steamwar.Turns
                 return;
             }
             StartCoroutine(FadeText());
-
-        }
-
-        public void OnTurnEnd()
-        {
-
-        }
-
-        public void OnTurnStart()
-        {
-
         }
 
         public IEnumerator FadeText()

@@ -58,7 +58,6 @@ namespace Steamwar.Utils
 #endif
         public static T[] GetAllInstances<T>() where T : ScriptableObject
         {
-            return UnityEngine.Resources.FindObjectsOfTypeAll<T>();
 #if UNITY_EDITOR
             string[] guids = AssetDatabase.FindAssets("t:" + typeof(T).Name);  //FindAssets uses tags check documentation for more info
             T[] a = new T[guids.Length];

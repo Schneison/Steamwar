@@ -8,7 +8,9 @@ namespace Steamwar
 {
     public class ServiceManager : Singleton<ServiceManager>, IGameStateListener
     {
-        private static readonly ServiceOrganizer organizer = new ServiceOrganizer((coroutine) => Instance.StartCoroutine(coroutine));
+        private static readonly ServiceOrganizer organizer = new ServiceOrganizer((coroutine)=>{
+            Instance.StartCoroutine(coroutine);
+        });
 
         public static ServiceContainer<S> Get<S>() where S : class, IService
         {

@@ -25,7 +25,7 @@ namespace Steamwar.Move
         /// <summary>
         /// If the object currently can move.
         /// </summary>
-        public virtual bool CanMove { get => IsMovable && !Moves; }
+        public virtual bool CanMove { get => IsMovable && !Moves && container.Data.CanMove; }
 
         /// <summary>
         /// If the object currently moves.
@@ -63,8 +63,10 @@ namespace Steamwar.Move
         {
             Transform transform = controlledObject.transform;
             Direction facingDirection = Direction.LEFT;
+            uint count = 0;
             foreach (PathNode point in path)
             {
+                count++;
                 Vector2 delta = ((Vector2)transform.position) - point.position;
                 if (delta.x > 0)
                 {
@@ -91,6 +93,7 @@ namespace Steamwar.Move
                     yield return new WaitForEndOfFrame();
                 }
             }
+            container.Data.OnMove(count, transform.position);
             Moves = false;
             objectRenderer.UpdateAnimation(Moves, facingDirection);
         }

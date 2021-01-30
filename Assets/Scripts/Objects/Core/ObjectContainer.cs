@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Steamwar.Objects
 {
 
-    public class ObjectContainer : SteamBehaviour
+    public class ObjectContainer : SteamBehaviour, IPropListener
     {
         [SerializeField]
         private ObjectData data;
@@ -44,6 +44,7 @@ namespace Steamwar.Objects
             {
                 data = new ObjectData();
             }
+            Data.Position = transform.position;
             ObjectElement element = GetComponent<ObjectElement>();
             if (element == null)
             {
@@ -68,8 +69,9 @@ namespace Steamwar.Objects
             {
                 Type = type,
                 Health = type.Health,
-                faction = SessionManager.session.playerIndex
+                FactionIndex = SessionManager.session.playerIndex
             };
+            data.Position = transform.position;
             if (boardObject) {
                 SessionManager.session.board.Add(gameObject);
             }
@@ -79,5 +81,6 @@ namespace Steamwar.Objects
         {
             SessionManager.session.board.Remove(gameObject);
         }
+
     }
 }

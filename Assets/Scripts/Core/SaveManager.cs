@@ -121,7 +121,7 @@ namespace Steamwar
             //GUI: Create Faction
             string factionName = "Blue";// GUI
             uint color = 0xFF63AAF1;// GUI
-            Faction faction = new Faction(factionName, color);
+            Faction faction = new Faction(0, factionName, color);
             session.playerIndex = faction.index;
             session.activeFaction = faction.index;
             session.factions = new Faction[] { faction, new Faction(1, "Team RED", 0xFFB94427) };

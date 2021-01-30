@@ -93,7 +93,7 @@ namespace Steamwar
         NONE,
         PERSISTENT, 
         MAIN_MENU, 
-        LOADING, 
+        LOADING,
         SESSION,
         SHUTTTING_DOWN
     }

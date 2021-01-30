@@ -175,7 +175,7 @@ namespace Steamwar.Grid
 
         protected override void OnInit()
         {
-            Services.board.Create<BoardManager>((state) => state == LifecycleState.SESSION, ()=>new ServiceContainer[] { Services.registry });
+            Services.board.Create<BoardManager>((state) => state == LifecycleState.SESSION, ()=>new ServiceContainer[] { Services.session, Services.registry });
         }
 
         public IEnumerator Initialize()

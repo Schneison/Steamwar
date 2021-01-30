@@ -8,12 +8,18 @@ using Steamwar.UI;
 using Steamwar.Utils;
 using System;
 using Steamwar.Core;
+using UnityEngine.Events;
 
 namespace Steamwar
 {
 
-    public class SessionManager : Singleton<SessionManager>
+    public class SessionManager : Singleton<SessionManager>, IFinishService
     {
+        public delegate Session SessionTransformer(Session session);
+
+        public SessionEvent sessionLoaded;
+        public SessionEvent sessionCreated;
+        public SessionEvent sessionSaved;
         public Camera mainCamera;
 
         internal RoundManager rounds;
@@ -28,7 +34,7 @@ namespace Steamwar
             rounds = GetComponent<RoundManager>();
             sectors = GetComponent<SectorManager>();
             Services.registry.Create(()=>new Registry(), (state) => state == LifecycleState.SESSION);
-
+            Services.session.Create<SessionManager>((state) => state == LifecycleState.SESSION, () => new ServiceContainer[] { Services.registry });
             StartSession();
         }
         
@@ -37,10 +43,12 @@ namespace Steamwar
         /// </summary>
         public void StartSession()
         {
-            SaveManager.Load(out session);
             GameManager.Instance.StartSession();
-            EventManager.Instance.sessionLoaded.Invoke(session);
-            EventManager.Instance.factionChanged.Invoke(session);
+            /*SaveManager.Load(out session);
+            GameManager.Instance.StartSession();
+            sessionCreated.Invoke(session);
+            sessionLoaded.Invoke(session);*/
+            //factionChanged.Invoke(session);
         }
 
         public void OnApplicationQuit()
@@ -53,16 +61,34 @@ namespace Steamwar
             sectors.Load(session.activeSector);
             SessionManager.session = session;
         }
+
+        public static void UpdateSession(SessionTransformer transformer)
+        {
+            Session newSession = transformer(session);
+        }
+
+        public IEnumerator Initialize()
+        {
+            SaveManager.Load(out session);
+            sessionCreated.Invoke(session);
+            yield return null;
+        }
+
+        public IEnumerator Finish()
+        {
+            sessionLoaded.Invoke(session);
+            yield return null;
+        }
+
+        public IEnumerator CleanUp()
+        {
+            yield return null;
+        }
     }
 
-    [Flags]
-    public enum SessionState
+    [Serializable]
+    public class SessionEvent : UnityEvent<Session>
     {
-        NONE,
-        BOARD_CREATED = 1,
-        OBJECTS_CONSTRUCTED = 2,
-        LOADING = 4,
-        SESSION = 8,
-        SHUTTTING_DOWN = 16
+
     }
 }

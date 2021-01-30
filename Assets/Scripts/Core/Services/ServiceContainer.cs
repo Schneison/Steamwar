@@ -125,6 +125,15 @@ namespace Steamwar
             if (updateCalls == 0)
             {
                 updates = false;
+                foreach(ServiceContainer container in this.sorted)
+                {
+                    if (!container.IsAvailable)
+                    {
+                        Debug.Log($"Failed to load service {nameof(container.ServiceType)}.");
+                        continue;
+                    }
+                    yield return (container?.InternalService as IFinishService)?.Finish();
+                }
             }
         }
 
@@ -180,6 +189,8 @@ namespace Steamwar
 
         public S Service => handler.Service;
 
+        public override IService InternalService => Service;
+
         public override Type ServiceType => typeof(S);
 
         public override ServiceState State => handler == null ? ServiceState.None : handler.State;
@@ -223,6 +234,11 @@ namespace Steamwar
         }
 
         public abstract bool IsLoadable
+        {
+            get;
+        }
+
+        public abstract IService InternalService
         {
             get;
         }

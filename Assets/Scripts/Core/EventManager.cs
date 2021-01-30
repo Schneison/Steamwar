@@ -14,31 +14,12 @@ namespace Steamwar.Core
 {
     public class EventManager : Singleton<EventManager>
     {
-        public SessionEvent sessionLoaded;
-        public SessionEvent sessionUpdated;
-        public SessionEvent factionChanged;
-        // IBoardListener
-        public UnityEvent boardCreation;
-        // IFractionListener
-        public FactionEvent factionUpdate;
         public ResourceEvent capacityUpdate;
         public ResourceEvent resourceUpdate;
     }
 
     [Serializable]
-    public class FactionEvent : UnityEvent<FactionData>
-    {
-
-    }
-
-    [Serializable]
     public class ResourceEvent : UnityEvent<SupplyContainer>
-    {
-
-    }
-
-    [Serializable]
-    public class SessionEvent : UnityEvent<Session>
     {
 
     }

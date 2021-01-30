@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Steamwar.Objects
 {
-    public class ObjectRenderer : SteamBehaviour
+    public class ObjectRenderer : SteamBehaviour, IPropListener
     {
         public ObjectContainer obj;
         SpriteRenderer[] baseRenderer;
@@ -83,6 +83,15 @@ namespace Steamwar.Objects
         protected override void OnSpawn()
         {
             base.OnSpawn();
+            if (!Services.session.IsAvailable)
+            {
+                return;
+            }
+            UpdateTextures();
+        }
+
+        public void OnPropInit()
+        {
             UpdateTextures();
         }
 

@@ -12,5 +12,9 @@ namespace Steamwar.Factions
     public interface IFactionListener
     {
         void OnFactionUpdate(FactionData data);
+
+        void OnFactionActivated(Faction faction);
+
+        void OnFactionDeactivated(Faction faction);
     }
 }

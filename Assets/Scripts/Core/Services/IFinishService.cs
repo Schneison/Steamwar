@@ -1,16 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Steamwar.Turns
+namespace Steamwar
 {
-    [Serializable]
-    public enum TurnStage
+    public interface IFinishService : IService
     {
-        START,
-        END,
-        BETWEEN
+        IEnumerator Finish();
     }
 }

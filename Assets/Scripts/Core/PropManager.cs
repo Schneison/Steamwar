@@ -6,14 +6,14 @@ using System.Collections;
 
 namespace Steamwar.Core
 {
-    public class PropManager : Singleton<PropManager>, IService
+    public class PropManager : Singleton<PropManager>, IFinishService
     {
         public Stack<ObjectContainer> props = new Stack<ObjectContainer>();
         private bool _init = false;
 
         protected override void OnInit()
         {
-            Services.props.Create<PropManager>((state)=>state == LifecycleState.SESSION, ()=>new ServiceContainer[] { Services.board });
+            Services.props.Create<PropManager>((state)=>state == LifecycleState.SESSION, ()=>new ServiceContainer[] { Services.board, Services.factions });
         }
 
         public static void CheckForProp(ObjectContainer behaviour)
@@ -31,10 +31,19 @@ namespace Steamwar.Core
 
         public IEnumerator Initialize()
         {
+            yield return null;
+        }
+
+        public IEnumerator Finish()
+        {
             while (props.Count > 0)
             {
                 var prop = props.Pop();
-                prop.OnPropInit();
+                IPropListener[] listeners = prop.GetComponentsInChildren<IPropListener>();
+                foreach(IPropListener listener in listeners)
+                {
+                    listener.OnPropInit();
+                }
 
             }
             if (!_init)
